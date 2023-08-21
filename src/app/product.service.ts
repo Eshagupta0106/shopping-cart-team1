@@ -10,7 +10,7 @@ export class ProductService {
 
     getJSONData(): Observable<any> {
         
-        return this.http.get('assets/products.json');
+        return this.http.get('assets/product.json');
 
     }
 }
