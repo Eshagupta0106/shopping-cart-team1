@@ -1,0 +1,27 @@
+<div class="flex justify-between -4 bg-black">
+  <div class="w-1/4 p-4 bg-black">
+    <app-filter [categories]="categories" (filterApplied)="applyFilter($event)"
+      (filterCleared)="resetFilters()"></app-filter>
+  </div>
+  <div class="w-3/4 p-4 bg-black">
+    <div *ngIf="filteredProducts.length > 0; else noProductsFound">
+      <div class="grid grid-cols-3 gap-4">
+        <div *ngFor="let product of filteredProducts" class="p-4">
+          <a [routerLink]="['/product', product.id]" class="block hover:opacity-75 transition">
+            <img [src]="product.image" alt="{{ product.name }}" class="w-full rounded-lg shadow-md" />
+            <p class="mt-2 text-center text-white text-lg ">{{ product.name }}</p>
+            <p class="mt-2 text-center text-white text-lg ">Rs. {{ product.price }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <ng-template #noProductsFound>
+      <div class="text-red-500 text-center text-3xl font-extrabold mt-4 flex flex-col mx-64">
+        <img class=" text-center inline rounded-full h-30 w-30" src="../../assets/oops.jpg">
+        <p class="m-16">
+          Products not found!
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</div>
