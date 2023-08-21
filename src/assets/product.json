@@ -1,0 +1,402 @@
+[
+    {
+        "id": 1,
+        "name": "Brio Fountain Pen Red - K1038",
+        "category": "Pen",
+        "price": 290,
+        "availability": "In Stock",
+        "rating": 4.5,
+        "image": "assets/Pen/pen1.jpeg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 2,
+        "name": "Jumbo Desktop Pen",
+        "category": "Pen",
+        "price": 225,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/Pen/pen2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 3,
+        "name": "Kaco Tecflow 0.5mm Roller Gel Pen- Pack of 3",
+        "category": "Pen",
+        "price": 450,
+        "availability": "Out of Stock",
+        "rating": 3.9,
+        "image": "assets/Pen/pen3.jpg",
+        "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
+    },
+    {
+        "id": 4,
+        "name": "Jumbo Large Capacity 0.5mm Gel Pens-Pack of 10",
+        "category": "Pen",
+        "price": 995,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/Pen/pen4.jpg",
+        "description": "Substantial cigar-shaped profile evokes Art Deco design."
+    },
+    {
+        "id": 5,
+        "name": "Kaco 4 in 1 Module 0.5mm Gel Pen",
+        "category": "Pen",
+        "price": 140,
+        "availability": "Out of Stock",
+        "rating": 4.8,
+        "image": "assets/Pen/pen5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    },
+    {
+        "id": 6,
+        "name": "Sheaffer Legacy Heritage Chrome Roller Ball - 9062",
+        "category": "Pencil",
+        "price": 180,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/Pencil/pencil1.jpg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 7,
+        "name": "Jumbo Pencil",
+        "category": "Pencil",
+        "price": 135,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/Pencil/pencil2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 8,
+        "name": "Kaco Tecflow 0.5mm Roller Gel Pen- Pack of 3",
+        "category": "Pencil",
+        "price": 295,
+        "availability": "Out of Stock",
+        "rating": 4.9,
+        "image": "assets/Pencil/pencil3.jpg",
+        "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
+    },
+    {
+        "id": 9,
+        "name": "Large Capacity 0.5mm Gel",
+        "category": "Pencil",
+        "price": 95,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/Pencil/pencil4.jpg",
+        "description": "Substantial cigar-shaped profile evokes Art Deco design."
+    },
+    {
+        "id": 10,
+        "name": "Kaco 4 in 1 Module 0.5mm ",
+        "category": "Pencil",
+        "price": 110,
+        "availability": "Out of Stock",
+        "rating": 4.8,
+        "image": "assets/Pencil/pencil5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    },
+    {
+        "id": 11,
+        "name": "Sheaffer Legacy Heritage Chrome Highlighter",
+        "category": "Highlighter",
+        "price": 67,
+        "availability": "In Stock",
+        "rating": 4.1,
+        "image": "assets/Highlighter/highlighter1.jpg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 12,
+        "name": "Jumbo Highlighter",
+        "category": "Highlighter",
+        "price": 80,
+        "availability": "In Stock",
+        "rating": 4.7,
+        "image": "assets/Highlighter/highlighter2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 13,
+        "name": "Kaco Tecflow 0.5mm Roller Gel Pen- Pack of 3",
+        "category": "Highlighter",
+        "price": 45,
+        "availability": "Out of Stock",
+        "rating": 3.9,
+        "image": "assets/Highlighter/highlighter3.jpg",
+        "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
+    },
+    {
+        "id": 14,
+        "name": "Highlighter World",
+        "category": "Highlighter",
+        "price": 52,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/Highlighter/highlighter4.jpg",
+        "description": "Substantial cigar-shaped profile evokes Art Deco design."
+    },
+    {
+        "id": 15,
+        "name": "Kaco 4 in 1 Module 0.5mm Highlighter",
+        "category": "Highlighter",
+        "price": 99,
+        "availability": "Out of Stock",
+        "rating": 4.8,
+        "image": "assets/Highlighter/highlighter5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    },
+    {
+        "id": 16,
+        "name": "Sheaffer Legacy Eraser",
+        "category": "Eraser",
+        "price": 25,
+        "availability": "In Stock",
+        "rating": 4.5,
+        "image": "assets/Eraser/eraser1.jpg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 17,
+        "name": "Jumbo Eraser",
+        "category": "Eraser",
+        "price": 22,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/Eraser/eraser2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 18,
+        "name": "Kaco Tecflow Eraser",
+        "category": "Eraser",
+        "price": 45,
+        "availability": "Out of Stock",
+        "rating": 3.2,
+        "image": "assets/Eraser/eraser3.jpg",
+        "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
+    },
+    {
+        "id": 19,
+        "name": "Jumbo Large Capacity Eraser",
+        "category": "Eraser",
+        "price": 87,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/Eraser/eraser4.jpg",
+        "description": "Substantial cigar-shaped profile evokes Art Deco design."
+    },
+    {
+        "id": 20,
+        "name": "Kaco 4 in 1 Eraser",
+        "category": "Eraser",
+        "price": 15,
+        "availability": "Out of Stock",
+        "rating": 4.9,
+        "image": "assets/Eraser/eraser5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    },
+    {
+        "id": 21,
+        "name": "Sheaffer Legacy Heritage Bookmark",
+        "category": "Bookmark",
+        "price": 108,
+        "availability": "In Stock",
+        "rating": 4.5,
+        "image": "assets/Bookmark/bookmark1.jpg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 22,
+        "name": "Jumbo Bookmark",
+        "category": "Bookmark",
+        "price": 20,
+        "availability": "In Stock",
+        "rating": 4.4,
+        "image": "assets/Bookmark/bookmark2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 23,
+        "name": "Kaco Tecflow Bookmark",
+        "category": "Bookmark",
+        "price": 45,
+        "availability": "Out of Stock",
+        "rating": 3.3,
+        "image": "assets/Bookmark/bookmark3.jpg",
+        "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
+    },
+    {
+        "id": 24,
+        "name": "Jumbo Large Capacity Bookmark",
+        "category": "Bookmark",
+        "price": 90,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/Bookmark/bookmark4.jpg",
+        "description": "Substantial cigar-shaped profile evokes Art Deco design."
+    },
+    {
+        "id": 25,
+        "name": "Kaco Bookmark",
+        "category": "Bookmark",
+        "price": 140,
+        "availability": "Out of Stock",
+        "rating": 4.8,
+        "image": "assets/Bookmark/bookmark5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    },
+    {
+        "id": 26,
+        "name": "Sheaffer Legacy Heritage Notebook",
+        "category": "Notebooks",
+        "price": 550,
+        "availability": "In Stock",
+        "rating": 4.6,
+        "image": "assets/Notebook/notebook1.jpg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 27,
+        "name": "Jumbo Desktop Notebook",
+        "category": "Notebooks",
+        "price": 670,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/Notebook/notebook2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 28,
+        "name": "Kaco Tecflow Notebook",
+        "category": "Notebooks",
+        "price": 450,
+        "availability": "Out of Stock",
+        "rating": 3.9,
+        "image": "assets/Notebook/notebook3.jpg",
+        "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
+    },
+    {
+        "id": 29,
+        "name": "Jumbo Large Capacity Notebook",
+        "category": "Notebooks",
+        "price": 560,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/Notebook/notebook4.jpg",
+        "description": "Substantial cigar-shaped profile evokes Art Deco design."
+    },
+    {
+        "id": 30,
+        "name": "Kaco Notebook",
+        "category": "Notebooks",
+        "price": 459,
+        "availability": "Out of Stock",
+        "rating": 4.8,
+        "image": "assets/Notebook/notebook5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    },
+    {
+        "id": 31,
+        "name": "Sheaffer Legacy Heritage Planner",
+        "category": "Planners",
+        "price": 1800,
+        "availability": "In Stock",
+        "rating": 4.5,
+        "image": "assets/Planner/planner1.jpg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 32,
+        "name": "Jumbo Planner",
+        "category": "Planners",
+        "price": 195,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/Planner/planner2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 33,
+        "name": "Techo Planner",
+        "category": "Planners",
+        "price": 235,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/Planner/planner2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 34,
+        "name": "Jumbo Planner 2",
+        "category": "Planners",
+        "price": 280,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/Planner/planner2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 35,
+        "name": "Kaco 4 in 1 Module Planner",
+        "category": "Planners",
+        "price": 1400,
+        "availability": "Out of Stock",
+        "rating": 4.8,
+        "image": "assets/Planner/planner5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    },
+    {
+        "id": 36,
+        "name": "Sheaffer Legacy Heritage Sticky Notes ",
+        "category": "Sticky Notes",
+        "price": 99,
+        "availability": "In Stock",
+        "rating": 4.5,
+        "image": "assets/StickyNotes/stickyNotes1.jpg",
+        "description": "A signature Sheaffer design."
+    },
+    {
+        "id": 37,
+        "name": "Jumbo Desktop Sticky Notes",
+        "category": "Sticky Notes",
+        "price": 225,
+        "availability": "In Stock",
+        "rating": 4.8,
+        "image": "assets/StickyNotes/stickyNotes2.jpg",
+        "description": "Polished chrome-plated finish with polished chrome-plated trim."
+    },
+    {
+        "id": 38,
+        "name": "Kaco Tecflow Sticky Notes",
+        "category": "Sticky Notes",
+        "price": 450,
+        "availability": "Out of Stock",
+        "rating": 3.9,
+        "image": "assets/StickyNotes/stickyNotes3.jpg",
+        "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
+    },
+    {
+        "id": 39,
+        "name": "Jumbo Large Sticky Notes",
+        "category": "Sticky Notes",
+        "price": 398,
+        "availability": "In Stock",
+        "rating": 4.2,
+        "image": "assets/StickyNotes/stickyNotes4.jpg",
+        "description": "Substantial cigar-shaped profile evokes Art Deco design."
+    },
+    {
+        "id": 40,
+        "name": "Kaco Sticky Notes",
+        "category": "Sticky Notes",
+        "price": 178,
+        "availability": "Out of Stock",
+        "rating": 4.8,
+        "image": "assets/StickyNotes/stickyNotes5.jpg",
+        "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
+    }
+]
