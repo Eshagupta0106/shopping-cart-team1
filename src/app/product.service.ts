@@ -9,6 +9,8 @@ export class ProductService {
     constructor(private http: HttpClient) { }
 
     getJSONData(): Observable<any> {
+        
         return this.http.get('assets/products.json');
+
     }
 }
