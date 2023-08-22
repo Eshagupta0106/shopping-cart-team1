@@ -6,7 +6,11 @@
         "price": 290,
         "availability": "In Stock",
         "rating": 4.5,
-        "image": "assets/Pen/pen1.jpeg",
+        "image": [
+            "assets/Pen/pen1.jpeg",
+            "assets/Pen/pen2.jpg",
+            "assets/Pen/pen3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -16,7 +20,11 @@
         "price": 225,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/Pen/pen2.jpg",
+        "image": [
+            "assets/Pen/pen2.jpg",
+            "assets/Pen/pen3.jpg",
+            "assets/Pen/pen4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -26,7 +34,11 @@
         "price": 450,
         "availability": "Out of Stock",
         "rating": 3.9,
-        "image": "assets/Pen/pen3.jpg",
+        "image": [
+            "assets/Pen/pen3.jpg",
+            "assets/Pen/pen4.jpg",
+            "assets/Pen/pen5.jpg"
+        ],
         "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
     },
     {
@@ -36,7 +48,11 @@
         "price": 995,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/Pen/pen4.jpg",
+        "image": [
+            "assets/Pen/pen4.jpg",
+            "assets/Pen/pen5.jpg",
+            "assets/Pen/pen1.jpeg"
+        ],
         "description": "Substantial cigar-shaped profile evokes Art Deco design."
     },
     {
@@ -46,7 +62,11 @@
         "price": 140,
         "availability": "Out of Stock",
         "rating": 4.8,
-        "image": "assets/Pen/pen5.jpg",
+        "image": [
+            "assets/Pen/pen5.jpg",
+            "assets/Pen/pen1.jpeg",
+            "assets/Pen/pen2.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     },
     {
@@ -56,7 +76,11 @@
         "price": 180,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/Pencil/pencil1.jpg",
+        "image": [
+            "assets/Pencil/pencil1.jpg",
+            "assets/Pencil/pencil2.jpg",
+            "assets/Pencil/pencil3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -66,7 +90,11 @@
         "price": 135,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/Pencil/pencil2.jpg",
+        "image": [
+            "assets/Pencil/pencil2.jpg",
+            "assets/Pencil/pencil3.jpg",
+            "assets/Pencil/pencil4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -76,7 +104,11 @@
         "price": 295,
         "availability": "Out of Stock",
         "rating": 4.9,
-        "image": "assets/Pencil/pencil3.jpg",
+        "image": [
+            "assets/Pencil/pencil3.jpg",
+            "assets/Pencil/pencil4.jpg",
+            "assets/Pencil/pencil5.jpg"
+        ],
         "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
     },
     {
@@ -86,7 +118,11 @@
         "price": 95,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/Pencil/pencil4.jpg",
+        "image": [
+            "assets/Pencil/pencil4.jpg",
+            "assets/Pencil/pencil5.jpg",
+            "assets/Pencil/pencil1.jpg"
+        ],
         "description": "Substantial cigar-shaped profile evokes Art Deco design."
     },
     {
@@ -96,7 +132,11 @@
         "price": 110,
         "availability": "Out of Stock",
         "rating": 4.8,
-        "image": "assets/Pencil/pencil5.jpg",
+        "image": [
+            "assets/Pencil/pencil5.jpg",
+            "assets/Pencil/pencil1.jpg",
+            "assets/Pencil/pencil2.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     },
     {
@@ -106,7 +146,11 @@
         "price": 67,
         "availability": "In Stock",
         "rating": 4.1,
-        "image": "assets/Highlighter/highlighter1.jpg",
+        "image": [
+            "assets/Highlighter/highlighter1.jpg",
+            "assets/Highlighter/highlighter2.jpg",
+            "assets/Highlighter/highlighter3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -116,7 +160,11 @@
         "price": 80,
         "availability": "In Stock",
         "rating": 4.7,
-        "image": "assets/Highlighter/highlighter2.jpg",
+        "image": [
+            "assets/Highlighter/highlighter2.jpg",
+            "assets/Highlighter/highlighter3.jpg",
+            "assets/Highlighter/highlighter4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -126,7 +174,11 @@
         "price": 45,
         "availability": "Out of Stock",
         "rating": 3.9,
-        "image": "assets/Highlighter/highlighter3.jpg",
+        "image": [
+            "assets/Highlighter/highlighter3.jpg",
+            "assets/Highlighter/highlighter4.jpg",
+            "assets/Highlighter/highlighter5.jpg"
+        ],
         "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
     },
     {
@@ -136,7 +188,11 @@
         "price": 52,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/Highlighter/highlighter4.jpg",
+        "image": [
+            "assets/Highlighter/highlighter4.jpg",
+            "assets/Highlighter/highlighter5.jpg",
+            "assets/Highlighter/highlighter1.jpg"
+        ],
         "description": "Substantial cigar-shaped profile evokes Art Deco design."
     },
     {
@@ -146,7 +202,11 @@
         "price": 99,
         "availability": "Out of Stock",
         "rating": 4.8,
-        "image": "assets/Highlighter/highlighter5.jpg",
+        "image": [
+            "assets/Highlighter/highlighter5.jpg",
+            "assets/Highlighter/highlighter1.jpg",
+            "assets/Highlighter/highlighter2.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     },
     {
@@ -156,7 +216,11 @@
         "price": 25,
         "availability": "In Stock",
         "rating": 4.5,
-        "image": "assets/Eraser/eraser1.jpg",
+        "image": [
+            "assets/Eraser/eraser1.jpg",
+            "assets/Eraser/eraser2.jpg",
+            "assets/Eraser/eraser3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -166,7 +230,11 @@
         "price": 22,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/Eraser/eraser2.jpg",
+        "image": [
+            "assets/Eraser/eraser2.jpg",
+            "assets/Eraser/eraser3.jpg",
+            "assets/Eraser/eraser4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -176,7 +244,11 @@
         "price": 45,
         "availability": "Out of Stock",
         "rating": 3.2,
-        "image": "assets/Eraser/eraser3.jpg",
+        "image": [
+            "assets/Eraser/eraser3.jpg",
+            "assets/Eraser/eraser4.jpg",
+            "assets/Eraser/eraser5.jpg"
+        ],
         "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
     },
     {
@@ -186,7 +258,11 @@
         "price": 87,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/Eraser/eraser4.jpg",
+        "image": [
+            "assets/Eraser/eraser4.jpg",
+            "assets/Eraser/eraser5.jpg",
+            "assets/Eraser/eraser1.jpg"
+        ],
         "description": "Substantial cigar-shaped profile evokes Art Deco design."
     },
     {
@@ -196,7 +272,11 @@
         "price": 15,
         "availability": "Out of Stock",
         "rating": 4.9,
-        "image": "assets/Eraser/eraser5.jpg",
+        "image": [
+            "assets/Eraser/eraser5.jpg",
+            "assets/Eraser/eraser2.jpg",
+            "assets/Eraser/eraser3.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     },
     {
@@ -206,7 +286,11 @@
         "price": 108,
         "availability": "In Stock",
         "rating": 4.5,
-        "image": "assets/Bookmark/bookmark1.jpg",
+        "image": [
+            "assets/Bookmark/bookmark1.jpg",
+            "assets/Bookmark/bookmark2.jpg",
+            "assets/Bookmark/bookmark3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -216,7 +300,11 @@
         "price": 20,
         "availability": "In Stock",
         "rating": 4.4,
-        "image": "assets/Bookmark/bookmark2.jpg",
+        "image": [
+            "assets/Bookmark/bookmark2.jpg",
+            "assets/Bookmark/bookmark3.jpg",
+            "assets/Bookmark/bookmark4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -226,7 +314,11 @@
         "price": 45,
         "availability": "Out of Stock",
         "rating": 3.3,
-        "image": "assets/Bookmark/bookmark3.jpg",
+        "image": [
+            "assets/Bookmark/bookmark3.jpg",
+            "assets/Bookmark/bookmark4.jpg",
+            "assets/Bookmark/bookmark5.jpg"
+        ],
         "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
     },
     {
@@ -236,7 +328,11 @@
         "price": 90,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/Bookmark/bookmark4.jpg",
+        "image": [
+            "assets/Bookmark/bookmark4.jpg",
+            "assets/Bookmark/bookmark5.jpg",
+            "assets/Bookmark/bookmark1.jpg"
+        ],
         "description": "Substantial cigar-shaped profile evokes Art Deco design."
     },
     {
@@ -246,7 +342,11 @@
         "price": 140,
         "availability": "Out of Stock",
         "rating": 4.8,
-        "image": "assets/Bookmark/bookmark5.jpg",
+        "image": [
+            "assets/Bookmark/bookmark5.jpg",
+            "assets/Bookmark/bookmark1.jpg",
+            "assets/Bookmark/bookmark2.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     },
     {
@@ -256,7 +356,11 @@
         "price": 550,
         "availability": "In Stock",
         "rating": 4.6,
-        "image": "assets/Notebook/notebook1.jpg",
+        "image": [
+            "assets/Notebook/notebook1.jpg",
+            "assets/Notebook/notebook2.jpg",
+            "assets/Notebook/notebook3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -266,7 +370,11 @@
         "price": 670,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/Notebook/notebook2.jpg",
+        "image": [
+            "assets/Notebook/notebook2.jpg",
+            "assets/Notebook/notebook3.jpg",
+            "assets/Notebook/notebook4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -276,7 +384,11 @@
         "price": 450,
         "availability": "Out of Stock",
         "rating": 3.9,
-        "image": "assets/Notebook/notebook3.jpg",
+        "image": [
+            "assets/Notebook/notebook3.jpg",
+            "assets/Notebook/notebook4.jpg",
+            "assets/Notebook/notebook5.jpg"
+        ],
         "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
     },
     {
@@ -286,7 +398,11 @@
         "price": 560,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/Notebook/notebook4.jpg",
+        "image": [
+            "assets/Notebook/notebook4.jpg",
+            "assets/Notebook/notebook5.jpg",
+            "assets/Notebook/notebook1.jpg"
+        ],
         "description": "Substantial cigar-shaped profile evokes Art Deco design."
     },
     {
@@ -296,7 +412,11 @@
         "price": 459,
         "availability": "Out of Stock",
         "rating": 4.8,
-        "image": "assets/Notebook/notebook5.jpg",
+        "image": [
+            "assets/Notebook/notebook5.jpg",
+            "assets/Notebook/notebook1.jpg",
+            "assets/Notebook/notebook2.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     },
     {
@@ -306,7 +426,11 @@
         "price": 1800,
         "availability": "In Stock",
         "rating": 4.5,
-        "image": "assets/Planner/planner1.jpg",
+        "image": [
+            "assets/Planner/planner1.jpg",
+            "assets/Planner/planner2.jpg",
+            "assets/Planner/planner3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -316,7 +440,11 @@
         "price": 195,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/Planner/planner2.jpg",
+        "image": [
+            "assets/Planner/planner2.jpg",
+            "assets/Planner/planner3.jpg",
+            "assets/Planner/planner4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -326,7 +454,11 @@
         "price": 235,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/Planner/planner3.jpg",
+        "image": [
+            "assets/Planner/planner3.jpg",
+            "assets/Planner/planner4.jpg",
+            "assets/Planner/planner5.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -336,7 +468,11 @@
         "price": 280,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/Planner/planner4.jpg",
+        "image": [
+            "assets/Planner/planner4.jpg",
+            "assets/Planner/planner5.jpg",
+            "assets/Planner/planner1.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -346,7 +482,11 @@
         "price": 1400,
         "availability": "Out of Stock",
         "rating": 4.8,
-        "image": "assets/Planner/planner5.jpg",
+        "image": [
+            "assets/Planner/planner5.jpg",
+            "assets/Planner/planner1.jpg",
+            "assets/Planner/planner2.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     },
     {
@@ -356,7 +496,11 @@
         "price": 99,
         "availability": "In Stock",
         "rating": 4.5,
-        "image": "assets/StickyNotes/stickyNotes1.jpg",
+        "image": [
+            "assets/StickyNotes/stickyNotes1.jpg",
+            "assets/StickyNotes/stickyNotes2.jpg",
+            "assets/StickyNotes/stickyNotes3.jpg"
+        ],
         "description": "A signature Sheaffer design."
     },
     {
@@ -366,7 +510,11 @@
         "price": 225,
         "availability": "In Stock",
         "rating": 4.8,
-        "image": "assets/StickyNotes/stickyNotes2.jpg",
+        "image": [
+            "assets/StickyNotes/stickyNotes2.jpg",
+            "assets/StickyNotes/stickyNotes3.jpg",
+            "assets/StickyNotes/stickyNotes4.jpg"
+        ],
         "description": "Polished chrome-plated finish with polished chrome-plated trim."
     },
     {
@@ -376,7 +524,11 @@
         "price": 450,
         "availability": "Out of Stock",
         "rating": 3.9,
-        "image": "assets/StickyNotes/stickyNotes3.jpg",
+        "image": [
+            "assets/StickyNotes/stickyNotes3.jpg",
+            "assets/StickyNotes/stickyNotes4.jpg",
+            "assets/StickyNotes/stickyNotes5.jpg"
+        ],
         "description": "Deep-etched engraved chevron pattern inspired by archival Art Deco finishes."
     },
     {
@@ -386,7 +538,11 @@
         "price": 398,
         "availability": "In Stock",
         "rating": 4.2,
-        "image": "assets/StickyNotes/stickyNotes4.jpg",
+        "image": [
+            "assets/StickyNotes/stickyNotes4.jpg",
+            "assets/StickyNotes/stickyNotes5.jpg",
+            "assets/StickyNotes/stickyNotes1.jpg"
+        ],
         "description": "Substantial cigar-shaped profile evokes Art Deco design."
     },
     {
@@ -396,7 +552,11 @@
         "price": 178,
         "availability": "Out of Stock",
         "rating": 4.8,
-        "image": "assets/StickyNotes/stickyNotes5.jpg",
+        "image": [
+            "assets/StickyNotes/stickyNotes5.jpg",
+            "assets/StickyNotes/stickyNotes1.jpg",
+            "assets/StickyNotes/stickyNotes2.jpg"
+        ],
         "description": "Smooth gel ink formula flows freely like a fountain pen. Comes in standard gift box."
     }
 ]
