@@ -1,14 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
+import { CartItem } from './models/cartItem.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductService {
+    searchProducts(searchText: string) {
+      throw new Error('Method not implemented.');
+    }
+    
     constructor(private http: HttpClient) { }
-    private cart: { product: any, quantity: number }[] = [];
+    private cart: CartItem[] = [];
+   
 
+    // Load products from the JSON file
+    loadProducts(): Observable<any> {
+      return this.getProducts().pipe(
+        catchError(error => {
+          console.error('Error loading products:', error);
+          return [];
+        })
+      );
+    }
+  
+    getFilteredProducts(searchText: string): Observable<any> {
+      return this.loadProducts().pipe(
+        map(products => products.filter((product: { category: string | string[]; }) => product.category.includes(searchText)))
+      );
+    }
+  
     getJSONData(): Observable<any> {
         return this.http.get('assets/product.json');
     }
@@ -32,7 +54,7 @@ export class ProductService {
         }
     }
 
-    getCartItems(): { product: any, quantity: number }[] {
+    getCartItems(): CartItem[] {
         return this.cart;
     }
 }

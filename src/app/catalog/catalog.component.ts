@@ -26,29 +26,45 @@ export class CatalogComponent implements OnInit {
     }
     this.route.queryParams.subscribe((params) => {
       const category = params['category'];
-      this.pageFilter(category);
+      if (category) {
+        this.pageFilter(category);
+      }
     });
   }
 
   pageFilter(category: string) {
-    if (category === 'Pen') {
+    if (
+      category.toLowerCase() === 'pen' ||
+      category.toLowerCase() === 'pencil' ||
+      category.toLowerCase() === 'highlighter'
+    ) {
       this.filteredProducts = this.products.filter(
         (product) =>
           product.category === category ||
           product.category === 'Pencil' ||
           product.category === 'Highlighter'
       );
-    } else if (category === 'Bookmark' || category === 'Eraser') {
+    } else if (
+      category.toLowerCase() === 'bookmark' ||
+      category.toLowerCase() === 'eraser'
+    ) {
       this.filteredProducts = this.products.filter(
         (product) => product.category === category
       );
-    } else if (category === 'Book') {
+    } else if (
+      category.toLowerCase() === 'book' ||
+      category.toLowerCase() === 'notebooks' ||
+      category.toLowerCase() === 'planners' ||
+      category.toLowerCase() === 'sticky notes'
+    ) {
       this.filteredProducts = this.products.filter(
         (product) =>
           product.category === 'Notebooks' ||
           product.category === 'Planners' ||
           product.category === 'Sticky Notes'
       );
+    } else if (category.length != 0) {
+      this.filteredProducts = [];
     }
   }
 
