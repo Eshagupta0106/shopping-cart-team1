@@ -1,0 +1,118 @@
+<div class="container my-6 mx-auto" *ngIf="cart.length != 0">
+  <section class="mb-12">
+    <h2 class="mb-12 text-center text-neutral-200 text-3xl font-bold">
+      Your Shopping Cart
+    </h2>
+
+    <div class="flex flex-col mx-60 bg-gray-800 shadow-xl">
+      <div class="flex-1 overflow-y-auto px-auto py-6 sm:px-6">
+        <div class="mt-8">
+          <div class="flow-root">
+            <ul
+              role="list"
+              class="-my-6 divide-y divide-gray-200"
+              *ngFor="let item of cart"
+            >
+              <li class="flex py-6">
+                <div
+                  class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+                >
+                  <img
+                    src="{{ item.product.image[0] }}"
+                    alt="{{ item.product.name }}"
+                    class="h-full w-full object-cover object-center"
+                  />
+                </div>
+
+                <div class="ml-4 flex flex-1 flex-col">
+                  <div>
+                    <div
+                      class="flex justify-between text-base font-medium text-neutral-200"
+                    >
+                      <h3>
+                        <a href="#">{{ item.product.name }}</a>
+                      </h3>
+                      <p class="ml-4">
+                        Rs. {{ item.product.price * item.quantity }}
+                      </p>
+                    </div>
+                    <p class="mt-1 text-sm text-neutral-400">
+                      {{ item.product.description }}
+                    </p>
+                  </div>
+                  <div class="flex flex-1 items-end justify-between text-sm">
+                    <button
+                      (click)="changeQuantity(item, 'decrease')"
+                      class="rounded-lg"
+                    >
+                      <span class="sr-only">Decrease quantity</span>
+                      <span class="text-xl font-semibold text-gray-700">-</span>
+                    </button>
+                    <p class="text-gray-500">
+                      <input
+                        class="text-center"
+                        type="text"
+                        placeholder="Quantity"
+                        value="{{ item.quantity }}"
+                        (change)="calculateTotal()"
+                      />
+                    </p>
+                    <button
+                      (click)="changeQuantity(item, 'increase')"
+                      class="rounded-lg"
+                    >
+                      <span class="sr-only">Increase quantity</span>
+                      <span class="text-xl font-semibold text-gray-700">+</span>
+                    </button>
+
+                    <div class="flex">
+                      <button
+                        (click)="removeItem(item)"
+                        type="button"
+                        class="font-medium text-neutral-300 hover:text-yellow-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+        <div
+          class="flex justify-between text-base font-medium text-neutral-200"
+        >
+          <p>Subtotal:</p>
+          <p>{{ calculateTotal() }}</p>
+        </div>
+        <div class="mt-6 text-center">
+          <a
+            [routerLink]="['/thankYou']"
+            class="flex text-center-center justify-center rounded-md border border-transparent bg-black px-6 py-3 mx-48 text-base font-medium text-white shadow-sm hover:bg-white hover:text-black"
+            >Checkout</a
+          >
+        </div>
+        <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+          <p>
+            or
+            <button
+              [routerLink]="['/home']"
+              type="button"
+              class="font-medium text-neutral-200 hover:text-yellow-700"
+            >
+              Continue Shopping
+              <span aria-hidden="true"> &rarr;</span>
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div *ngIf="cart.length == 0">
+  <app-empty-cart></app-empty-cart>
+</div>
