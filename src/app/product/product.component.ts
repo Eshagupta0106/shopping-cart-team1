@@ -6,20 +6,24 @@ import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
   product: any;
   quantity: number = 1;
   Math: any;
 
-  constructor(private route: ActivatedRoute, private productService: ProductService, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const productId = +params['id'];
-      this.productService.getProductById(productId).subscribe(product => {
-        this.product = product
+      this.productService.getProductById(productId).subscribe((product) => {
+        this.product = product;
       });
     });
   }
@@ -43,11 +47,11 @@ export class ProductComponent implements OnInit {
     if (this.product && this.quantity) {
       this.productService.addToCart(this.product, this.quantity);
     }
+    console.log(this.productService);
   }
 
   buyNow() {
-    this.addToCart()
+    this.addToCart();
     this.router.navigate(['/cart']);
   }
 }
-
