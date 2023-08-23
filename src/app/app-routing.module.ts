@@ -8,17 +8,19 @@ import { FilledCartComponent } from './filled-cart/filled-cart.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent}, 
-  { path: 'catalog', component: CatalogComponent }, 
+  { path: '', redirectTo: '/signIn', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'catalog', component: CatalogComponent },
   { path: 'product/:id', component: ProductComponent },
-  { path: 'emptyCart', component: EmptyCartComponent},
-  { path: 'cart', component: FilledCartComponent},
-  { path: 'signIn', component: SignUpComponent}
+  { path: 'emptyCart', component: EmptyCartComponent },
+  { path: 'cart', component: FilledCartComponent },
+  { path: 'signIn', component: SignUpComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
