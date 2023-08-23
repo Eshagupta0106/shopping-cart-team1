@@ -1,0 +1,209 @@
+<div class="m-10 min-h-full h-screen flex">
+  <div
+    class="bg-[url('https://images.squarespace-cdn.com/content/v1/59c1e9338419c24b74689f6c/1511226652226-0PA6QYL07TW5F09LIWIQ/Premium-Black-Stationary-Mockup+-+9.jpg?format=1000w')] bg-contain h-screen flex container text-center"
+  >
+    <div class="container md:mx-24 md:px-6 flex justify-center">
+      <section class="mb-32 text-center">
+        <style>
+          @media (min-width: 992px) {
+            .rotate-lg-6 {
+              transform: rotate(6deg);
+            }
+          }
+        </style>
+
+        <div class="py-12 md:px-12 text-center">
+          <div class="container mx-auto xl:px-32">
+            <div class="grid items-center lg:grid-cols-2">
+              <div class="mb-12 md:mt-12 lg:mt-0 lg:mb-0.5">
+                <div
+                  class="relative z-[1] block rounded-lg bg-gray-800 py-12 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] backdrop-blur-[25px] dark:bg-[hsla(0,0%,5%,0.55)] dark:shadow-black/20 md:px-12 lg:-mr-14"
+                >
+                  <div
+                    class="block max-w-sm rounded-lg p-6 bg-neutral-200 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+                  >
+                    <div [hidden]="showAlert">
+                      <div
+                        class="mb-3 inline-flex w-full items-center rounded-lg bg-danger-600 px-6 py-5 text-base text-neutral-200"
+                        role="alert"
+                      >
+                        <span
+                          class="mr-2 text-neutral-200"
+                          (click)="closeAlert()"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            class="h-5 w-5"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                        {{ alertMessage }}
+                      </div>
+                    </div>
+
+                    <form
+                      [hidden]="showSignIn"
+                      [formGroup]="profileForm"
+                      (ngSubmit)="onSubmit()"
+                    >
+                      <div class="relative mb-6" data-te-input-wrapper-init>
+                        <input
+                          type="email"
+                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          id="exampleInputEmail2"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter email"
+                          formControlName="email"
+                        />
+                        <label
+                          for="inputEmail2"
+                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
+                          >Email address</label
+                        >
+                      </div>
+
+                      <div class="relative mb-6" data-te-input-wrapper-init>
+                        <input
+                          type="password"
+                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          id="exampleInputPassword2"
+                          placeholder="Password"
+                          formControlName="password"
+                        />
+                        <label
+                          for="exampleInputPassword2"
+                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gra peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                          >Password</label
+                        >
+                      </div>
+
+                      <button
+                        type="button"
+                        class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-800 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-gray-00 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                        data-te-ripple-init
+                        data-te-ripple-color="light"
+                        (click)="signIn()"
+                        [disabled]="!profileForm.valid"
+                      >
+                        Sign In
+                      </button>
+                      <p
+                        class="mt-6 text-center text-neutral-800 dark:text-neutral-200"
+                      >
+                        Not a member?
+                        <a
+                          type="button"
+                          (click)="register()"
+                          class="text-gray-900 font-extrabold transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+                          >Register</a
+                        >
+                      </p>
+                    </form>
+
+                    <form
+                      [hidden]="showSignOut"
+                      [formGroup]="profileForm"
+                      (ngSubmit)="onSubmit()"
+                    >
+                      <div class="flex px-4">
+                        <div class="relative mb-6" data-te-input-wrapper-init>
+                          <input
+                            type="email"
+                            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                            id="firstName"
+                            aria-describedby="emailHelp"
+                            placeholder="Enter First Name"
+                            formControlName="firstName"
+                          />
+                          <label
+                            for="firstName"
+                            class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
+                            >First Name</label
+                          >
+                        </div>
+                        <div class="relative mb-6" data-te-input-wrapper-init>
+                          <input
+                            type="email"
+                            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                            id="lastName"
+                            aria-describedby="emailHelp"
+                            placeholder="Enter Last Name"
+                            formControlName="lastName"
+                          />
+                          <label
+                            for="lastName"
+                            class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
+                            >Last Name</label
+                          >
+                        </div>
+                      </div>
+
+                      <div class="relative mb-6" data-te-input-wrapper-init>
+                        <input
+                          type="email"
+                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          id="email"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter email"
+                          formControlName="email"
+                        />
+                        <label
+                          for="email"
+                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
+                          >Email address</label
+                        >
+                      </div>
+
+                      <div class="relative mb-6" data-te-input-wrapper-init>
+                        <input
+                          type="password"
+                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          id="password"
+                          placeholder="Password"
+                          formControlName="password"
+                        />
+                        <label
+                          for="password"
+                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gra peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                          >Password</label
+                        >
+                      </div>
+
+                      <button
+                        type="button"
+                        class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-800 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                        data-te-ripple-init
+                        data-te-ripple-color="light"
+                        (click)="signUp()"
+                        [disabled]="!profileForm.valid"
+                      >
+                        Sign Up
+                      </button>
+                      <p
+                        class="mt-6 text-center text-neutral-800 dark:text-neutral-200"
+                      >
+                        Already have an account?
+                        <a
+                          type="button"
+                          (click)="register()"
+                          class="text-gray-900 font-extrabold transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+                          >Sign In</a
+                        >
+                      </p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
