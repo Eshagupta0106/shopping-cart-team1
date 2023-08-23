@@ -1,5 +1,5 @@
 <nav class="bg-gray-800">
-  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl px-4 lg:px-8 md:px-6">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <button
@@ -41,7 +41,7 @@
         </button>
       </div>
       <div
-        class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+        class="flex flex-1 sm:flex-6 items-center justify-center sm:justify-start"
       >
         <div class="flex flex-shrink-0 items-center">
           <a
@@ -55,12 +55,12 @@
             <div class="relative inline-block text-left">
               <div>
                 <a
-                  type="button"
                   class="text-gray-300 border-collapse hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base inline-flex w-full justify-center gap-x-1.5 font-semibold shadow-sm"
                   id="menu-button"
                   aria-expanded="true"
                   aria-haspopup="true"
                   [routerLink]="['/catalog']"
+                  [queryParams]="{}"
                 >
                   Catalog
                 </a>
@@ -75,14 +75,14 @@
             type="search"
             class="flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-200 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-neutral-100 focus:text-neutral-200 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
             placeholder="Search"
-            aria-label="Search" 
+            aria-label="Search"
             aria-describedby="button-addon2"
             [(ngModel)]="searchText"
             (keyup.enter)="searchCategory()"
           />
-          
 
-          <span (click)="searchCategory()"
+          <span
+            (click)="searchCategory()"
             class="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
             id="basic-addon2"
           >
@@ -107,7 +107,7 @@
       >
         <a
           class="mr-4 text-neutral-600 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-          [routerLink]="['/emptyCart']"
+          (click)="navigateCart()"
         >
           <span class="[&>svg]:w-5">
             <svg
@@ -131,6 +131,8 @@
               id="user-menu-button"
               aria-expanded="false"
               aria-haspopup="true"
+              [title]="getUserEmail()"
+              (click)="signOut()"
             >
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only">Open user menu</span>

@@ -10,7 +10,9 @@ export class CatalogComponent implements OnInit {
   storedDta: any[] = [];
   products: any[] = [];
   filteredProducts: any[] = [];
+  filteredItems: any[] = [];
   categories: string[] = [];
+
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -25,43 +27,66 @@ export class CatalogComponent implements OnInit {
       this.categories = this.getDistinctCategories();
     }
     this.route.queryParams.subscribe((params) => {
+      const sourcePage = params['source'];
       const category = params['category'];
-      if (category) {
-        this.pageFilter(category);
+      if (sourcePage == 'search') {
+        if (category) {
+          this.searchPageFilter(category.toLowerCase());
+        }
+      } else if (sourcePage === 'home') {
+        if (category) {
+          this.pageFilter(category.toLowerCase());
+        }
       }
     });
   }
 
+  searchPageFilter(category: string) {
+    if (
+      category === 'pen' ||
+      category === 'pencil' ||
+      category === 'highlighter' ||
+      category === 'eraser' ||
+      category === 'notebooks' ||
+      category === 'planners' ||
+      category === 'sticky notes' ||
+      category === 'bookmark'
+    ) {
+      this.filteredProducts = this.products.filter(
+        (product) => product.category.toLowerCase() === category
+      );
+    } else {
+      this.filteredProducts = [];
+    }
+  }
+
   pageFilter(category: string) {
     if (
-      category.toLowerCase() === 'pen' ||
-      category.toLowerCase() === 'pencil' ||
-      category.toLowerCase() === 'highlighter'
+      category === 'pen' ||
+      category === 'pencil' ||
+      category === 'highlighter'
     ) {
       this.filteredProducts = this.products.filter(
         (product) =>
-          product.category === category ||
-          product.category === 'Pencil' ||
-          product.category === 'Highlighter'
+          product.category.toLowerCase() === category ||
+          product.category.toLowerCase() === 'pencil' ||
+          product.category.toLowerCase() === 'highlighter'
       );
-    } else if (
-      category.toLowerCase() === 'bookmark' ||
-      category.toLowerCase() === 'eraser'
-    ) {
+    } else if (category === 'bookmark' || category === 'eraser') {
       this.filteredProducts = this.products.filter(
-        (product) => product.category === category
+        (product) => product.category.toLowerCase() === category
       );
     } else if (
-      category.toLowerCase() === 'book' ||
-      category.toLowerCase() === 'notebooks' ||
-      category.toLowerCase() === 'planners' ||
-      category.toLowerCase() === 'sticky notes'
+      category === 'book' ||
+      category === 'notebooks' ||
+      category === 'planners' ||
+      category === 'sticky notes'
     ) {
       this.filteredProducts = this.products.filter(
         (product) =>
-          product.category === 'Notebooks' ||
-          product.category === 'Planners' ||
-          product.category === 'Sticky Notes'
+          product.category.toLowerCase() === 'notebooks' ||
+          product.category.toLowerCase() === 'planners' ||
+          product.category.toLowerCase() === 'sticky notes'
       );
     } else if (category.length != 0) {
       this.filteredProducts = [];
@@ -71,6 +96,7 @@ export class CatalogComponent implements OnInit {
   getDistinctCategories(): string[] {
     return [...new Set(this.storedDta.map((product) => product.category))];
   }
+
   applyFilter(filters: any) {
     this.filteredProducts = this.products.filter((product) => {
       let categoryMatches = true;
@@ -84,15 +110,9 @@ export class CatalogComponent implements OnInit {
       }
 
       if (filters.minPrice !== null && filters.maxPrice !== null) {
-        console.log(
-          `Product Price: ${product.price}, Min Price: ${filters.minPrice}, Max Price: ${filters.maxPrice}`
-        );
         priceMatches =
           product.price >= filters.minPrice &&
           product.price <= filters.maxPrice;
-
-        console.log(priceMatches);
-        console.log('price works');
       }
 
       if (filters.availability == 'All') {
@@ -108,8 +128,6 @@ export class CatalogComponent implements OnInit {
         categoryMatches && priceMatches && availabilityMatches && ratingMatches
       );
     });
-
-    console.log('Filtered Products:', this.filteredProducts);
   }
   resetFilters() {
     this.filteredProducts = this.products;

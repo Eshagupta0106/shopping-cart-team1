@@ -12,7 +12,7 @@ export class CartService {
     this.loadCart();
   }
 
-  private loadCart(): void {
+  loadCart(): void {
     const productServiceCart = this.productService.getCartItems();
     this.cart = productServiceCart;
   }

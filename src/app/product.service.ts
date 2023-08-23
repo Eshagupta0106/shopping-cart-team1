@@ -4,58 +4,61 @@ import { Observable, catchError, map } from 'rxjs';
 import { CartItem } from './models/cartItem.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-    searchProducts(searchText: string) {
-      throw new Error('Method not implemented.');
-    }
-    
-    constructor(private http: HttpClient) { }
-    private cart: CartItem[] = [];
-   
+  searchProducts(searchText: string) {
+    throw new Error('Method not implemented.');
+  }
 
-    // Load products from the JSON file
-    loadProducts(): Observable<any> {
-      return this.getProducts().pipe(
-        catchError(error => {
-          console.error('Error loading products:', error);
-          return [];
-        })
-      );
-    }
-  
-    getFilteredProducts(searchText: string): Observable<any> {
-      return this.loadProducts().pipe(
-        map(products => products.filter((product: { category: string | string[]; }) => product.category.includes(searchText)))
-      );
-    }
-  
-    getJSONData(): Observable<any> {
-        return this.http.get('assets/product.json');
-    }
+  constructor(private http: HttpClient) {}
+  private cart: CartItem[] = [];
 
-    getProducts(): Observable<any[]> {
-        return this.http.get<any[]>('assets/product.json');
-    }
+  loadProducts(): Observable<any> {
+    return this.getProducts().pipe(
+      catchError((error) => {
+        console.error('Error loading products:', error);
+        return [];
+      })
+    );
+  }
 
-    getProductById(id: number): Observable<any> {
-        return this.getProducts().pipe(
-            map(products => products.find(product => product.id === id))
-        );
-    }
+  getFilteredProducts(searchText: string): Observable<any> {
+    return this.loadProducts().pipe(
+      map((products) =>
+        products.filter((product: { category: string | string[] }) =>
+          product.category.includes(searchText)
+        )
+      )
+    );
+  }
 
-    addToCart(product: any, quantity: number): void {
-        const existingCartItem = this.cart.find(item => item.product.id === product.id);
-        if (existingCartItem) {
-            existingCartItem.quantity = quantity;
-        } else {
-            this.cart.push({ product, quantity });
-        }
-    }
+  getJSONData(): Observable<any> {
+    return this.http.get('assets/product.json');
+  }
 
-    getCartItems(): CartItem[] {
-        return this.cart;
+  getProducts(): Observable<any[]> {
+    return this.http.get<any[]>('assets/product.json');
+  }
+
+  getProductById(id: number): Observable<any> {
+    return this.getProducts().pipe(
+      map((products) => products.find((product) => product.id === id))
+    );
+  }
+
+  addToCart(product: any, quantity: number): void {
+    const existingCartItem = this.cart.find(
+      (item) => item.product.id === product.id
+    );
+    if (existingCartItem) {
+      existingCartItem.quantity = quantity;
+    } else {
+      this.cart.push({ product, quantity });
     }
+  }
+
+  getCartItems(): CartItem[] {
+    return this.cart;
+  }
 }
-

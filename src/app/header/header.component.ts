@@ -9,19 +9,63 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   searchText: string = '';
   constructor(private route: Router) {}
+  category: string = '';
 
   navigateCart() {
-    localStorage.clear;
-    if (localStorage.length != 0) {
-      this.route.navigate(['/cart']);
+    this.route.navigate(['/cart']);
+  }
+
+  extractCategory(searchText: string): string {
+    if (searchText.toLowerCase().includes('pencil')) {
+      return 'Pencil';
+    } else if (searchText.toLowerCase().includes('pen')) {
+      return 'Pen';
+    } else if (searchText.toLowerCase().includes('highlighter')) {
+      return 'Highlighter';
+    } else if (searchText.toLowerCase().includes('bookmark')) {
+      return 'Bookmark';
+    } else if (
+      searchText.toLowerCase().includes('book') ||
+      searchText.toLowerCase().includes('notebook')
+    ) {
+      return 'Notebooks';
+    } else if (searchText.toLowerCase().includes('eraser')) {
+      return 'Eraser';
+    } else if (searchText.toLowerCase().includes('sticky note')) {
+      return 'Sticky Notes';
+    } else if (searchText.toLowerCase().includes('planner')) {
+      return 'Planners';
     } else {
-      this.route.navigate(['/emptyCart']);
+      return 'Not Found';
     }
   }
+
+  navigateToCatalogWithoutQueryParams() {
+    this.route.navigate(['/catalog']);
+  }
   searchCategory() {
-    this.route.navigate(['/catalog'], {
-      queryParams: { category: this.searchText },
-    });
+    if (this.searchText.trim().length != 0) {
+      this.category = this.extractCategory(this.searchText);
+
+      this.route.navigate(['/catalog'], {
+        queryParams: { category: this.category, source: 'search' },
+      });
+    }
+
     this.searchText = '';
+  }
+
+  getUserEmail(): string | null {
+    const storedUser = localStorage.getItem('userDetails');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      return user.firstName;
+    }
+    return null;
+  }
+
+  signOut(): void {
+    localStorage.removeItem('user');
+    this.route.navigate(['/signIn']);
   }
 }
