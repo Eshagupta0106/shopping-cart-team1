@@ -15,13 +15,19 @@
             >
               <li class="flex py-6">
                 <div
-                  class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+                  class="hover:scale-105 h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
                 >
-                  <img
-                    src="{{ item.product.image[0] }}"
-                    alt="{{ item.product.name }}"
-                    class="h-full w-full object-cover object-center"
-                  />
+                  <div class="image-wrapper">
+                    <img
+                      [src]="item.product.image[0]"
+                      alt="{{ item.product.name }}"
+                      class="h-full w-full object-cover object-center"
+                      id="productImage"
+                      #productImage
+                      (mouseover)="onImageHover(item.product)"
+                      (mouseout)="onImageHoverExit(item.product)"
+                    />
+                  </div>
                 </div>
 
                 <div class="ml-4 flex flex-1 flex-col">
@@ -43,7 +49,7 @@
                   <div class="flex flex-1 items-end justify-between text-sm">
                     <button
                       (click)="changeQuantity(item, 'decrease')"
-                      class="rounded-lg"
+                      class="rounded-lg bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
                     >
                       <span class="sr-only">Decrease quantity</span>
                       <span class="text-xl font-semibold text-gray-700">-</span>
@@ -59,7 +65,7 @@
                     </p>
                     <button
                       (click)="changeQuantity(item, 'increase')"
-                      class="rounded-lg"
+                      class="rounded-lg bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
                     >
                       <span class="sr-only">Increase quantity</span>
                       <span class="text-xl font-semibold text-gray-700">+</span>
@@ -69,7 +75,7 @@
                       <button
                         (click)="removeItem(item)"
                         type="button"
-                        class="font-medium text-neutral-300 hover:text-yellow-700"
+                        class="font-medium bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
                       >
                         Remove
                       </button>
