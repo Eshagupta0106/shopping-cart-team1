@@ -14,8 +14,13 @@ export class CatalogComponent implements OnInit {
   filteredItems: any[] = [];
   categories: string[] = [];
   quantity: number = 1;
-
-  constructor(private route: ActivatedRoute, private productService: ProductService , private cartService: CartService) { }
+  hideNotification: boolean = false;
+  notifyValue: string = '';
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     const storedJsonData = localStorage.getItem('json_data');
@@ -136,8 +141,18 @@ export class CatalogComponent implements OnInit {
   }
   addToCart(product: any) {
     if (product.availability === 'In Stock') {
+      this.notifyValue = 'Item added to Cart';
       this.productService.addToCart(product, this.quantity);
       this.cartService.increaseCartValue(this.quantity);
+    } else {
+      this.notifyValue = 'Item not in Stock';
     }
+    this.hideNotification = true;
+    this.hideNotificationAfterDelay(1500);
+  }
+  hideNotificationAfterDelay(delay: number) {
+    setTimeout(() => {
+      this.hideNotification = false;
+    }, delay);
   }
 }

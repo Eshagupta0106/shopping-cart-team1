@@ -1,9 +1,9 @@
 <div class="m-10 min-h-full h-screen flex">
   <div
-    class="bg-[url('https://images.squarespace-cdn.com/content/v1/59c1e9338419c24b74689f6c/1511226652226-0PA6QYL07TW5F09LIWIQ/Premium-Black-Stationary-Mockup+-+9.jpg?format=1000w')] bg-contain h-screen flex container text-center"
+    class="bg-[url('https://images.squarespace-cdn.com/content/v1/59c1e9338419c24b74689f6c/1511226652226-0PA6QYL07TW5F09LIWIQ/Premium-Black-Stationary-Mockup+-+9.jpg?format=1000w')] h-screen flex container justify-center"
   >
     <div class="container md:mx-24 md:px-6 flex justify-center">
-      <section class="mb-32 text-center">
+      <section class="mb-32">
         <style>
           @media (min-width: 992px) {
             .rotate-lg-6 {
@@ -12,7 +12,7 @@
           }
         </style>
 
-        <div class="py-12 md:px-12 text-center">
+        <div class="py-12 md:px-12">
           <div class="container mx-auto xl:px-32">
             <div class="grid items-center lg:grid-cols-2">
               <div class="mb-12 md:mt-12 lg:mt-0 lg:mb-0.5">
@@ -24,9 +24,30 @@
                   >
                     <div [hidden]="showAlert">
                       <div
-                        class="mb-3 inline-flex w-full items-center rounded-lg bg-danger-600 px-6 py-5 text-base text-neutral-200"
+                        id="toast-warning"
+                        class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
                         role="alert"
                       >
+                        <div
+                          class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200"
+                        >
+                          <svg
+                            class="w-5 h-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"
+                            />
+                          </svg>
+                          <span class="sr-only">Warning icon</span>
+                        </div>
+                        <div class="ml-3 text-sm font-normal">
+                          {{ alertMessage }}
+                        </div>
+                        <span class="sr-only">Close</span>
                         <span
                           class="mr-2 text-neutral-200"
                           (click)="closeAlert()"
@@ -43,7 +64,6 @@
                             />
                           </svg>
                         </span>
-                        {{ alertMessage }}
                       </div>
                     </div>
 
@@ -52,37 +72,27 @@
                       [formGroup]="profileForm"
                       (ngSubmit)="onSubmit()"
                     >
-                      <div class="relative mb-6" data-te-input-wrapper-init>
+                      <div class="mb-6">
                         <input
-                          type="email"
-                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                          id="exampleInputEmail2"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           aria-describedby="emailHelp"
                           placeholder="Enter email"
                           formControlName="email"
+                          type="email"
+                          id="emailInput"
+                          required
                         />
-                        <label
-                          for="inputEmail2"
-                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
-                          >Email address</label
-                        >
                       </div>
-
-                      <div class="relative mb-6" data-te-input-wrapper-init>
+                      <div class="mb-6">
                         <input
-                          type="password"
-                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                          id="exampleInputPassword2"
                           placeholder="Password"
                           formControlName="password"
+                          type="password"
+                          id="passwordInput"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
                         />
-                        <label
-                          for="exampleInputPassword2"
-                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gra peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                          >Password</label
-                        >
                       </div>
-
                       <button
                         type="button"
                         class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-800 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-gray-00 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
@@ -111,68 +121,54 @@
                       [formGroup]="profileForm"
                       (ngSubmit)="onSubmit()"
                     >
-                      <div class="flex px-4">
-                        <div class="relative mb-6" data-te-input-wrapper-init>
+                      <div class="flex px-2">
+                        <div
+                          class="relative mb-6 mr-3 ml-0"
+                          data-te-input-wrapper-init
+                        >
                           <input
                             type="email"
-                            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             id="firstName"
                             aria-describedby="emailHelp"
-                            placeholder="Enter First Name"
+                            placeholder="First Name"
                             formControlName="firstName"
                           />
-                          <label
-                            for="firstName"
-                            class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
-                            >First Name</label
-                          >
                         </div>
-                        <div class="relative mb-6" data-te-input-wrapper-init>
+                        <div
+                          class="relative mb-6 ml-3 mr-0"
+                          data-te-input-wrapper-init
+                        >
                           <input
                             type="email"
-                            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             id="lastName"
                             aria-describedby="emailHelp"
-                            placeholder="Enter Last Name"
+                            placeholder="Last Name"
                             formControlName="lastName"
                           />
-                          <label
-                            for="lastName"
-                            class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
-                            >Last Name</label
-                          >
                         </div>
                       </div>
 
                       <div class="relative mb-6" data-te-input-wrapper-init>
                         <input
                           type="email"
-                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           id="email"
                           aria-describedby="emailHelp"
-                          placeholder="Enter email"
+                          placeholder="Email"
                           formControlName="email"
                         />
-                        <label
-                          for="email"
-                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gray-800 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-gray-800"
-                          >Email address</label
-                        >
                       </div>
 
                       <div class="relative mb-6" data-te-input-wrapper-init>
                         <input
                           type="password"
-                          class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           id="password"
                           placeholder="Password"
                           formControlName="password"
                         />
-                        <label
-                          for="password"
-                          class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-gra peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                          >Password</label
-                        >
                       </div>
 
                       <button
@@ -181,7 +177,6 @@
                         data-te-ripple-init
                         data-te-ripple-color="light"
                         (click)="signUp()"
-                        [disabled]="!profileForm.valid"
                       >
                         Sign Up
                       </button>

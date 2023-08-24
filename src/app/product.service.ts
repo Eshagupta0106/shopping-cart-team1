@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
 import { CartItem } from './models/cartItem.model';
 import { Router } from '@angular/router';
 
@@ -8,9 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ProductService {
-  searchProducts(searchText: string) {
-    throw new Error('Method not implemented.');
-  }
+  public isFilterApplied = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private route: Router) {}
   private cart: CartItem[] = [];
@@ -57,27 +55,27 @@ export class ProductService {
       (item) => item.product.id === product.id
     );
     if (existingCartItem) {
-<<<<<<< Updated upstream
       existingCartItem.quantity += quantity;
-=======
-      existingCartItem.quantity+= quantity;
->>>>>>> Stashed changes
     } else {
       this.cart.push({ product, quantity });
     }
   }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
   buyNow(product: any, quantity: number) {
-    const existingCartItem = this.cart.find(
-      (item) => item.product.id === product.id
-    );
-    if (!existingCartItem) {
+    if (!this.itemInCart(product)) {
       this.cart.push({ product, quantity });
     }
     this.route.navigate(['/cart']);
+  }
+
+  itemInCart(product: any): boolean {
+    const existingCartItem = this.cart.find(
+      (item) => item.product.id === product.id
+    );
+    if (existingCartItem) {
+      return true;
+    } else {
+      return false;
+    }
   }
   getCartItems(): CartItem[] {
     return this.cart;

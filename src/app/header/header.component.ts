@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../cart.service';
 import { Subscription } from 'rxjs';
-
+import { ProductService } from '../product.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,8 +12,14 @@ export class HeaderComponent {
   searchText: string = '';
   private cartSubscription: Subscription;
   cartValue: number = 0;
-
-  constructor(private route: Router, private cartService: CartService) {
+  showProfile: boolean = true;
+  isMenu: boolean = true;
+  hideNotification: boolean = false;
+  constructor(
+    private route: Router,
+    private cartService: CartService,
+    private productService: ProductService
+  ) {
     this.cartSubscription = this.cartService
       .getCartValue()
       .subscribe((value) => {
@@ -21,7 +27,16 @@ export class HeaderComponent {
       });
   }
   category: string = '';
-
+  showProfileDropDown() {
+    this.showProfile = !this.showProfile;
+  }
+  ngOnInit() {
+    if (this.getUserEmail == null) {
+      setTimeout(() => {
+        this.hideNotification = true;
+      }, 2000);
+    }
+  }
   ngOnDestroy() {
     this.cartSubscription.unsubscribe();
   }
@@ -71,7 +86,9 @@ export class HeaderComponent {
   }
 
   navigateToCatalogWithoutQueryParams() {
+    this.productService.isFilterApplied.next(true);
     this.route.navigate(['/catalog']);
+    this.isMenu = !this.isMenu;
   }
 
   searchCategory() {
@@ -84,6 +101,7 @@ export class HeaderComponent {
     }
 
     this.searchText = '';
+    this.isMenu = !this.isMenu;
   }
 
   getUserEmail(): string | null {
@@ -96,7 +114,22 @@ export class HeaderComponent {
   }
 
   signOut(): void {
+    this.hideNotification = true;
     localStorage.removeItem('user');
+    this.showProfile = !this.showProfile;
+    this.hideNotificationAfterDelay(1500);
     this.route.navigate(['/signIn']);
+  }
+  onNotificationClick() {
+    this.hideNotification = false;
+  }
+  hideNotificationAfterDelay(delay: number) {
+    setTimeout(() => {
+      this.hideNotification = false;
+    }, delay);
+  }
+
+  showMenu() {
+    this.isMenu = !this.isMenu;
   }
 }

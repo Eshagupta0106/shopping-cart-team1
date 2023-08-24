@@ -25,10 +25,8 @@ export class CheckoutComponent {
     this.cart = this.productService.getCartItems();
     this.calculateTotal();
     const userDetails = localStorage.getItem('userDetails');
-    console.log(userDetails);
     if (userDetails) {
       const user = JSON.parse(userDetails);
-      console.log(user);
       this.email = user.email;
       this.firstName = user.firstName;
       this.lastName = user.lastName;
@@ -53,6 +51,7 @@ export class CheckoutComponent {
   }
   onSubmit() {
     this.cartService.clearCart();
+
     this.productService.clearCart();
     this.route.navigate(['/thankYou']);
   }
