@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from '../cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +10,35 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   searchText: string = '';
-  constructor(private route: Router) {}
+  private cartSubscription: Subscription;
+  cartValue: number = 0;
+
+  constructor(private route: Router, private cartService: CartService) {
+    this.cartSubscription = this.cartService
+      .getCartValue()
+      .subscribe((value) => {
+        this.cartValue = value;
+      });
+  }
   category: string = '';
 
+  ngOnDestroy() {
+    this.cartSubscription.unsubscribe();
+  }
+
   navigateCart() {
-    this.route.navigate(['/cart']);
+    const userString = localStorage.getItem('userDetails');
+    if (userString) {
+      const userObject = JSON.parse(userString);
+      const email = userObject.email;
+      if (email.trim().length != 0) {
+        this.route.navigate(['/cart']);
+      } else {
+        this.route.navigate(['/signIn']);
+      }
+    } else {
+      this.route.navigate(['/signIn']);
+    }
   }
 
   extractCategory(searchText: string): string {
@@ -31,7 +57,11 @@ export class HeaderComponent {
       return 'Notebooks';
     } else if (searchText.toLowerCase().includes('eraser')) {
       return 'Eraser';
-    } else if (searchText.toLowerCase().includes('sticky note')) {
+    } else if (
+      searchText.toLowerCase().includes('sticky note') ||
+      searchText.toLowerCase().includes('sticky') ||
+      searchText.toLowerCase().includes('note')
+    ) {
       return 'Sticky Notes';
     } else if (searchText.toLowerCase().includes('planner')) {
       return 'Planners';
@@ -43,6 +73,7 @@ export class HeaderComponent {
   navigateToCatalogWithoutQueryParams() {
     this.route.navigate(['/catalog']);
   }
+
   searchCategory() {
     if (this.searchText.trim().length != 0) {
       this.category = this.extractCategory(this.searchText);

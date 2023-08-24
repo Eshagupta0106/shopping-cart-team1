@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from './models/cartItem.model';
 import { ProductService } from './product.service';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,20 @@ export class CartService {
 
   constructor(private productService: ProductService) {
     this.loadCart();
+  }
+  private cartValue = new BehaviorSubject<number>(0);
+
+  getCartValue(): Observable<number> {
+    return this.cartValue.asObservable();
+  }
+
+  increaseCartValue(amount: number): void {
+    this.cartValue.next(this.cartValue.value + amount);
+  }
+
+  decreaseCartValue(amount: number): void {
+    const newValue = Math.max(0, this.cartValue.value - amount);
+    this.cartValue.next(newValue);
   }
 
   loadCart(): void {
@@ -28,6 +43,7 @@ export class CartService {
     if (index !== -1) {
       this.cart.splice(index, 1);
     }
+    this.decreaseCartValue(item.quantity);
   }
 
   getTotal(items: Array<CartItem>): number {
@@ -45,9 +61,11 @@ export class CartService {
     if (index !== -1) {
       if (action === 'increase') {
         this.cart[index].quantity++;
+        this.increaseCartValue(1);
       } else if (action === 'decrease') {
         if (this.cart[index].quantity > 1) {
           this.cart[index].quantity--;
+          this.decreaseCartValue(1);
         }
       }
     }

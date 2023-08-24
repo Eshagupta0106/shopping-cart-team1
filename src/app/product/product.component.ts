@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponent } from '../app.component';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-product',
@@ -16,7 +16,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -46,12 +47,22 @@ export class ProductComponent implements OnInit {
   addToCart() {
     if (this.product && this.quantity) {
       this.productService.addToCart(this.product, this.quantity);
+      this.cartService.increaseCartValue(1);
     }
-    console.log(this.productService);
   }
 
   buyNow() {
-    this.addToCart();
-    this.router.navigate(['/cart']);
+    const userString = localStorage.getItem('userDetails');
+    if (userString) {
+      const userObject = JSON.parse(userString);
+      const email = userObject.email;
+      if (email.trim().length != 0) {
+        if (this.product && this.quantity) {
+          this.productService.buyNow(this.product, this.quantity);
+        }
+      }
+    } else {
+      this.router.navigate(['/signIn']);
+    }
   }
 }

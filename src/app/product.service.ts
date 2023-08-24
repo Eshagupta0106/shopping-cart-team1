@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map } from 'rxjs';
 import { CartItem } from './models/cartItem.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class ProductService {
     throw new Error('Method not implemented.');
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: Router) {}
   private cart: CartItem[] = [];
 
   loadProducts(): Observable<any> {
@@ -21,6 +22,10 @@ export class ProductService {
         return [];
       })
     );
+  }
+
+  clearCart(): void {
+    this.cart = [];
   }
 
   getFilteredProducts(searchText: string): Observable<any> {
@@ -52,12 +57,21 @@ export class ProductService {
       (item) => item.product.id === product.id
     );
     if (existingCartItem) {
-      existingCartItem.quantity = quantity;
+      existingCartItem.quantity += quantity;
     } else {
       this.cart.push({ product, quantity });
     }
   }
 
+  buyNow(product: any, quantity: number) {
+    const existingCartItem = this.cart.find(
+      (item) => item.product.id === product.id
+    );
+    if (!existingCartItem) {
+      this.cart.push({ product, quantity });
+    }
+    this.route.navigate(['/cart']);
+  }
   getCartItems(): CartItem[] {
     return this.cart;
   }
