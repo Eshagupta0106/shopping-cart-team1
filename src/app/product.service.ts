@@ -57,12 +57,19 @@ export class ProductService {
       (item) => item.product.id === product.id
     );
     if (existingCartItem) {
+<<<<<<< Updated upstream
       existingCartItem.quantity += quantity;
+=======
+      existingCartItem.quantity+= quantity;
+>>>>>>> Stashed changes
     } else {
       this.cart.push({ product, quantity });
     }
   }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   buyNow(product: any, quantity: number) {
     const existingCartItem = this.cart.find(
       (item) => item.product.id === product.id

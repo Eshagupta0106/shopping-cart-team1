@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { ProductService } from '../product.service';
+import { CartService } from '../cart.service';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -12,8 +13,9 @@ export class CatalogComponent implements OnInit {
   filteredProducts: any[] = [];
   filteredItems: any[] = [];
   categories: string[] = [];
+  quantity: number = 1;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private productService: ProductService , private cartService: CartService) { }
 
   ngOnInit(): void {
     const storedJsonData = localStorage.getItem('json_data');
@@ -131,5 +133,11 @@ export class CatalogComponent implements OnInit {
   }
   resetFilters() {
     this.filteredProducts = this.products;
+  }
+  addToCart(product: any) {
+    if (product.availability === 'In Stock') {
+      this.productService.addToCart(product, this.quantity);
+      this.cartService.increaseCartValue(this.quantity);
+    }
   }
 }
