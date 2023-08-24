@@ -8,7 +8,6 @@ import { FilledCartComponent } from './filled-cart/filled-cart.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { ThankyouComponent } from './thankyou/thankyou.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
