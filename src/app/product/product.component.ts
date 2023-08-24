@@ -61,6 +61,9 @@ export class ProductComponent implements OnInit {
           this.productService.buyNow(this.product, this.quantity);
         }
       }
+      else{
+        this.router.navigate(['/signIn']);
+      }
     } else {
       this.router.navigate(['/signIn']);
     }

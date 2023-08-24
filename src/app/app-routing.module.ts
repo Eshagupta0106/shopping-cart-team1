@@ -6,15 +6,19 @@ import { HomeComponent } from './home/home.component';
 import { EmptyCartComponent } from './empty-cart/empty-cart.component';
 import { FilledCartComponent } from './filled-cart/filled-cart.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { ThankyouComponent } from './thankyou/thankyou.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/signIn', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'catalog', component: CatalogComponent },
   { path: 'product/:id', component: ProductComponent },
   { path: 'emptyCart', component: EmptyCartComponent },
   { path: 'cart', component: FilledCartComponent },
   { path: 'signIn', component: SignUpComponent },
+  { path: 'thankYou', component: ThankyouComponent },
+  { path: 'checkout', component: CheckoutComponent },
 ];
 
 @NgModule({

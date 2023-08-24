@@ -17,6 +17,8 @@ import { HomeComponent } from './home/home.component';
 import { FilledCartComponent } from './filled-cart/filled-cart.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { ThankyouComponent } from './thankyou/thankyou.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,8 +33,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     FilledCartComponent,
     SignUpComponent,
+    CheckoutComponent,
+    ThankyouComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   providers: [ProductService],
   bootstrap: [AppComponent],
 })
