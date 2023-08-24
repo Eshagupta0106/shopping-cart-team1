@@ -44,10 +44,14 @@ export class ProductComponent implements OnInit {
     this.quantity = Math.max(this.quantity - 1, 1);
   }
 
+  increaseQuantity() {
+    this.quantity += 1;
+  }
+
   addToCart() {
     if (this.product && this.quantity) {
       this.productService.addToCart(this.product, this.quantity);
-      this.cartService.increaseCartValue(1);
+      this.cartService.increaseCartValue(this.quantity);
     }
   }
 
@@ -60,8 +64,7 @@ export class ProductComponent implements OnInit {
         if (this.product && this.quantity) {
           this.productService.buyNow(this.product, this.quantity);
         }
-      }
-      else{
+      } else {
         this.router.navigate(['/signIn']);
       }
     } else {
