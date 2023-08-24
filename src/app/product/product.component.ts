@@ -12,7 +12,8 @@ export class ProductComponent implements OnInit {
   product: any;
   quantity: number = 1;
   Math: any;
-
+  isItemCart: boolean = false;
+  hideNotification: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -49,19 +50,30 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart() {
+    this.hideNotification = true;
+    this.hideNotificationAfterDelay(1500);
     if (this.product && this.quantity) {
       this.productService.addToCart(this.product, this.quantity);
       this.cartService.increaseCartValue(this.quantity);
     }
   }
+  hideNotificationAfterDelay(delay: number) {
+    setTimeout(() => {
+      this.hideNotification = false;
+    }, delay);
+  }
 
   buyNow() {
-    const userString = localStorage.getItem('userDetails');
+    const userString = localStorage.getItem('user');
     if (userString) {
       const userObject = JSON.parse(userString);
       const email = userObject.email;
-      if (email.trim().length != 0) {
+      if (email.trim().length != 0 && this.product && this.quantity) {
         if (this.product && this.quantity) {
+          this.isItemCart = this.productService.itemInCart(this.product);
+          this.isItemCart
+            ? this.cartService.increaseCartValue(0)
+            : this.cartService.increaseCartValue(this.quantity);
           this.productService.buyNow(this.product, this.quantity);
         }
       } else {

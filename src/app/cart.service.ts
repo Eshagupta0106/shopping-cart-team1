@@ -12,7 +12,7 @@ export class CartService {
   constructor(private productService: ProductService) {
     this.loadCart();
   }
-  private cartValue = new BehaviorSubject<number>(0);
+  public cartValue = new BehaviorSubject<number>(0);
 
   getCartValue(): Observable<number> {
     return this.cartValue.asObservable();
@@ -34,6 +34,7 @@ export class CartService {
 
   clearCart(): void {
     this.cart = [];
+    this.cartValue.next(0);
   }
 
   removeItem(item: CartItem): void {

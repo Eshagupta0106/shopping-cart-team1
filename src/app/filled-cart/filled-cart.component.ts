@@ -11,6 +11,7 @@ import { CartItem } from '../models/cartItem.model';
 export class FilledCartComponent implements OnInit {
   cart: CartItem[] = [];
   grand_total: number = 0;
+  showNotification: boolean = false;
   @ViewChild('productImage') productImage?: ElementRef;
 
   originalImageSrc: string = '';
@@ -23,15 +24,6 @@ export class FilledCartComponent implements OnInit {
     this.cart = this.productService.getCartItems();
     this.calculateTotal();
   }
-
-  displayedColumns: Array<string> = [
-    'product',
-    'name',
-    'price',
-    'quantity',
-    'total',
-    'action',
-  ];
 
   onImageHover(product: any) {
     if (this.productImage) {
@@ -54,7 +46,17 @@ export class FilledCartComponent implements OnInit {
   }
 
   removeItem(item: CartItem): void {
+    this.showNotification = true;
     this.cartService.removeItem(item);
+    this.hideNotificationAfterDelay(1500);
+  }
+  onNotificationClick() {
+    this.showNotification = false;
+  }
+  hideNotificationAfterDelay(delay: number) {
+    setTimeout(() => {
+      this.showNotification = false;
+    }, delay);
   }
 
   calculateTotal(): number {
