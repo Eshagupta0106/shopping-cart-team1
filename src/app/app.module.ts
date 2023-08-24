@@ -16,8 +16,10 @@ import { HomeQuoteComponent } from './home-quote/home-quote.component';
 import { HomeComponent } from './home/home.component';
 import { FilledCartComponent } from './filled-cart/filled-cart.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,9 +34,17 @@ import { RouterModule } from '@angular/router';
     HomeComponent,
     FilledCartComponent,
     SignUpComponent,
-    ThankyouComponent
+    CheckoutComponent,
+    ThankyouComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    RouterModule
+  ],
   providers: [ProductService],
   bootstrap: [AppComponent],
 })
