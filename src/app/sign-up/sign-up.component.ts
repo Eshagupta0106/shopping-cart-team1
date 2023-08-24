@@ -51,12 +51,11 @@ export class SignUpComponent {
       this.user.password != this.userDetails.password
     ) {
       this.showAlert = false;
-      this.alertMessage = 'Details filled are wrong!';
+      this.alertMessage = 'Password is wrong!';
     } else {
       this.showAlert = false;
       this.alertMessage = 'Not a Registered Member!';
     }
-    console.log(localStorage);
     this.onSubmit();
   }
 

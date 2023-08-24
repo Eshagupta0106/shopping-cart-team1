@@ -131,6 +131,5 @@ export class HeaderComponent {
 
   showMenu() {
     this.isMenu = !this.isMenu;
-    console.log(this.isMenu);
   }
 }

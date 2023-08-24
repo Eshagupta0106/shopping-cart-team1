@@ -1,4 +1,4 @@
 export interface CartItem {
-    product: any,
-    quantity: number
-  }
+  product: any;
+  quantity: number;
+}

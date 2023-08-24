@@ -93,18 +93,17 @@
         </tbody>
       </table>
       <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-      
     </div>
     <div class="text-neutral-50">
-        <div class="flex">
-          <p class="my-6 mx-6">Total Item:</p>
-          <p class="my-6 mx-6">{{ getTotalQuantity() }}</p>
-        </div>
-        <div class="flex">
-          <p class="mx-6">Grand Total:</p>
-          <p class="mx-6">{{ calculateTotal() }}</p>
-        </div>
+      <div class="flex">
+        <p class="my-6 mx-6">Total Item:</p>
+        <p class="my-6 mx-6">{{ getTotalQuantity() }}</p>
       </div>
+      <div class="flex">
+        <p class="mx-6">Grand Total:</p>
+        <p class="mx-6">{{ calculateTotal() }}</p>
+      </div>
+    </div>
     <div class="text-right">
       <button
         (click)="onSubmit()"
