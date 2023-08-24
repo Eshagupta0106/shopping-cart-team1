@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponent } from '../app.component';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
   product: any;
   quantity: number = 1;
   Math: any;
-
-  constructor(private route: ActivatedRoute, private productService: ProductService, private router: Router) { }
+  isItemCart: boolean = false;
+  hideNotification: boolean = false;
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private router: Router,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const productId = +params['id'];
-      this.productService.getProductById(productId).subscribe(product => {
-        this.product = product
+      this.productService.getProductById(productId).subscribe((product) => {
+        this.product = product;
       });
     });
   }
@@ -39,15 +45,42 @@ export class ProductComponent implements OnInit {
     this.quantity = Math.max(this.quantity - 1, 1);
   }
 
+  increaseQuantity() {
+    this.quantity += 1;
+  }
+
   addToCart() {
+    this.hideNotification = true;
+    this.hideNotificationAfterDelay(1500);
     if (this.product && this.quantity) {
       this.productService.addToCart(this.product, this.quantity);
+      this.cartService.increaseCartValue(this.quantity);
     }
+  }
+  hideNotificationAfterDelay(delay: number) {
+    setTimeout(() => {
+      this.hideNotification = false;
+    }, delay);
   }
 
   buyNow() {
-    this.addToCart()
-    this.router.navigate(['/cart']);
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userObject = JSON.parse(userString);
+      const email = userObject.email;
+      if (email.trim().length != 0 && this.product && this.quantity) {
+        if (this.product && this.quantity) {
+          this.isItemCart = this.productService.itemInCart(this.product);
+          this.isItemCart
+            ? this.cartService.increaseCartValue(0)
+            : this.cartService.increaseCartValue(this.quantity);
+          this.productService.buyNow(this.product, this.quantity);
+        }
+      } else {
+        this.router.navigate(['/signIn']);
+      }
+    } else {
+      this.router.navigate(['/signIn']);
+    }
   }
 }
-

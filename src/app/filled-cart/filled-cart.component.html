@@ -1,0 +1,146 @@
+<div class="container my-6 mx-auto" *ngIf="cart.length != 0">
+  <section class="mb-12">
+    <h2 class="mb-12 text-center text-neutral-200 text-3xl font-bold">
+      Your Shopping Cart
+    </h2>
+
+    <div class="flex flex-col mx-60 bg-gray-800 shadow-xl">
+      <div class="flex-1 overflow-y-auto px-auto py-6 sm:px-6">
+        <div class="mt-8">
+          <div class="flow-root">
+            <ul
+              role="list"
+              class="-my-6 divide-y divide-gray-200"
+              *ngFor="let item of cart"
+            >
+              <li class="flex py-6">
+                <div
+                  class="hover:scale-105 h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+                >
+                  <div class="image-wrapper">
+                    <img
+                      [src]="item.product.image[0]"
+                      alt="{{ item.product.name }}"
+                      class="h-full w-full object-cover object-center"
+                      id="productImage"
+                      #productImage
+                      (mouseover)="onImageHover(item.product)"
+                      (mouseout)="onImageHoverExit(item.product)"
+                    />
+                  </div>
+                </div>
+
+                <div class="ml-4 flex flex-1 flex-col">
+                  <div>
+                    <div
+                      class="flex justify-between text-base font-medium text-neutral-200"
+                    >
+                      <h3>
+                        <a href="#">{{ item.product.name }}</a>
+                      </h3>
+                      <p class="ml-4">
+                        Rs. {{ item.product.price * item.quantity }}
+                      </p>
+                    </div>
+                    <p class="mt-1 text-sm text-neutral-400">
+                      {{ item.product.description }}
+                    </p>
+                  </div>
+                  <div class="flex flex-1 items-end justify-between text-sm">
+                    <button
+                      (click)="changeQuantity(item, 'decrease')"
+                      class="rounded-lg bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
+                    >
+                      <span class="sr-only">Decrease quantity</span>
+                      <span class="text-xl font-semibold text-gray-700">-</span>
+                    </button>
+                    <p class="text-gray-500">
+                      <input
+                        class="text-center"
+                        type="text"
+                        placeholder="Quantity"
+                        value="{{ item.quantity }}"
+                        (change)="calculateTotal()"
+                      />
+                    </p>
+                    <button
+                      (click)="changeQuantity(item, 'increase')"
+                      class="rounded-lg bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
+                    >
+                      <span class="sr-only">Increase quantity</span>
+                      <span class="text-xl font-semibold text-gray-700">+</span>
+                    </button>
+
+                    <div class="flex">
+                      <button
+                        (click)="removeItem(item)"
+                        type="button"
+                        class="font-medium bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+        <div
+          class="flex justify-between text-base font-medium text-neutral-200"
+        >
+          <p>Subtotal:</p>
+          <p>{{ calculateTotal() }}</p>
+        </div>
+        <div class="mt-6 text-center">
+          <a
+            [routerLink]="['/checkout']"
+            class="flex text-center-center justify-center rounded-md border border-transparent bg-black px-6 py-3 mx-48 text-base font-medium text-white shadow-sm hover:bg-white hover:text-black"
+            >Checkout</a
+          >
+        </div>
+        <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+          <p>
+            or
+            <button
+              [routerLink]="['/home']"
+              type="button"
+              class="font-medium text-neutral-200 hover:text-yellow-700"
+            >
+              Continue Shopping
+              <span aria-hidden="true"> &rarr;</span>
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div *ngIf="cart.length == 0">
+  <app-empty-cart></app-empty-cart>
+</div>
+
+<div
+  [ngClass]="{ hidden: !showNotification }"
+  class="fixed flex items-center w-full max-w-xs p-4 space space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800"
+>
+  <div
+    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200"
+  >
+    <svg
+      class="w-5 h-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"
+      />
+    </svg>
+    <span class="sr-only">Error icon</span>
+  </div>
+  <div class="ml-3 text-sm font-normal">Item has been removed!</div>
+</div>

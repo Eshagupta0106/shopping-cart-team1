@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { ProductService } from '../product.service';
+import { CartService } from '../cart.service';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -10,8 +11,16 @@ export class CatalogComponent implements OnInit {
   storedDta: any[] = [];
   products: any[] = [];
   filteredProducts: any[] = [];
+  filteredItems: any[] = [];
   categories: string[] = [];
-  constructor(private route: ActivatedRoute) {}
+  quantity: number = 1;
+  hideNotification: boolean = false;
+  notifyValue: string = '';
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     const storedJsonData = localStorage.getItem('json_data');
@@ -25,36 +34,76 @@ export class CatalogComponent implements OnInit {
       this.categories = this.getDistinctCategories();
     }
     this.route.queryParams.subscribe((params) => {
+      const sourcePage = params['source'];
       const category = params['category'];
-      this.pageFilter(category);
+      if (sourcePage == 'search') {
+        if (category) {
+          this.searchPageFilter(category.toLowerCase());
+        }
+      } else if (sourcePage === 'home') {
+        if (category) {
+          this.pageFilter(category.toLowerCase());
+        }
+      }
     });
   }
 
+  searchPageFilter(category: string) {
+    if (
+      category === 'pen' ||
+      category === 'pencil' ||
+      category === 'highlighter' ||
+      category === 'eraser' ||
+      category === 'notebooks' ||
+      category === 'planners' ||
+      category === 'sticky notes' ||
+      category === 'bookmark'
+    ) {
+      this.filteredProducts = this.products.filter(
+        (product) => product.category.toLowerCase() === category
+      );
+    } else {
+      this.filteredProducts = [];
+    }
+  }
+
   pageFilter(category: string) {
-    if (category === 'Pen') {
+    if (
+      category === 'pen' ||
+      category === 'pencil' ||
+      category === 'highlighter'
+    ) {
       this.filteredProducts = this.products.filter(
         (product) =>
-          product.category === category ||
-          product.category === 'Pencil' ||
-          product.category === 'Highlighter'
+          product.category.toLowerCase() === category ||
+          product.category.toLowerCase() === 'pencil' ||
+          product.category.toLowerCase() === 'highlighter'
       );
-    } else if (category === 'Bookmark' || category === 'Eraser') {
+    } else if (category === 'bookmark' || category === 'eraser') {
       this.filteredProducts = this.products.filter(
-        (product) => product.category === category
+        (product) => product.category.toLowerCase() === category
       );
-    } else if (category === 'Book') {
+    } else if (
+      category === 'book' ||
+      category === 'notebooks' ||
+      category === 'planners' ||
+      category === 'sticky notes'
+    ) {
       this.filteredProducts = this.products.filter(
         (product) =>
-          product.category === 'Notebooks' ||
-          product.category === 'Planners' ||
-          product.category === 'Sticky Notes'
+          product.category.toLowerCase() === 'notebooks' ||
+          product.category.toLowerCase() === 'planners' ||
+          product.category.toLowerCase() === 'sticky notes'
       );
+    } else if (category.length != 0) {
+      this.filteredProducts = [];
     }
   }
 
   getDistinctCategories(): string[] {
     return [...new Set(this.storedDta.map((product) => product.category))];
   }
+
   applyFilter(filters: any) {
     this.filteredProducts = this.products.filter((product) => {
       let categoryMatches = true;
@@ -68,15 +117,9 @@ export class CatalogComponent implements OnInit {
       }
 
       if (filters.minPrice !== null && filters.maxPrice !== null) {
-        console.log(
-          `Product Price: ${product.price}, Min Price: ${filters.minPrice}, Max Price: ${filters.maxPrice}`
-        );
         priceMatches =
           product.price >= filters.minPrice &&
           product.price <= filters.maxPrice;
-
-        console.log(priceMatches);
-        console.log('price works');
       }
 
       if (filters.availability == 'All') {
@@ -92,10 +135,24 @@ export class CatalogComponent implements OnInit {
         categoryMatches && priceMatches && availabilityMatches && ratingMatches
       );
     });
-
-    console.log('Filtered Products:', this.filteredProducts);
   }
   resetFilters() {
     this.filteredProducts = this.products;
+  }
+  addToCart(product: any) {
+    if (product.availability === 'In Stock') {
+      this.notifyValue = 'Item added to Cart';
+      this.productService.addToCart(product, this.quantity);
+      this.cartService.increaseCartValue(this.quantity);
+    } else {
+      this.notifyValue = 'Item not in Stock';
+    }
+    this.hideNotification = true;
+    this.hideNotificationAfterDelay(1500);
+  }
+  hideNotificationAfterDelay(delay: number) {
+    setTimeout(() => {
+      this.hideNotification = false;
+    }, delay);
   }
 }

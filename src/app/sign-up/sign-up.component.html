@@ -1,0 +1,204 @@
+<div class="m-10 min-h-full h-screen flex">
+  <div
+    class="bg-[url('https://images.squarespace-cdn.com/content/v1/59c1e9338419c24b74689f6c/1511226652226-0PA6QYL07TW5F09LIWIQ/Premium-Black-Stationary-Mockup+-+9.jpg?format=1000w')] h-screen flex container justify-center"
+  >
+    <div class="container md:mx-24 md:px-6 flex justify-center">
+      <section class="mb-32">
+        <style>
+          @media (min-width: 992px) {
+            .rotate-lg-6 {
+              transform: rotate(6deg);
+            }
+          }
+        </style>
+
+        <div class="py-12 md:px-12">
+          <div class="container mx-auto xl:px-32">
+            <div class="grid items-center lg:grid-cols-2">
+              <div class="mb-12 md:mt-12 lg:mt-0 lg:mb-0.5">
+                <div
+                  class="relative z-[1] block rounded-lg bg-gray-800 py-12 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] backdrop-blur-[25px] dark:bg-[hsla(0,0%,5%,0.55)] dark:shadow-black/20 md:px-12 lg:-mr-14"
+                >
+                  <div
+                    class="block max-w-sm rounded-lg p-6 bg-neutral-200 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+                  >
+                    <div [hidden]="showAlert">
+                      <div
+                        id="toast-warning"
+                        class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+                        role="alert"
+                      >
+                        <div
+                          class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200"
+                        >
+                          <svg
+                            class="w-5 h-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"
+                            />
+                          </svg>
+                          <span class="sr-only">Warning icon</span>
+                        </div>
+                        <div class="ml-3 text-sm font-normal">
+                          {{ alertMessage }}
+                        </div>
+                        <span class="sr-only">Close</span>
+                        <span
+                          class="mr-2 text-neutral-200"
+                          (click)="closeAlert()"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            class="h-5 w-5"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+
+                    <form
+                      [hidden]="showSignIn"
+                      [formGroup]="profileForm"
+                      (ngSubmit)="onSubmit()"
+                    >
+                      <div class="mb-6">
+                        <input
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter email"
+                          formControlName="email"
+                          type="email"
+                          id="emailInput"
+                          required
+                        />
+                      </div>
+                      <div class="mb-6">
+                        <input
+                          placeholder="Password"
+                          formControlName="password"
+                          type="password"
+                          id="passwordInput"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-800 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-gray-00 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                        data-te-ripple-init
+                        data-te-ripple-color="light"
+                        (click)="signIn()"
+                        [disabled]="!profileForm.valid"
+                      >
+                        Sign In
+                      </button>
+                      <p
+                        class="mt-6 text-center text-neutral-800 dark:text-neutral-200"
+                      >
+                        Not a member?
+                        <a
+                          type="button"
+                          (click)="register()"
+                          class="text-gray-900 font-extrabold transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+                          >Register</a
+                        >
+                      </p>
+                    </form>
+
+                    <form
+                      [hidden]="showSignOut"
+                      [formGroup]="profileForm"
+                      (ngSubmit)="onSubmit()"
+                    >
+                      <div class="flex px-2">
+                        <div
+                          class="relative mb-6 mr-3 ml-0"
+                          data-te-input-wrapper-init
+                        >
+                          <input
+                            type="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            id="firstName"
+                            aria-describedby="emailHelp"
+                            placeholder="First Name"
+                            formControlName="firstName"
+                          />
+                        </div>
+                        <div
+                          class="relative mb-6 ml-3 mr-0"
+                          data-te-input-wrapper-init
+                        >
+                          <input
+                            type="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            id="lastName"
+                            aria-describedby="emailHelp"
+                            placeholder="Last Name"
+                            formControlName="lastName"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="relative mb-6" data-te-input-wrapper-init>
+                        <input
+                          type="email"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          id="email"
+                          aria-describedby="emailHelp"
+                          placeholder="Email"
+                          formControlName="email"
+                        />
+                      </div>
+
+                      <div class="relative mb-6" data-te-input-wrapper-init>
+                        <input
+                          type="password"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          id="password"
+                          placeholder="Password"
+                          formControlName="password"
+                        />
+                      </div>
+
+                      <button
+                        type="button"
+                        class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-800 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                        data-te-ripple-init
+                        data-te-ripple-color="light"
+                        (click)="signUp()"
+                      >
+                        Sign Up
+                      </button>
+                      <p
+                        class="mt-6 text-center text-neutral-800 dark:text-neutral-200"
+                      >
+                        Already have an account?
+                        <a
+                          type="button"
+                          (click)="register()"
+                          class="text-gray-900 font-extrabold transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+                          >Sign In</a
+                        >
+                      </p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
