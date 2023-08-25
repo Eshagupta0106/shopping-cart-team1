@@ -9,10 +9,11 @@ import { Router } from '@angular/router';
 })
 export class ProductService {
   public isFilterApplied = new BehaviorSubject<boolean>(false);
+  public filters = new BehaviorSubject<any>({});
+  public appliedFilters: any = {};
 
-  constructor(private http: HttpClient, private route: Router) {}
+  constructor(private http: HttpClient, private route: Router) { }
   private cart: CartItem[] = [];
-
   loadProducts(): Observable<any> {
     return this.getProducts().pipe(
       catchError((error) => {
@@ -21,11 +22,18 @@ export class ProductService {
       })
     );
   }
-
+  setAppliedFilters(filters: any): void {
+    this.appliedFilters = filters;
+  }
+  getAppliedFilters(): any {
+    return this.appliedFilters;
+  }
+  clearAppliedFilters(): void {
+    this.appliedFilters = {};
+  }
   clearCart(): void {
     this.cart = [];
   }
-
   getFilteredProducts(searchText: string): Observable<any> {
     return this.loadProducts().pipe(
       map((products) =>
@@ -35,21 +43,17 @@ export class ProductService {
       )
     );
   }
-
   getJSONData(): Observable<any> {
     return this.http.get('assets/product.json');
   }
-
   getProducts(): Observable<any[]> {
     return this.http.get<any[]>('assets/product.json');
   }
-
   getProductById(id: number): Observable<any> {
     return this.getProducts().pipe(
       map((products) => products.find((product) => product.id === id))
     );
   }
-
   addToCart(product: any, quantity: number): void {
     const existingCartItem = this.cart.find(
       (item) => item.product.id === product.id
@@ -66,7 +70,6 @@ export class ProductService {
     }
     this.route.navigate(['/cart']);
   }
-
   itemInCart(product: any): boolean {
     const existingCartItem = this.cart.find(
       (item) => item.product.id === product.id
