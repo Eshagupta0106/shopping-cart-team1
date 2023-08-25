@@ -14,6 +14,7 @@ export class ProductComponent implements OnInit {
   Math: any;
   isItemCart: boolean = false;
   hideNotification: boolean = false;
+  filterR: any = {};
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -27,6 +28,21 @@ export class ProductComponent implements OnInit {
       this.productService.getProductById(productId).subscribe((product) => {
         this.product = product;
       });
+    });
+    this.route.queryParams.subscribe(queryParams => {
+      this.filterR = queryParams;
+      if (this.filterR.filters) {
+        this.productService.setAppliedFilters(JSON.parse(this.filterR.filters));
+      }
+    });
+  }
+  navigateCategory() {
+    this.productService.filters.next(this.filterR);
+    this.router.navigate(['/catalog'], {
+      queryParams: {
+        id: this.filterR.id, 
+        filters: JSON.stringify(this.filterR.filters)
+      }
     });
   }
 
