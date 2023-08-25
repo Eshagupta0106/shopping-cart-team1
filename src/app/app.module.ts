@@ -43,9 +43,9 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

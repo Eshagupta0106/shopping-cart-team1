@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { CartService } from '../cart.service';
 @Component({
@@ -19,7 +19,8 @@ export class CatalogComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -138,6 +139,9 @@ export class CatalogComponent implements OnInit {
   }
   resetFilters() {
     this.filteredProducts = this.products;
+  }
+  goToHome() {
+    this.router.navigate(['/home']);
   }
   addToCart(product: any) {
     if (product.availability === 'In Stock') {

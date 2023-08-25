@@ -1,126 +1,179 @@
-<div class="container my-6 mx-auto" *ngIf="cart.length != 0">
-  <section class="mb-12">
-    <h2 class="mb-12 text-center text-neutral-200 text-3xl font-bold">
-      Your Shopping Cart
-    </h2>
-
-    <div class="flex flex-col mx-60 bg-gray-800 shadow-xl">
-      <div class="flex-1 overflow-y-auto px-auto py-6 sm:px-6">
-        <div class="mt-8">
-          <div class="flow-root">
-            <ul
-              role="list"
-              class="-my-6 divide-y divide-gray-200"
-              *ngFor="let item of cart"
+<div
+  class="w-full h-full bg-black top-0 overflow-y-auto overflow-x-hidden fixed sticky-0"
+  id="chec-div"
+  *ngIf="cart.length != 0"
+>
+  <div
+    class="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700"
+    id="checkout"
+  >
+    <div class="flex items-end lg:flex-row flex-col justify-end" id="cart">
+      <div
+        class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white overflow-y-auto overflow-x-hidden lg:h-screen h-auto"
+        id="scroll"
+      >
+        <div
+          class="flex items-center text-gray-500 hover:text-gray-600 cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-chevron-left"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <polyline points="15 6 9 12 15 18" />
+          </svg>
+          <p (click)="goBack()" class="text-sm pl-2 leading-none">Back</p>
+        </div>
+        <p
+          class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3"
+        >
+          Bag
+        </p>
+        <div
+          class="md:flex items-strech py-8 md:py-10 lg:py-8 border-t border-gray-50"
+          *ngFor="let item of cart"
+        >
+          <div class="md:w-4/12 2xl:w-1/4 w-full">
+            <img
+              [src]="item.product.image[0]"
+              alt="{{ item.product.name }}"
+              class="h-full w-full object-cover object-center"
+              id="productImage"
+            />
+          </div>
+          <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
+            <p
+              class="leading-3 text-gray-800 md:pt-0 pt-4 font-extrabold text-sm"
             >
-              <li class="flex py-6">
-                <div
-                  class="hover:scale-105 h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+              {{ item.product.name }}
+            </p>
+            <div class="flex items-center justify-between w-full pt-1">
+              <!-- <div class="flex flex-1 items-end justify-between text-sm"> -->
+              <button
+                (click)="changeQuantity(item, 'decrease')"
+                class="rounded-lg text-gray-700 hover:text-black"
+              >
+                <span class="sr-only">Decrease quantity</span>
+                <span class="text-xl font-semibold text-gray-700">-</span>
+              </button>
+
+              <input
+                class="text-center border-none w-10"
+                type="text"
+                placeholder="Quantity"
+                value="{{ item.quantity }}"
+                (change)="calculateTotal()"
+              />
+
+              <button
+                (click)="changeQuantity(item, 'increase')"
+                class="rounded-lg text-gray-700 hover:text-black"
+              >
+                <span class="sr-only">Increase quantity</span>
+                <span class="text-xl font-semibold text-gray-700">+</span>
+              </button>
+              <!-- </div> -->
+            </div>
+
+            <p class="text-xs leading-3 text-gray-600 pt-2"></p>
+            <p class="text-xs leading-3 text-gray-600 py-4 font-bold">
+              Price: Rs.{{ item.product.price }}
+            </p>
+            <p class="w-96 text-xs leading-3 text-gray-600">
+              {{ item.product.description }}
+            </p>
+            <div class="flex items-center justify-between pt-5">
+              <div class="flex itemms-center">
+                <p
+                  (click)="removeItem(item)"
+                  class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer"
                 >
-                  <div class="image-wrapper">
-                    <img
-                      [src]="item.product.image[0]"
-                      alt="{{ item.product.name }}"
-                      class="h-full w-full object-cover object-center"
-                      id="productImage"
-                      #productImage
-                      (mouseover)="onImageHover(item.product)"
-                      (mouseout)="onImageHoverExit(item.product)"
-                    />
-                  </div>
-                </div>
-
-                <div class="ml-4 flex flex-1 flex-col">
-                  <div>
-                    <div
-                      class="flex justify-between text-base font-medium text-neutral-200"
-                    >
-                      <h3>
-                        <a href="#">{{ item.product.name }}</a>
-                      </h3>
-                      <p class="ml-4">
-                        Rs. {{ item.product.price * item.quantity }}
-                      </p>
-                    </div>
-                    <p class="mt-1 text-sm text-neutral-400">
-                      {{ item.product.description }}
-                    </p>
-                  </div>
-                  <div class="flex flex-1 items-end justify-between text-sm">
-                    <button
-                      (click)="changeQuantity(item, 'decrease')"
-                      class="rounded-lg bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
-                    >
-                      <span class="sr-only">Decrease quantity</span>
-                      <span class="text-xl font-semibold text-gray-700">-</span>
-                    </button>
-                    <p class="text-gray-500">
-                      <input
-                        class="text-center"
-                        type="text"
-                        placeholder="Quantity"
-                        value="{{ item.quantity }}"
-                        (change)="calculateTotal()"
-                      />
-                    </p>
-                    <button
-                      (click)="changeQuantity(item, 'increase')"
-                      class="rounded-lg bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
-                    >
-                      <span class="sr-only">Increase quantity</span>
-                      <span class="text-xl font-semibold text-gray-700">+</span>
-                    </button>
-
-                    <div class="flex">
-                      <button
-                        (click)="removeItem(item)"
-                        type="button"
-                        class="font-medium bg-neutral-200 text-gray-700 hover:text-black hover:bg-white"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
+                  Remove
+                </p>
+              </div>
+              <p class="text-base font-black leading-none text-gray-800">
+                Rs. {{ item.product.price * item.quantity }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+      <div class="lg:w-96 md:w-8/12 w-full bg-gray-100 h-full">
         <div
-          class="flex justify-between text-base font-medium text-neutral-200"
+          class="flex flex-col lg:h-screen h-auto lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 justify-between overflow-y-auto"
         >
-          <p>Subtotal:</p>
-          <p>{{ calculateTotal() }}</p>
-        </div>
-        <div class="mt-6 text-center">
-          <a
-            [routerLink]="['/checkout']"
-            class="flex text-center-center justify-center rounded-md border border-transparent bg-black px-6 py-3 mx-48 text-base font-medium text-white shadow-sm hover:bg-white hover:text-black"
-            >Checkout</a
-          >
-        </div>
-        <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-          <p>
-            or
+          <div>
+            <p class="lg:text-4xl text-3xl font-black leading-9 text-gray-800">
+              Summary
+            </p>
+            <div class="flex items-center justify-between pt-16">
+              <p class="text-base leading-none text-gray-800">Subtotal</p>
+              <p class="text-base leading-none text-gray-800">
+                Rs. {{ calculateTotal() }}
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-5">
+              <p class="text-base leading-none text-gray-800">Shipping</p>
+              <p class="text-base leading-none text-gray-800">Rs.30</p>
+            </div>
+            <div class="flex items-center justify-between pt-5">
+              <p class="text-base leading-none text-gray-800">Tax</p>
+              <p class="text-base leading-none text-gray-800">Rs. 20</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center pb-6 justify-between lg:pt-5 pt-20">
+              <p class="text-2xl leading-normal text-gray-800">Total</p>
+              <p
+                class="text-2xl font-bold leading-normal text-right text-gray-800"
+              >
+                {{ calculateTotal() + 30 + 20 }}
+              </p>
+            </div>
             <button
               [routerLink]="['/home']"
               type="button"
-              class="font-medium text-neutral-200 hover:text-yellow-700"
+              class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
             >
               Continue Shopping
               <span aria-hidden="true"> &rarr;</span>
             </button>
-          </p>
+            <button
+              [routerLink]="['/checkout']"
+              type="button"
+              class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
+            >
+              Checkout
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-</div>
-<div *ngIf="cart.length == 0">
-  <app-empty-cart></app-empty-cart>
+  </div>
+  <style>
+    /* width */
+    #scroll::-webkit-scrollbar {
+      width: 1px;
+    }
+
+    /* Track */
+    #scroll::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    #scroll::-webkit-scrollbar-thumb {
+      background: rgb(133, 132, 132);
+    }
+  </style>
 </div>
 
 <div
@@ -143,4 +196,7 @@
     <span class="sr-only">Error icon</span>
   </div>
   <div class="ml-3 text-sm font-normal">Item has been removed!</div>
+</div>
+<div *ngIf="cart.length == 0">
+  <app-empty-cart></app-empty-cart>
 </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ProductService } from '../product.service';
 import { CartService } from '../cart.service';
 import { CartItem } from '../models/cartItem.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-filled-cart',
@@ -12,29 +13,19 @@ export class FilledCartComponent implements OnInit {
   cart: CartItem[] = [];
   grand_total: number = 0;
   showNotification: boolean = false;
-  @ViewChild('productImage') productImage?: ElementRef;
 
-  originalImageSrc: string = '';
   constructor(
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     this.cart = this.productService.getCartItems();
     this.calculateTotal();
   }
-
-  onImageHover(product: any) {
-    if (this.productImage) {
-      this.productImage.nativeElement.src = product.image[1];
-    }
-  }
-
-  onImageHoverExit(product: any) {
-    if (this.productImage) {
-      this.productImage.nativeElement.src = product.image[0];
-    }
+  goBack() {
+    this.location.back();
   }
 
   getTotal(items: Array<CartItem>): number {

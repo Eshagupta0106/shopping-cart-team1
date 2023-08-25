@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-  private cart: CartItem[] = [];
+  cart: CartItem[] = [];
 
   constructor(private productService: ProductService) {
     this.loadCart();

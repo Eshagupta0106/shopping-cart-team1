@@ -22,7 +22,8 @@ export class CheckoutComponent {
     private route: Router
   ) {}
   ngOnInit() {
-    this.cart = this.productService.getCartItems();
+    this.cartService.loadCart();
+    this.cart = this.cartService.cart;
     this.calculateTotal();
     const userDetails = localStorage.getItem('userDetails');
     if (userDetails) {
