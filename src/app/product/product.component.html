@@ -1,23 +1,15 @@
-<div
-  *ngIf="product"
-  class="full-page-bg min-h-screen flex items-center justify-center p-6"
->
+<div *ngIf="product" class="full-page-bg min-h-screen flex items-center justify-center p-6">
   <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg relative">
-    <a
-      [routerLink]="['/catalog']"
-      class="absolute right-2 top-2 sm:right-2 sm:top-4 md:right-6 md:top-6 lg:right-8 lg:top-8 p-4 text-red-600 transition"
-    >
+    <a (click)="navigateCategory()"
+      class="absolute right-2 top-2 sm:right-2 sm:top-4 md:right-6 md:top-6 lg:right-8 lg:top-8 p-4 text-red-600 transition">
       <i class="fas fa-times text-xl"></i>
     </a>
     <div class="flex flex-col md:flex-row">
       <div class="w-full md:w-1/2 md:relative md:p-4">
         <div class="flex flex-wrap">
           <div *ngFor="let image of product.image" class="w-full md:w-1/2 p-2">
-            <img
-              [src]="image"
-              alt="{{ product.name }}"
-              class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition duration-500 cursor-pointer object-cover"
-            />
+            <img [src]="image" alt="{{ product.name }}"
+              class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition duration-500 cursor-pointer object-cover" />
           </div>
         </div>
       </div>
@@ -33,66 +25,39 @@
           <div class="mt-4">
             <p class="text-gray-600">
               <span class="font-bold">Availability: </span>
-              <span
-                *ngIf="product.availability === 'Out of Stock'"
-                class="text-red-500 font-extrabold"
-                >{{ product.availability }}</span
-              >
-              <span
-                *ngIf="product.availability === 'In Stock'"
-                class="text-gray-700 font-semibold"
-                >{{ product.availability }}</span
-              >
+              <span *ngIf="product.availability === 'Out of Stock'" class="text-red-500 font-extrabold">{{
+                product.availability }}</span>
+              <span *ngIf="product.availability === 'In Stock'" class="text-gray-700 font-semibold">{{
+                product.availability }}</span>
             </p>
             <div class="mt-2">
-              <span
-                class="text-yellow-500 text-lg md:text-xl star-rating"
-                [innerHTML]="generateStars(product.rating)"
-              ></span>
+              <span class="text-yellow-500 text-lg md:text-xl star-rating"
+                [innerHTML]="generateStars(product.rating)"></span>
             </div>
-            <div
-              class="mt-4 flex items-center"
-              *ngIf="product.availability === 'In Stock'"
-            >
-              <button
-                (click)="decreaseQuantity()"
-                class="bg-gray-100 rounded-lg p-2"
-              >
+            <div class="mt-4 flex items-center" *ngIf="product.availability === 'In Stock'">
+              <button (click)="decreaseQuantity()" class="bg-gray-100 rounded-lg p-2">
                 <span class="sr-only">Decrease quantity</span>
                 <span class="text-xl font-semibold text-gray-700">-</span>
               </button>
-              <input
-                type="text"
-                [(ngModel)]="quantity"
-                class="w-16 text-center text-lg md:text-xl font-semibold text-gray-700 border-none"
-              />
-              <button
-                (click)="quantity = quantity + 1"
-                class="bg-gray-100 rounded-lg p-2"
-              >
+              <input type="text" [(ngModel)]="quantity"
+                class="w-16 text-center text-lg md:text-xl font-semibold text-gray-700 border-none" />
+              <button (click)="quantity = quantity + 1" class="bg-gray-100 rounded-lg p-2">
                 <span class="sr-only">Increase quantity</span>
                 <span class="text-xl font-semibold text-gray-700">+</span>
               </button>
             </div>
             <div class="mt-6">
-              <button
-                (click)="addToCart()"
+              <button (click)="addToCart()"
                 class="addtocart w-full bg-black text-white rounded-lg py-2 px-4 text-lg md:text-xl mb-2 font-semibold"
-                *ngIf="product.availability === 'In Stock'"
-              >
+                *ngIf="product.availability === 'In Stock'">
                 Add to Cart
               </button>
-              <button
-                (click)="buyNow()"
+              <button (click)="buyNow()"
                 class="buynow w-full bg-black text-white rounded-lg py-2 px-4 text-lg md:text-xl mb-2 font-semibold"
-                *ngIf="product.availability === 'In Stock'"
-              >
+                *ngIf="product.availability === 'In Stock'">
                 Buy Now
               </button>
-              <p
-                *ngIf="product.availability === 'Out of Stock'"
-                class="text-red-500 text-bold font-extrabold mt-4"
-              >
+              <p *ngIf="product.availability === 'Out of Stock'" class="text-red-500 text-bold font-extrabold mt-4">
                 This product is out of stock and cannot be purchased.
               </p>
             </div>
@@ -102,22 +67,13 @@
     </div>
   </div>
 </div>
-<div
-  [ngClass]="{ hidden: !hideNotification }"
-  class="fixed flex items-center w-full max-w-xs p-4 space space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800"
->
+<div [ngClass]="{ hidden: !hideNotification }"
+  class="fixed flex items-center w-full max-w-xs p-4 space space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800">
   <div
-    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200"
-  >
-    <svg
-      class="w-5 h-5"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-    >
+    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
       <path
-        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
-      />
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
     </svg>
     <span class="sr-only">Check icon</span>
   </div>
