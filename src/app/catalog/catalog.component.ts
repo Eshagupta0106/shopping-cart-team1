@@ -15,7 +15,9 @@ export class CatalogComponent implements OnInit {
   categories: string[] = [];
   quantity: number = 1;
   hideNotification: boolean = false;
+  filterParams: any = {};
   notifyValue: string = '';
+  isSideBar: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -33,6 +35,10 @@ export class CatalogComponent implements OnInit {
       this.products = this.storedDta;
       this.filteredProducts = this.storedDta;
       this.categories = this.getDistinctCategories();
+      const filters = this.productService.getAppliedFilters();
+      if (filters) {
+        this.applyFilter(filters);
+      }
     }
     this.route.queryParams.subscribe((params) => {
       const sourcePage = params['source'];
@@ -68,6 +74,9 @@ export class CatalogComponent implements OnInit {
     }
   }
 
+  openSideBar() {
+    this.isSideBar = !this.isSideBar;
+  }
   pageFilter(category: string) {
     if (
       category === 'pen' ||
@@ -106,6 +115,7 @@ export class CatalogComponent implements OnInit {
   }
 
   applyFilter(filters: any) {
+    this.filterParams = filters;
     this.filteredProducts = this.products.filter((product) => {
       let categoryMatches = true;
       let priceMatches = true;
@@ -142,6 +152,13 @@ export class CatalogComponent implements OnInit {
   }
   goToHome() {
     this.router.navigate(['/home']);
+  }
+  navigateToProduct(product: any) {
+    const queryParams = {
+      id: product.id,
+      filters: JSON.stringify(this.filterParams)
+    };
+    this.router.navigate(['/product', product.id], { queryParams });
   }
   addToCart(product: any) {
     if (product.availability === 'In Stock') {
