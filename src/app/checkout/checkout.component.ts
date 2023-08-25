@@ -15,6 +15,7 @@ export class CheckoutComponent {
   firstName: string = '';
   cart: CartItem[] = [];
   grand_total: number = 0;
+  hideNotification: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -54,6 +55,16 @@ export class CheckoutComponent {
     this.cartService.clearCart();
 
     this.productService.clearCart();
-    this.route.navigate(['/thankYou']);
+    setTimeout(() => {
+      this.route.navigate(['/thankYou']);
+    }, 600);
+    
+    this.hideNotification = true;
+    this.hideNotificationAfterDelay(500);
+  }
+  hideNotificationAfterDelay(delay: number) {
+    setTimeout(() => {
+      this.hideNotification = false;
+    }, delay);
   }
 }

@@ -56,7 +56,6 @@
               {{ item.product.name }}
             </p>
             <div class="flex items-center justify-between w-full pt-1">
-              <!-- <div class="flex flex-1 items-end justify-between text-sm"> -->
               <button
                 (click)="changeQuantity(item, 'decrease')"
                 class="rounded-lg text-gray-700 hover:text-black"
@@ -159,17 +158,14 @@
     </div>
   </div>
   <style>
-    /* width */
     #scroll::-webkit-scrollbar {
       width: 1px;
     }
 
-    /* Track */
     #scroll::-webkit-scrollbar-track {
       background: #f1f1f1;
     }
 
-    /* Handle */
     #scroll::-webkit-scrollbar-thumb {
       background: rgb(133, 132, 132);
     }
