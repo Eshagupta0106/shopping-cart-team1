@@ -11,7 +11,7 @@ export class ProductService {
   public isFilterApplied = new BehaviorSubject<boolean>(false);
   public filters = new BehaviorSubject<any>({});
   public appliedFilters: any = {};
-
+  
   constructor(private http: HttpClient, private route: Router) { }
   private cart: CartItem[] = [];
   loadProducts(): Observable<any> {
@@ -22,6 +22,7 @@ export class ProductService {
       })
     );
   }
+  
   setAppliedFilters(filters: any): void {
     this.appliedFilters = filters;
   }

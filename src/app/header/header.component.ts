@@ -9,6 +9,9 @@ import { ProductService } from '../product.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  storedDta: any[] = [];
+  products: any[] = [];
+  filteredProducts: any[] = [];
   searchText: string = '';
   private cartSubscription: Subscription;
   cartValue: number = 0;
@@ -31,6 +34,15 @@ export class HeaderComponent {
     this.showProfile = !this.showProfile;
   }
   ngOnInit() {
+    const storedJsonData = localStorage.getItem('json_data');
+    if (storedJsonData) {
+      this.storedDta = JSON.parse(storedJsonData);
+      this.storedDta.sort(
+        (a: { price: number }, b: { price: number }) => a.price - b.price
+      );
+      this.products = this.storedDta;
+      this.filteredProducts = this.storedDta;
+    }
     if (this.getUserEmail == null) {
       setTimeout(() => {
         this.hideNotification = true;
@@ -87,14 +99,15 @@ export class HeaderComponent {
 
   navigateToCatalogWithoutQueryParams() {
     this.productService.isFilterApplied.next(true);
-    this.route.navigate(['/catalog']);
+
+    this.route.navigate(['/catalog'], { queryParams: { category: 'All' } });
     this.isMenu = !this.isMenu;
   }
 
   searchCategory() {
     if (this.searchText.trim().length != 0) {
       this.category = this.extractCategory(this.searchText);
-
+      this.productService.isFilterApplied.next(false);
       this.route.navigate(['/catalog'], {
         queryParams: { category: this.category, source: 'search' },
       });
