@@ -43,11 +43,11 @@ export class CatalogComponent implements OnInit {
       const category = params['category'];
       if (sourcePage == 'search') {
         if (category) {
-          this.searchPageFilter(category.toLowerCase());
+          this.searchPageFilter(category);
         }
       } else if (sourcePage === 'home') {
         if (category) {
-          this.pageFilter(category.toLowerCase());
+          this.pageFilter(category);
         }
       } else if (category === 'All') {
         this.resetFilters();
@@ -61,30 +61,32 @@ export class CatalogComponent implements OnInit {
 
   searchPageFilter(category: string) {
     if (
-      category === 'pen' ||
-      category === 'pencil' ||
-      category === 'highlighter' ||
-      category === 'eraser' ||
-      category === 'notebooks' ||
-      category === 'planners' ||
-      category === 'sticky notes' ||
-      category === 'bookmark'
+      category === 'Pen' ||
+      category === 'Pencil' ||
+      category === 'Highlighter' ||
+      category === 'Eraser' ||
+      category === 'Notebooks' ||
+      category === 'Planners' ||
+      category === 'Sticky Notes' ||
+      category === 'Bookmark'
     ) {
       const storedJsonData = localStorage.getItem('json_data');
       if (storedJsonData) {
         this.storedDta = JSON.parse(storedJsonData);
       }
       this.filteredProducts = this.storedDta.filter(
-        (product) => product.category.toLowerCase() === category
+        (product) => product.category === category
       );
       const filters = {
-        [category]: true,
+        category: {
+          [category]: true,
+        },
         availability: 'All',
         minPrice: 0,
         maxPrice: 5000,
         minRating: 0,
       };
-      this.productService.setAppliedFilters(filters);
+      this.applyFilter(filters);
     } else {
       this.filteredProducts = [];
     }
@@ -95,32 +97,66 @@ export class CatalogComponent implements OnInit {
   }
   pageFilter(category: string) {
     if (
-      category === 'pen' ||
-      category === 'pencil' ||
-      category === 'highlighter'
+      category === 'Pen' ||
+      category === 'Pencil' ||
+      category === 'Highlighter'
     ) {
       this.filteredProducts = this.products.filter(
         (product) =>
-          product.category.toLowerCase() === category ||
-          product.category.toLowerCase() === 'pencil' ||
-          product.category.toLowerCase() === 'highlighter'
+          product.category === category ||
+          product.category === 'Pencil' ||
+          product.category === 'Highlighter'
       );
-    } else if (category === 'bookmark' || category === 'eraser') {
+      const filters = {
+        category: {
+          Pen: true,
+          Pencil: true,
+          Highlighter: true,
+        },
+        availability: 'All',
+        minPrice: 0,
+        maxPrice: 5000,
+        minRating: 0,
+      };
+      this.productService.setAppliedFilters(filters);
+    } else if (category === 'Bookmark' || category === 'Eraser') {
       this.filteredProducts = this.products.filter(
-        (product) => product.category.toLowerCase() === category
+        (product) => product.category === category
       );
+      const filters = {
+        category: {
+          [category]: true,
+        },
+        availability: 'All',
+        minPrice: 0,
+        maxPrice: 5000,
+        minRating: 0,
+      };
+      this.productService.setAppliedFilters(filters);
     } else if (
-      category === 'book' ||
-      category === 'notebooks' ||
-      category === 'planners' ||
-      category === 'sticky notes'
+      category === 'Book' ||
+      category === 'Notebooks' ||
+      category === 'Planners' ||
+      category === 'Sticky Notes'
     ) {
       this.filteredProducts = this.products.filter(
         (product) =>
-          product.category.toLowerCase() === 'notebooks' ||
-          product.category.toLowerCase() === 'planners' ||
-          product.category.toLowerCase() === 'sticky notes'
+          product.category === 'Notebooks' ||
+          product.category === ' Planners' ||
+          product.category === 'Sticky Notes'
       );
+      const filters = {
+        category: {
+          Notebooks: true,
+          Planners: true,
+          'Sticky Notes': true,
+        },
+        availability: 'All',
+        minPrice: 0,
+        maxPrice: 5000,
+        minRating: 0,
+      };
+      this.productService.setAppliedFilters(filters);
     } else if (category.length != 0) {
       this.filteredProducts = [];
     }
