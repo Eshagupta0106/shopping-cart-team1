@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { FilterComponent } from './filter/filter.component';
-import { ProductService } from './product.service';
+import { ProductService } from './service/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductComponent } from './product/product.component';
 import { EmptyCartComponent } from './empty-cart/empty-cart.component';

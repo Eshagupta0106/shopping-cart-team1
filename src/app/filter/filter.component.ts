@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { ProductService } from '../product.service';
+import { ProductService } from '../service/product.service';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-filter',
