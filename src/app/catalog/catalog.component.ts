@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../service/product.service';
 import { CartService } from '../service/cart.service';
+import { Product } from '../models/product.model';
+import { Filter } from '../models/filter.model';
+import { FilterService } from '../service/filter.service';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -27,14 +30,14 @@ export class CatalogComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private filterService: FilterService,
+  ) { }
 
   ngOnInit(): void {
     const storedJsonData = localStorage.getItem('json_data');
     if (storedJsonData) {
       this.storedDta = JSON.parse(storedJsonData);
-      console.log(this.storedDta);
       this.storedDta.sort(
         (a: { price: number }, b: { price: number }) => a.price - b.price
       );
@@ -42,7 +45,15 @@ export class CatalogComponent implements OnInit {
       this.filteredProducts = this.storedDta;
     }
     this.categories = this.getDistinctCategories();
-
+    this.filterService.getAppliedFilters().subscribe((filters) => {
+      if (filters) {
+        this.filterParams = filters;
+        this.applyFilter(this.filterParams);
+      }
+      else {
+        this.resetFilters();
+      }
+    });
     this.route.queryParams.subscribe((params) => {
       const sourcePage = params['source'];
       const category = params['category'];
@@ -58,11 +69,10 @@ export class CatalogComponent implements OnInit {
         this.resetFilters();
       }
     });
- 
   }
 
   searchPageFilter(category: string) {
-    this.productService.clearAppliedFilters();
+    this.filterService.clearAppliedFilters();
     if (
       category === 'Pen' ||
       category === 'Pencil' ||
@@ -89,8 +99,7 @@ export class CatalogComponent implements OnInit {
         maxPrice: 5000,
         minRating: 0,
       };
-      this.productService.setAppliedFilters(filters);
-      this.applyFilter(filters);
+      this.filterService.setAppliedFilters(filters);
     } else {
       this.filteredProducts = [];
     }
@@ -99,6 +108,7 @@ export class CatalogComponent implements OnInit {
   openSideBar() {
     this.isSideBar = !this.isSideBar;
   }
+
   pageFilter(category: string) {
     if (
       category === 'Pen' ||
@@ -122,7 +132,7 @@ export class CatalogComponent implements OnInit {
         maxPrice: 5000,
         minRating: 0,
       };
-      this.productService.setAppliedFilters(filters);
+      this.filterService.setAppliedFilters(filters);
     } else if (category === 'Bookmark' || category === 'Eraser') {
       this.filteredProducts = this.products.filter(
         (product) => product.category === category
@@ -136,7 +146,7 @@ export class CatalogComponent implements OnInit {
         maxPrice: 5000,
         minRating: 0,
       };
-      this.productService.setAppliedFilters(filters);
+      this.filterService.setAppliedFilters(filters);
     } else if (
       category === 'Book' ||
       category === 'Notebooks' ||
@@ -160,7 +170,7 @@ export class CatalogComponent implements OnInit {
         maxPrice: 5000,
         minRating: 0,
       };
-      this.productService.setAppliedFilters(filters);
+      this.filterService.setAppliedFilters(filters);
     } else if (category.length != 0) {
       this.filteredProducts = [];
     }
@@ -170,10 +180,9 @@ export class CatalogComponent implements OnInit {
     return [...new Set(this.storedDta.map((product) => product.category))];
   }
 
-  applyFilter(filters: any) {
-    this.productService.isFilterApplied.next(false);
+  applyFilter(filters: Filter) {
+    this.filterService.isFilterApplied.next(false);
     this.filterParams = filters;
-    console.log(this.filterParams);
     this.filteredProducts = this.products.filter((product) => {
       let categoryMatches = true;
       let priceMatches = true;
@@ -205,32 +214,35 @@ export class CatalogComponent implements OnInit {
       );
     });
   }
-  handleFilterChange(filters: any) {
+
+  handleFilterChange(filters: Filter) {
     this.applyFilter(filters);
   }
 
   resetFilters() {
-    this.productService.isFilterApplied.next(true);
-    console.log("Reset filter works");
-    this.filterParams.category = {}; // Clear category filter
+    this.filterService.isFilterApplied.next(true);
+    this.filterParams.category = {};
     this.filterParams.availability = 'All';
     this.filterParams.minPrice = 0;
-    this.filterParams.maxPrice = 0;
+    this.filterParams.maxPrice = 5000;
     this.filterParams.minRating = 0;
-    this.applyFilter(this.filterParams);
     this.filteredProducts = this.products;
+    this.applyFilter(this.filterParams);
   }
+
   goToHome() {
     this.router.navigate(['/home']);
   }
-  navigateToProduct(product: any) {
+
+  navigateToProduct(product: Product) {
     const queryParams = {
       id: product.id,
       filters: JSON.stringify(this.filterParams),
     };
     this.router.navigate(['/product', product.id], { queryParams });
   }
-  addToCart(product: any) {
+
+  addToCart(product: Product) {
     if (product.availability === 'In Stock') {
       this.notifyValue = 'Item added to Cart';
       this.productService.addToCart(product, this.quantity);
@@ -241,6 +253,7 @@ export class CatalogComponent implements OnInit {
     this.hideNotification = true;
     this.hideNotificationAfterDelay(1500);
   }
+
   hideNotificationAfterDelay(delay: number) {
     setTimeout(() => {
       this.hideNotification = false;
