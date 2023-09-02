@@ -3,17 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
 import { CartItem } from '../models/cartItem.model';
 import { Router } from '@angular/router';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  public isFilterApplied = new BehaviorSubject<boolean>(false);
-  public filters = new BehaviorSubject<any>({});
-  public appliedFilters: any = {};
-  
+
   constructor(private http: HttpClient, private route: Router) { }
   private cart: CartItem[] = [];
+
   loadProducts(): Observable<any> {
     return this.getProducts().pipe(
       catchError((error) => {
@@ -22,20 +21,12 @@ export class ProductService {
       })
     );
   }
-  
-  setAppliedFilters(filters: any): void {
-    this.appliedFilters = filters;
-  }
-  getAppliedFilters(): any {
-    return this.appliedFilters;
-  }
-  clearAppliedFilters(): void {
-    this.appliedFilters = {};
-  }
+
   clearCart(): void {
     this.cart = [];
   }
-  getFilteredProducts(searchText: string): Observable<any> {
+
+  getFilteredProducts(searchText: string): Observable<Product> {
     return this.loadProducts().pipe(
       map((products) =>
         products.filter((product: { category: string | string[] }) =>
@@ -44,18 +35,22 @@ export class ProductService {
       )
     );
   }
+
   getJSONData(): Observable<any> {
     return this.http.get('assets/product.json');
   }
-  getProducts(): Observable<any[]> {
-    return this.http.get<any[]>('assets/product.json');
+
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>('assets/product.json');
   }
+
   getProductById(id: number): Observable<any> {
     return this.getProducts().pipe(
       map((products) => products.find((product) => product.id === id))
     );
   }
-  addToCart(product: any, quantity: number): void {
+
+  addToCart(product: Product, quantity: number): void {
     const existingCartItem = this.cart.find(
       (item) => item.product.id === product.id
     );
@@ -65,13 +60,15 @@ export class ProductService {
       this.cart.push({ product, quantity });
     }
   }
-  buyNow(product: any, quantity: number) {
+
+  buyNow(product: Product, quantity: number) {
     if (!this.itemInCart(product)) {
       this.cart.push({ product, quantity });
     }
     this.route.navigate(['/cart']);
   }
-  itemInCart(product: any): boolean {
+
+  itemInCart(product: Product): boolean {
     const existingCartItem = this.cart.find(
       (item) => item.product.id === product.id
     );
@@ -81,6 +78,7 @@ export class ProductService {
       return false;
     }
   }
+
   getCartItems(): CartItem[] {
     return this.cart;
   }
