@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../service/cart.service';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../service/product.service';
+import { Product } from '../models/product.model';
 import { RegisterService } from '../service/register.service';
 @Component({
   selector: 'app-header',
@@ -10,9 +11,9 @@ import { RegisterService } from '../service/register.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  storedDta: any[] = [];
-  products: any[] = [];
-  filteredProducts: any[] = [];
+  storedDta: Product[] = [];
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
   searchText: string = '';
   private cartSubscription: Subscription;
   cartValue: number = 0;

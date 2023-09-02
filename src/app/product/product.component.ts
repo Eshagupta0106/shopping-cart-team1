@@ -10,7 +10,7 @@ import { RegisterService } from '../service/register.service';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
-  product: any;
+  product!: Product;
   quantity: number = 1;
   Math: any;
   isItemCart: boolean = false;
@@ -29,10 +29,12 @@ export class ProductComponent implements OnInit {
       const productId = +params['id'];
       this.productService.getProductById(productId).subscribe((product) => {
         this.product = product;
+        console.log(this.product);
       });
     });
     this.route.queryParams.subscribe((queryParams) => {
       this.filterR = queryParams;
+      console.log(this.filterR);
       if (this.filterR.filters) {
         this.productService.setAppliedFilters(JSON.parse(this.filterR.filters));
       }

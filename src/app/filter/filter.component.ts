@@ -8,8 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FilterComponent implements OnInit {
   @Input() categories: string[] = [];
-  @Output() filterApplied = new EventEmitter<any>();
-  @Output() filterCleared = new EventEmitter<any>();
+  @Output() filterChanged = new EventEmitter<any>();
 
   constructor(
     private productService: ProductService,
@@ -23,7 +22,7 @@ export class FilterComponent implements OnInit {
   maxPrice: number = 5000;
   minRating: number | null = 0;
 
-  isFilterButtonDisabled: boolean = false;
+ 
   ngOnInit(): void {
     this.selectedAvailability = 'All';
     const storedFilters = this.productService.getAppliedFilters();
@@ -49,16 +48,15 @@ export class FilterComponent implements OnInit {
       minRating: this.minRating,
     };
     this.productService.setAppliedFilters(filters);
-    this.filterApplied.emit(filters);
+    this.filterChanged.emit(filters);
   }
   validateMinRating() {
     if (this.minRating !== null && (this.minRating < 0 || this.minRating > 5)) {
       this.minRatingError = true;
-      this.isFilterButtonDisabled = true;
     } else {
       this.minRatingError = false;
-      this.isFilterButtonDisabled = false;
     }
+    this.applyFilter();
   }
   resetMinPrice() {
     this.minPrice = 0;
@@ -71,7 +69,6 @@ export class FilterComponent implements OnInit {
   validatePriceRange(): boolean {
     if (this.minPrice === null || this.maxPrice === null) {
       this.priceRangeError = 'Price fields cannot be empty.';
-      this.isFilterButtonDisabled = true;
       return false;
     }
     if (this.minPrice < 0) {
@@ -82,11 +79,9 @@ export class FilterComponent implements OnInit {
     }
     if (this.minPrice > this.maxPrice) {
       this.priceRangeError = 'Min price cannot be greater than max price.';
-      this.isFilterButtonDisabled = true;
       return false;
     } else {
       this.priceRangeError = null;
-      this.isFilterButtonDisabled = false;
       return true;
     }
   }
@@ -98,7 +93,7 @@ export class FilterComponent implements OnInit {
     this.minPrice = 0;
     this.maxPrice = 5000;
     this.minRating = 0;
-    this.isFilterButtonDisabled = false;
-    this.filterCleared.emit();
+    this.validatePriceRange();
+    this.applyFilter();
   }
 }

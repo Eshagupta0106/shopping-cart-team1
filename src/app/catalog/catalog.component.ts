@@ -8,14 +8,19 @@ import { CartService } from '../service/cart.service';
   styleUrls: ['./catalog.component.css'],
 })
 export class CatalogComponent implements OnInit {
-  storedDta: any[] = [];
-  products: any[] = [];
-  filteredProducts: any[] = [];
-  filteredItems: any[] = [];
+  storedDta: Product[] = [];
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
   categories: string[] = [];
   quantity: number = 1;
   hideNotification: boolean = false;
-  filterParams: any = {};
+  filterParams: Filter = {
+    category: {},
+    availability: '',
+    minPrice: 0,
+    maxPrice: 0,
+    minRating: 0
+  };
   notifyValue: string = '';
   isSideBar: boolean = false;
   constructor(
@@ -29,11 +34,11 @@ export class CatalogComponent implements OnInit {
     const storedJsonData = localStorage.getItem('json_data');
     if (storedJsonData) {
       this.storedDta = JSON.parse(storedJsonData);
+      console.log(this.storedDta);
       this.storedDta.sort(
         (a: { price: number }, b: { price: number }) => a.price - b.price
       );
       this.products = this.storedDta;
-      this.products;
       this.filteredProducts = this.storedDta;
     }
     this.categories = this.getDistinctCategories();
@@ -53,10 +58,7 @@ export class CatalogComponent implements OnInit {
         this.resetFilters();
       }
     });
-    const filters = this.productService.getAppliedFilters();
-    if (filters) {
-      this.applyFilter(filters);
-    }
+ 
   }
 
   searchPageFilter(category: string) {
@@ -171,6 +173,7 @@ export class CatalogComponent implements OnInit {
   applyFilter(filters: any) {
     this.productService.isFilterApplied.next(false);
     this.filterParams = filters;
+    console.log(this.filterParams);
     this.filteredProducts = this.products.filter((product) => {
       let categoryMatches = true;
       let priceMatches = true;
@@ -202,8 +205,19 @@ export class CatalogComponent implements OnInit {
       );
     });
   }
+  handleFilterChange(filters: any) {
+    this.applyFilter(filters);
+  }
+
   resetFilters() {
     this.productService.isFilterApplied.next(true);
+    console.log("Reset filter works");
+    this.filterParams.category = {}; // Clear category filter
+    this.filterParams.availability = 'All';
+    this.filterParams.minPrice = 0;
+    this.filterParams.maxPrice = 0;
+    this.filterParams.minRating = 0;
+    this.applyFilter(this.filterParams);
     this.filteredProducts = this.products;
   }
   goToHome() {
