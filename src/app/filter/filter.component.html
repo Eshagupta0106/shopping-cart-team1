@@ -3,24 +3,24 @@
   <div class="mb-4">
     <label class="block font-semibold mb-1">Category:</label>
     <div *ngFor="let category of categories" class="flex items-center">
-      <input type="checkbox" [(ngModel)]="selectedCategory[category]" class="mr-2" placeholder="category" />
+      <input type="checkbox" [(ngModel)]="selectedCategory[category]" class="mr-2" (ngModelChange)="applyFilter()" />
       <label>{{ category }}</label>
     </div>
   </div>
   <div class="mb-4">
     <label class="block font-semibold mb-1">Price Range:</label>
     <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 text-black text-base">
-      <input type="number" [(ngModel)]="minPrice" placeholder="Min" class="w-full md:w-1/2 border p-1 rounded" min="0"
-        (input)="validatePriceRange()" />
-      <input type="number" [(ngModel)]="maxPrice" placeholder="Max" class="w-full md:w-1/2 border p-1 rounded" min="0"
-        (input)="validatePriceRange()" />
+      <input type="number" [(ngModel)]="minPrice" placeholder="Min" class="w-full md:w-1/2 border p-1 rounded"
+        (change)="validatePriceRange(); applyFilter()" />
+      <input type="number" [(ngModel)]="maxPrice" placeholder="Max" class="w-full md:w-1/2 border p-1 rounded"
+        (change)="validatePriceRange(); applyFilter()" />
     </div>
-    <div class="text-red-500 mt-1 text-sm font-bold" *ngIf="priceRangeError">{{priceRangeError}}</div>
+    <div class="text-red-500 mt-1 text-sm font-bold" *ngIf="priceRangeError">{{ priceRangeError }}</div>
   </div>
   <div class="mb-4">
     <label class="block font-semibold mb-1" for="availability">Availability:</label>
-    <select id="availability" [(ngModel)]="selectedAvailability" placeholder="All"
-      class="w-full border p-1 rounded text-black text-base">
+    <select id="availability" [(ngModel)]="selectedAvailability" class="w-full border p-1 rounded text-black text-base"
+      (ngModelChange)="applyFilter()">
       <option value="All">All</option>
       <option value="In Stock">In Stock</option>
       <option value="Out of Stock">Out of Stock</option>
@@ -29,14 +29,11 @@
   <div class="mb-4">
     <label class="block font-semibold mb-1">Minimum Rating:</label>
     <input type="number" [(ngModel)]="minRating" placeholder="Min Rating"
-      class="w-full border p-1 rounded text-black text-lg" (input)="validateMinRating()" />
+      class="w-full border p-1 rounded text-black text-lg" (change)="validateMinRating(); applyFilter()" />
     <div class="text-red-500 mt-1 text-sm font-bold" *ngIf="minRatingError">Choose a value between 0 and 5.</div>
   </div>
   <div class="text-center">
-    <button type="submit" (click)="applyFilter()"
-      class=" text-white px-4 py-2 rounded mb-2 md:mb-0 md:mr-2 md:inline-block"
-      [disabled]="isFilterButtonDisabled">Apply
-      Filters</button>
     <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 md:inline-block"
       (click)="clearFilters()">Clear Filters</button>
   </div>
+</div>
