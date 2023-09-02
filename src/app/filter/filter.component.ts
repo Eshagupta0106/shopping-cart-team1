@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { ProductService } from '../service/product.service';
+import { FilterService } from '../service/filter.service';
 import { ActivatedRoute } from '@angular/router';
+import { Filter } from '../models/filter.model';
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
@@ -9,11 +10,18 @@ import { ActivatedRoute } from '@angular/router';
 export class FilterComponent implements OnInit {
   @Input() categories: string[] = [];
   @Output() filterChanged = new EventEmitter<any>();
+  @Input() filterParams: Filter = {
+    category: {},
+    availability: '',
+    minPrice: 0,
+    maxPrice: 0,
+    minRating: 0,
+  };
 
   constructor(
-    private productService: ProductService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private filterService: FilterService,
+  ) { }
   selectedCategory: { [category: string]: boolean } = {};
   selectedAvailability: string = 'All';
   minRatingError: boolean = false;
@@ -22,23 +30,18 @@ export class FilterComponent implements OnInit {
   maxPrice: number = 5000;
   minRating: number | null = 0;
 
- 
   ngOnInit(): void {
     this.selectedAvailability = 'All';
-    const storedFilters = this.productService.getAppliedFilters();
-    if (storedFilters) {
-      this.selectedCategory = storedFilters.category || {};
-      this.selectedAvailability = storedFilters.availability || 'All';
-      this.minPrice = storedFilters.minPrice || 0;
-      this.maxPrice = storedFilters.maxPrice || 5000;
-      this.minRating = storedFilters.minRating || 0;
-    }
-    this.productService.isFilterApplied.subscribe((value) => {
-      if (value) {
-        this.clearFilters();
-      }
-    });
+    this.filterService.getAppliedFilters().subscribe((filters) => {
+      this.selectedCategory = filters?.category || {};
+      this.selectedAvailability = filters?.availability || 'All';
+      this.minPrice = filters?.minPrice || 0;
+      this.maxPrice = filters?.maxPrice || 5000;
+      this.minRating = filters?.minRating || 0;
+
+    })
   }
+
   applyFilter() {
     const filters = {
       category: this.selectedCategory,
@@ -47,25 +50,30 @@ export class FilterComponent implements OnInit {
       maxPrice: this.maxPrice,
       minRating: this.minRating,
     };
-    this.productService.setAppliedFilters(filters);
-    this.filterChanged.emit(filters);
+    if (this.validatePriceRange() && !this.minRatingError) {
+      this.filterService.setAppliedFilters(filters);
+      this.filterChanged.emit(filters);
+    }
   }
+
   validateMinRating() {
     if (this.minRating !== null && (this.minRating < 0 || this.minRating > 5)) {
       this.minRatingError = true;
     } else {
       this.minRatingError = false;
     }
-    this.applyFilter();
   }
+
   resetMinPrice() {
     this.minPrice = 0;
     this.validatePriceRange();
   }
+
   resetMaxPrice() {
     this.maxPrice = 5000;
     this.validatePriceRange();
   }
+
   validatePriceRange(): boolean {
     if (this.minPrice === null || this.maxPrice === null) {
       this.priceRangeError = 'Price fields cannot be empty.';
@@ -87,13 +95,6 @@ export class FilterComponent implements OnInit {
   }
 
   clearFilters() {
-    this.productService.clearAppliedFilters();
-    this.selectedCategory = {};
-    this.selectedAvailability = 'All';
-    this.minPrice = 0;
-    this.maxPrice = 5000;
-    this.minRating = 0;
-    this.validatePriceRange();
-    this.applyFilter();
+    this.filterService.clearAppliedFilters();
   }
 }
