@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../service/cart.service';
 import { Subscription } from 'rxjs';
-import { ProductService } from '../service/product.service';
 import { Product } from '../models/product.model';
 import { RegisterService } from '../service/register.service';
+import { FilterService } from '../service/filter.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -23,8 +23,8 @@ export class HeaderComponent {
   constructor(
     private route: Router,
     private cartService: CartService,
-    private productService: ProductService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private filterService: FilterService,
   ) {
     this.cartSubscription = this.cartService
       .getCartValue()
@@ -100,8 +100,8 @@ export class HeaderComponent {
   }
 
   navigateToCatalogWithoutQueryParams() {
-    this.productService.isFilterApplied.next(true);
-
+    this.filterService.isFilterApplied.next(true);
+    this.filterService.clearAppliedFilters();
     this.route.navigate(['/catalog'], { queryParams: { category: 'All' } });
     this.isMenu = !this.isMenu;
   }
@@ -109,7 +109,7 @@ export class HeaderComponent {
   searchCategory() {
     if (this.searchText.trim().length != 0) {
       this.category = this.extractCategory(this.searchText);
-      this.productService.isFilterApplied.next(false);
+      this.filterService.isFilterApplied.next(false);
       this.route.navigate(['/catalog'], {
         queryParams: { category: this.category, source: 'search' },
       });
