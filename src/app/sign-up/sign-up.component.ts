@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { RegisterService } from '../service/register.service';
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -10,48 +12,50 @@ export class SignUpComponent {
   profileForm = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
   });
-
+  email: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  password: string = '';
+  hideNotification: boolean = false;
+  notifyValue: string = '';
   onSubmit() {
     this.profileForm.reset();
   }
 
-  constructor(private route: Router) {}
+  constructor(
+    private route: Router,
+    private registerService: RegisterService
+  ) {}
   showAlert: boolean = true;
   showSignIn: boolean = false;
   showSignOut: boolean = true;
   alertMessage: string = '';
 
-  user = { email: '', password: '' };
-  userDetails = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  };
-
-  ngOnInit(): void {
-    localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-  }
+  ngOnInit(): void {}
 
   signIn() {
     this.showAlert = true;
-    this.user.email = this.profileForm.get('email')?.value ?? '';
-    this.user.password = this.profileForm.get('password')?.value ?? '';
-    if (
-      this.user.email === this.userDetails.email &&
-      this.user.password === this.userDetails.password
-    ) {
-      localStorage.setItem('user', JSON.stringify(this.user));
-      this.route.navigate(['/home']);
-    } else if (
-      this.user.email === this.userDetails.email &&
-      this.user.password != this.userDetails.password
-    ) {
-      this.showAlert = false;
-      this.alertMessage = 'Password is wrong!';
+    this.email = this.profileForm.get('email')?.value ?? '';
+    this.password = this.profileForm.get('password')?.value ?? '';
+    const userDetail = this.registerService.getUserDetail(this.email);
+    if (userDetail) {
+      if (userDetail.password === this.password) {
+        this.hideNotification = true;
+        this.notifyValue = ' You have been successfully logged in';
+        this.registerService.setCurrentUser(this.email);
+        setTimeout(() => {
+          this.route.navigate(['/home']);
+        }, 1000);
+      } else {
+        this.showAlert = false;
+        this.alertMessage = 'Password is wrong!';
+      }
     } else {
       this.showAlert = false;
       this.alertMessage = 'Not a Registered Member!';
@@ -62,31 +66,27 @@ export class SignUpComponent {
   signUp() {
     this.showAlert = true;
 
-    this.userDetails.email = this.profileForm.get('email')?.value ?? '';
-    this.userDetails.password = this.profileForm.get('password')?.value ?? '';
-    this.userDetails.firstName = this.profileForm.get('firstName')?.value ?? '';
-    this.userDetails.lastName = this.profileForm.get('lastName')?.value ?? '';
-
-    if (
-      this.userDetails.email.trim().length == 0 ||
-      this.userDetails.password.trim().length == 0
-    ) {
+    this.email = this.profileForm.get('email')?.value ?? '';
+    const userInfo = {
+      password: this.profileForm.get('password')?.value as string,
+      firstName: this.profileForm.get('firstName')?.value as string,
+      lastName: this.profileForm.get('lastName')?.value as string,
+    };
+    const user = this.registerService.getUserDetail(this.email);
+    if (this.email.trim().length == 0 || userInfo.password.trim().length == 0) {
       this.alertMessage = 'Fields are not filled';
       this.showAlert = false;
-    } else if (
-      this.user.email === this.userDetails.email &&
-      this.user.email != null
-    ) {
+    } else if (user) {
       this.alertMessage = 'User already have an account';
       this.showAlert = false;
     } else {
-      localStorage.setItem('userDetails', JSON.stringify(this.userDetails));
-      this.user.email = this.userDetails.email;
-      this.user.password = this.userDetails.password;
-      localStorage.setItem('user', JSON.stringify(this.user));
-      this.route.navigate(['/home']);
-      this.showSignIn = !this.showSignIn;
-      this.showSignOut = !this.showSignOut;
+      this.registerService.setUserDetail(this.email, userInfo);
+      this.registerService.setCurrentUser(this.email);
+      this.hideNotification = true;
+      this.notifyValue = 'Welcome to our website ' + userInfo.firstName;
+      setTimeout(() => {
+        this.route.navigate(['/home']);
+      }, 1000);
     }
     this.onSubmit();
   }

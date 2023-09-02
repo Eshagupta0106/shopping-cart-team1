@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartService } from '../cart.service';
+import { CartService } from '../service/cart.service';
 import { Subscription } from 'rxjs';
-import { ProductService } from '../product.service';
+import { ProductService } from '../service/product.service';
+import { RegisterService } from '../service/register.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -21,7 +22,8 @@ export class HeaderComponent {
   constructor(
     private route: Router,
     private cartService: CartService,
-    private productService: ProductService
+    private productService: ProductService,
+    private registerService: RegisterService
   ) {
     this.cartSubscription = this.cartService
       .getCartValue()
@@ -43,7 +45,7 @@ export class HeaderComponent {
       this.products = this.storedDta;
       this.filteredProducts = this.storedDta;
     }
-    if (this.getUserEmail == null) {
+    if (this.getUserName() == null) {
       setTimeout(() => {
         this.hideNotification = true;
       }, 2000);
@@ -54,10 +56,9 @@ export class HeaderComponent {
   }
 
   navigateCart() {
-    const userString = localStorage.getItem('userDetails');
+    const userString = this.registerService.getCurrentUser();
     if (userString) {
-      const userObject = JSON.parse(userString);
-      const email = userObject.email;
+      const email = userString.email;
       if (email.trim().length != 0) {
         this.route.navigate(['/cart']);
       } else {
@@ -117,20 +118,19 @@ export class HeaderComponent {
     this.isMenu = !this.isMenu;
   }
 
-  getUserEmail(): string | null {
-    const storedUser = localStorage.getItem('userDetails');
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      return user.firstName;
+  getUserName(): string | null {
+    const currentUser = this.registerService.getCurrentUser();
+    if (currentUser) {
+      return currentUser.firstName;
     }
     return null;
   }
 
   signOut(): void {
     this.hideNotification = true;
-    localStorage.removeItem('user');
     this.showProfile = !this.showProfile;
     this.hideNotificationAfterDelay(1500);
+    this.registerService.clearCurrentUser();
     this.route.navigate(['/signIn']);
   }
   onNotificationClick() {

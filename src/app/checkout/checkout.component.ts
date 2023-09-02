@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { CartItem } from '../models/cartItem.model';
-import { ProductService } from '../product.service';
-import { CartService } from '../cart.service';
+import { ProductService } from '../service/product.service';
+import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
+import { RegisterService } from '../service/register.service';
 
 @Component({
   selector: 'app-checkout',
@@ -20,18 +21,18 @@ export class CheckoutComponent {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private route: Router
+    private route: Router,
+    private registerService: RegisterService
   ) {}
   ngOnInit() {
     this.cartService.loadCart();
     this.cart = this.cartService.cart;
     this.calculateTotal();
-    const userDetails = localStorage.getItem('userDetails');
-    if (userDetails) {
-      const user = JSON.parse(userDetails);
-      this.email = user.email;
-      this.firstName = user.firstName;
-      this.lastName = user.lastName;
+    const currentUser = this.registerService.getCurrentUser();
+    if (currentUser) {
+      this.email = currentUser.email;
+      this.firstName = currentUser.firstName;
+      this.lastName = currentUser.lastName;
     }
     if (this.cart.length == 0) {
       this.route.navigate(['/home']);
@@ -58,7 +59,7 @@ export class CheckoutComponent {
     setTimeout(() => {
       this.route.navigate(['/thankYou']);
     }, 600);
-    
+
     this.hideNotification = true;
     this.hideNotificationAfterDelay(500);
   }

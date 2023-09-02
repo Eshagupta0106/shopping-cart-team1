@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../product.service';
+import { ProductService } from '../service/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartService } from '../cart.service';
+import { CartService } from '../service/cart.service';
+import { RegisterService } from '../service/register.service';
 
 @Component({
   selector: 'app-product',
@@ -19,7 +20,8 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private registerService: RegisterService
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +31,7 @@ export class ProductComponent implements OnInit {
         this.product = product;
       });
     });
-    this.route.queryParams.subscribe(queryParams => {
+    this.route.queryParams.subscribe((queryParams) => {
       this.filterR = queryParams;
       if (this.filterR.filters) {
         this.productService.setAppliedFilters(JSON.parse(this.filterR.filters));
@@ -40,9 +42,9 @@ export class ProductComponent implements OnInit {
     this.productService.filters.next(this.filterR);
     this.router.navigate(['/catalog'], {
       queryParams: {
-        id: this.filterR.id, 
-        filters: JSON.stringify(this.filterR.filters)
-      }
+        id: this.filterR.id,
+        filters: JSON.stringify(this.filterR.filters),
+      },
     });
   }
 
@@ -80,10 +82,9 @@ export class ProductComponent implements OnInit {
   }
 
   buyNow() {
-    const userString = localStorage.getItem('user');
+    const userString = this.registerService.getCurrentUser();
     if (userString) {
-      const userObject = JSON.parse(userString);
-      const email = userObject.email;
+      const email = userString.email;
       if (email.trim().length != 0 && this.product && this.quantity) {
         if (this.product && this.quantity) {
           this.isItemCart = this.productService.itemInCart(this.product);

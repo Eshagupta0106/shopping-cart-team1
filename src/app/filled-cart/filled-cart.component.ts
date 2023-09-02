@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ProductService } from '../product.service';
-import { CartService } from '../cart.service';
+import { ProductService } from '../service/product.service';
+import { CartService } from '../service/cart.service';
 import { CartItem } from '../models/cartItem.model';
 import { Location } from '@angular/common';
 

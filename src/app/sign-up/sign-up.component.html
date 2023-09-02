@@ -82,6 +82,24 @@
                           id="emailInput"
                           required
                         />
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('email')!.hasError('required') &&
+                            profileForm.get('email')!.touched
+                          "
+                        >
+                          Email is required.
+                        </div>
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('email')!.hasError('email') &&
+                            profileForm.get('email')!.touched
+                          "
+                        >
+                          Please enter a valid email address.
+                        </div>
                       </div>
                       <div class="mb-6">
                         <input
@@ -92,8 +110,39 @@
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           required
                         />
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('password')!.hasError('required') &&
+                            profileForm.get('password')!.touched
+                          "
+                        >
+                          Password is required.
+                        </div>
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm
+                              .get('password')!
+                              .hasError('minlength') &&
+                            profileForm.get('password')!.touched
+                          "
+                        >
+                          Password must be at least 8 characters long.
+                        </div>
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('password')!.hasError('pattern') &&
+                            profileForm.get('password')!.touched
+                          "
+                        >
+                          Password must contain at least one letter and one
+                          digit.
+                        </div>
                       </div>
                       <button
+                        [disabled]="!profileForm.valid"
                         type="button"
                         class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-800 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-gray-00 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                         data-te-ripple-init
@@ -159,6 +208,24 @@
                           placeholder="Email"
                           formControlName="email"
                         />
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('email')!.hasError('required') &&
+                            profileForm.get('email')!.touched
+                          "
+                        >
+                          Email is required.
+                        </div>
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('email')!.hasError('email') &&
+                            profileForm.get('email')!.touched
+                          "
+                        >
+                          Please enter a valid email address.
+                        </div>
                       </div>
 
                       <div class="relative mb-6" data-te-input-wrapper-init>
@@ -169,9 +236,40 @@
                           placeholder="Password"
                           formControlName="password"
                         />
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('password')!.hasError('required') &&
+                            profileForm.get('password')!.touched
+                          "
+                        >
+                          Password is required.
+                        </div>
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm
+                              .get('password')!
+                              .hasError('minlength') &&
+                            profileForm.get('password')!.touched
+                          "
+                        >
+                          Password must be at least 8 characters long.
+                        </div>
+                        <div
+                          class="text-red-600 font-semibold"
+                          *ngIf="
+                            profileForm.get('password')!.hasError('pattern') &&
+                            profileForm.get('password')!.touched
+                          "
+                        >
+                          Password must contain at least one letter and one
+                          digit.
+                        </div>
                       </div>
 
                       <button
+                        [disabled]="!profileForm.valid"
                         type="button"
                         class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-800 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                         data-te-ripple-init
@@ -201,4 +299,26 @@
       </section>
     </div>
   </div>
+</div>
+
+<div
+  [ngClass]="{ hidden: !hideNotification }"
+  class="fixed flex items-center w-full max-w-xs p-4 space space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800"
+>
+  <div
+    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200"
+  >
+    <svg
+      class="w-5 h-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+      />
+    </svg>
+    <span class="sr-only">Check icon</span>
+  </div>
+  <div class="ml-3 text-sm font-normal">{{ notifyValue }}</div>
 </div>

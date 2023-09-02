@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../product.service';
-import { CartService } from '../cart.service';
+import { ProductService } from '../service/product.service';
+import { CartService } from '../service/cart.service';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -60,6 +60,7 @@ export class CatalogComponent implements OnInit {
   }
 
   searchPageFilter(category: string) {
+    this.productService.clearAppliedFilters();
     if (
       category === 'Pen' ||
       category === 'Pencil' ||
@@ -86,6 +87,7 @@ export class CatalogComponent implements OnInit {
         maxPrice: 5000,
         minRating: 0,
       };
+      this.productService.setAppliedFilters(filters);
       this.applyFilter(filters);
     } else {
       this.filteredProducts = [];
