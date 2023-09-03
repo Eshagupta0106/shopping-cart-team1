@@ -20,22 +20,19 @@ export class HeaderComponent {
   showProfile: boolean = true;
   isMenu: boolean = true;
   hideNotification: boolean = false;
+  category: string = '';
+
   constructor(
     private route: Router,
     private cartService: CartService,
     private registerService: RegisterService,
-    private filterService: FilterService,
+    private filterService: FilterService
   ) {
-    this.cartSubscription = this.cartService
-      .getCartValue()
-      .subscribe((value) => {
-        this.cartValue = value;
-      });
+    this.cartSubscription = this.cartService.cartValue.subscribe((value) => {
+      this.cartValue = value;
+    });
   }
-  category: string = '';
-  showProfileDropDown() {
-    this.showProfile = !this.showProfile;
-  }
+
   ngOnInit() {
     const storedJsonData = localStorage.getItem('json_data');
     if (storedJsonData) {
@@ -52,8 +49,13 @@ export class HeaderComponent {
       }, 2000);
     }
   }
+
   ngOnDestroy() {
     this.cartSubscription.unsubscribe();
+  }
+
+  showProfileDropDown() {
+    this.showProfile = !this.showProfile;
   }
 
   navigateCart() {
@@ -114,7 +116,6 @@ export class HeaderComponent {
         queryParams: { category: this.category, source: 'search' },
       });
     }
-
     this.searchText = '';
     this.isMenu = !this.isMenu;
   }
@@ -134,9 +135,11 @@ export class HeaderComponent {
     this.registerService.clearCurrentUser();
     this.route.navigate(['/signIn']);
   }
+
   onNotificationClick() {
     this.hideNotification = false;
   }
+
   hideNotificationAfterDelay(delay: number) {
     setTimeout(() => {
       this.hideNotification = false;

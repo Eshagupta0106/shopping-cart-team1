@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../service/product.service';
 import { CartService } from '../service/cart.service';
 import { Product } from '../models/product.model';
 import { Filter } from '../models/filter.model';
@@ -22,17 +21,17 @@ export class CatalogComponent implements OnInit {
     availability: '',
     minPrice: 0,
     maxPrice: 0,
-    minRating: 0
+    minRating: 0,
   };
   notifyValue: string = '';
   isSideBar: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService,
     private cartService: CartService,
     private router: Router,
-    private filterService: FilterService,
-  ) { }
+    private filterService: FilterService
+  ) {}
 
   ngOnInit(): void {
     const storedJsonData = localStorage.getItem('json_data');
@@ -49,8 +48,7 @@ export class CatalogComponent implements OnInit {
       if (filters) {
         this.filterParams = filters;
         this.applyFilter(this.filterParams);
-      }
-      else {
+      } else {
         this.resetFilters();
       }
     });
@@ -206,7 +204,6 @@ export class CatalogComponent implements OnInit {
         availabilityMatches = product.availability === filters.availability;
       }
       if (filters.minRating) {
-        const productRating = product.rating;
         ratingMatches = product.rating >= filters.minRating;
       }
       return (
@@ -245,7 +242,7 @@ export class CatalogComponent implements OnInit {
   addToCart(product: Product) {
     if (product.availability === 'In Stock') {
       this.notifyValue = 'Item added to Cart';
-      this.productService.addToCart(product, this.quantity);
+      this.cartService.addToCart(product, this.quantity);
       this.cartService.increaseCartValue(this.quantity);
     } else {
       this.notifyValue = 'Item not in Stock';

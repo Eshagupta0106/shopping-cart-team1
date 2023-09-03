@@ -1,6 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartItem } from '../models/cartItem.model';
-import { ProductService } from '../service/product.service';
 import { CartService } from '../service/cart.service';
 import { Router } from '@angular/router';
 import { RegisterService } from '../service/register.service';
@@ -19,11 +18,11 @@ export class CheckoutComponent {
   hideNotification: boolean = false;
 
   constructor(
-    private productService: ProductService,
     private cartService: CartService,
     private route: Router,
     private registerService: RegisterService
   ) {}
+
   ngOnInit() {
     this.cartService.loadCart();
     this.cart = this.cartService.cart;
@@ -38,6 +37,7 @@ export class CheckoutComponent {
       this.route.navigate(['/home']);
     }
   }
+
   getTotalQuantity(): number {
     let qty = 0;
     for (let i = 0; i < this.cart.length; i++) {
@@ -45,6 +45,7 @@ export class CheckoutComponent {
     }
     return qty;
   }
+
   calculateTotal(): number {
     let total = 0;
     for (let i = 0; i < this.cart.length; i++) {
@@ -52,10 +53,9 @@ export class CheckoutComponent {
     }
     return total;
   }
+
   onSubmit() {
     this.cartService.clearCart();
-
-    this.productService.clearCart();
     setTimeout(() => {
       this.route.navigate(['/thankYou']);
     }, 600);
@@ -63,6 +63,7 @@ export class CheckoutComponent {
     this.hideNotification = true;
     this.hideNotificationAfterDelay(500);
   }
+
   hideNotificationAfterDelay(delay: number) {
     setTimeout(() => {
       this.hideNotification = false;

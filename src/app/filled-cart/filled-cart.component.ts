@@ -1,5 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ProductService } from '../service/product.service';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from '../service/cart.service';
 import { CartItem } from '../models/cartItem.model';
 import { Location } from '@angular/common';
@@ -14,22 +13,15 @@ export class FilledCartComponent implements OnInit {
   grand_total: number = 0;
   showNotification: boolean = false;
 
-  constructor(
-    private productService: ProductService,
-    private cartService: CartService,
-    private location: Location
-  ) {}
+  constructor(private cartService: CartService, private location: Location) {}
 
   ngOnInit(): void {
-    this.cart = this.productService.getCartItems();
+    this.cart = this.cartService.getCartItems();
     this.calculateTotal();
   }
+
   goBack() {
     this.location.back();
-  }
-
-  getTotal(items: Array<CartItem>): number {
-    return this.cartService.getTotal(items);
   }
 
   removeAllItems(): void {
@@ -41,9 +33,11 @@ export class FilledCartComponent implements OnInit {
     this.cartService.removeItem(item);
     this.hideNotificationAfterDelay(1500);
   }
+
   onNotificationClick() {
     this.showNotification = false;
   }
+
   hideNotificationAfterDelay(delay: number) {
     setTimeout(() => {
       this.showNotification = false;
