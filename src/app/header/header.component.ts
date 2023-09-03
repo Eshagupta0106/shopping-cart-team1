@@ -43,11 +43,6 @@ export class HeaderComponent {
       this.products = this.storedDta;
       this.filteredProducts = this.storedDta;
     }
-    if (this.getUserName() == null) {
-      setTimeout(() => {
-        this.hideNotification = true;
-      }, 2000);
-    }
   }
 
   ngOnDestroy() {
@@ -131,19 +126,11 @@ export class HeaderComponent {
   signOut(): void {
     this.hideNotification = true;
     this.showProfile = !this.showProfile;
-    this.hideNotificationAfterDelay(1500);
     this.registerService.clearCurrentUser();
-    this.route.navigate(['/signIn']);
-  }
-
-  onNotificationClick() {
-    this.hideNotification = false;
-  }
-
-  hideNotificationAfterDelay(delay: number) {
     setTimeout(() => {
       this.hideNotification = false;
-    }, delay);
+      this.route.navigate(['/signIn']);
+    }, 1000);
   }
 
   showMenu() {
