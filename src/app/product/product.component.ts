@@ -18,6 +18,7 @@ export class ProductComponent implements OnInit {
   isItemCart: boolean = false;
   hideNotification: boolean = false;
   filterR: any = {};
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -25,7 +26,7 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private registerService: RegisterService,
     private filterService: FilterService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -74,7 +75,7 @@ export class ProductComponent implements OnInit {
     this.hideNotification = true;
     this.hideNotificationAfterDelay(1500);
     if (this.product && this.quantity) {
-      this.productService.addToCart(this.product, this.quantity);
+      this.cartService.addToCart(this.product, this.quantity);
       this.cartService.increaseCartValue(this.quantity);
     }
   }
@@ -91,11 +92,11 @@ export class ProductComponent implements OnInit {
       const email = userString.email;
       if (email.trim().length != 0 && this.product && this.quantity) {
         if (this.product && this.quantity) {
-          this.isItemCart = this.productService.itemInCart(this.product);
+          this.isItemCart = this.cartService.itemInCart(this.product);
           this.isItemCart
             ? this.cartService.increaseCartValue(0)
             : this.cartService.increaseCartValue(this.quantity);
-          this.productService.buyNow(this.product, this.quantity);
+          this.cartService.buyNow(this.product, this.quantity);
         }
       } else {
         this.router.navigate(['/signIn']);
@@ -104,5 +105,4 @@ export class ProductComponent implements OnInit {
       this.router.navigate(['/signIn']);
     }
   }
-
 }

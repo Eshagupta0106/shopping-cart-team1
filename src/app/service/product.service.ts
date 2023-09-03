@@ -22,10 +22,6 @@ export class ProductService {
     );
   }
 
-  clearCart(): void {
-    this.cart = [];
-  }
-
   getFilteredProducts(searchText: string): Observable<Product> {
     return this.loadProducts().pipe(
       map((products) =>
@@ -48,38 +44,5 @@ export class ProductService {
     return this.getProducts().pipe(
       map((products) => products.find((product) => product.id === id))
     );
-  }
-
-  addToCart(product: Product, quantity: number): void {
-    const existingCartItem = this.cart.find(
-      (item) => item.product.id === product.id
-    );
-    if (existingCartItem) {
-      existingCartItem.quantity += quantity;
-    } else {
-      this.cart.push({ product, quantity });
-    }
-  }
-
-  buyNow(product: Product, quantity: number) {
-    if (!this.itemInCart(product)) {
-      this.cart.push({ product, quantity });
-    }
-    this.route.navigate(['/cart']);
-  }
-
-  itemInCart(product: Product): boolean {
-    const existingCartItem = this.cart.find(
-      (item) => item.product.id === product.id
-    );
-    if (existingCartItem) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getCartItems(): CartItem[] {
-    return this.cart;
   }
 }

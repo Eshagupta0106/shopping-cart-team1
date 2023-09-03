@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FilterService } from '../service/filter.service';
-import { ActivatedRoute } from '@angular/router';
 import { Filter } from '../models/filter.model';
 @Component({
   selector: 'app-filter',
@@ -17,11 +16,6 @@ export class FilterComponent implements OnInit {
     maxPrice: 0,
     minRating: 0,
   };
-
-  constructor(
-    private route: ActivatedRoute,
-    private filterService: FilterService,
-  ) { }
   selectedCategory: { [category: string]: boolean } = {};
   selectedAvailability: string = 'All';
   minRatingError: boolean = false;
@@ -29,6 +23,8 @@ export class FilterComponent implements OnInit {
   minPrice: number = 0;
   maxPrice: number = 5000;
   minRating: number | null = 0;
+
+  constructor(private filterService: FilterService) {}
 
   ngOnInit(): void {
     this.selectedAvailability = 'All';
@@ -38,8 +34,7 @@ export class FilterComponent implements OnInit {
       this.minPrice = filters?.minPrice || 0;
       this.maxPrice = filters?.maxPrice || 5000;
       this.minRating = filters?.minRating || 0;
-
-    })
+    });
   }
 
   applyFilter() {
