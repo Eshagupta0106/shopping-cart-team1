@@ -7,13 +7,13 @@ Welcome to the Shopping Cart App! This application allows users to add, remove, 
 ## Installation
 
 * Clone this repository: `git clone https://github.com/Eshagupta0106/shopping-cart-team1.git`
-* Navigate to the project directory: `cd shopping-cart`
-* Install dependencies: `npm install`, `npm install flowbite`, `npm install @fortawesome/fontawesome-free`
+* Navigate to the project directory: `cd shopping-cart-team1`
+* Install: `npm-install`, `npm install -g @angular/cli`, `npm install flowbite`, `npm install @fortawesome/fontawesome-free`
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-Try running ng serve --host 0.0.0.0 --port port-number if the port 4200 is occupied.
+Try running `ng serve --host 0.0.0.0 --port port-number` if the port 4200 is occupied.
 
 ## Usage
 
