@@ -1,5 +1,5 @@
 {
-  "name": "shopping-cart",
+  "name": "client-side",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -20,16 +20,22 @@
     "@angular/router": "^16.2.0",
     "@fortawesome/fontawesome-free": "^6.4.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/forms": "^0.5.4",
+    "@tailwindcss/forms": "^0.5.6",
+    "custom-event-polyfill": "^1.0.7",
+    "deepmerge": "^4.3.1",
+    "detect-autofill": "^1.1.4",
     "flowbite": "^1.8.1",
+    "perfect-scrollbar": "^1.5.5",
+    "quick-lru": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "tw-elements": "^1.0.0-beta3",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.13.0",
+    "chart.js": "^3.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.0",
-    "@angular/cli": "~16.2.0",
+    "@angular-devkit/build-angular": "^16.2.1",
+    "@angular/cli": "~16.2.1",
     "@angular/compiler-cli": "^16.2.0",
     "@types/jasmine": "~4.3.0",
     "autoprefixer": "^10.4.15",
@@ -39,7 +45,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "postcss": "^8.4.28",
+    "postcss": "^8.4.29",
     "tailwindcss": "^3.3.3",
     "typescript": "~5.1.3"
   }

@@ -10,8 +10,8 @@ export class AppComponent implements OnInit {
   title = 'shopping-cart';
   constructor(private productService: ProductService) {}
   ngOnInit(): void {
-  /*  this.productService.getJSONData().subscribe((product) => {
+    this.productService.getJSONData().subscribe((product) => {
       localStorage.setItem('json_data', JSON.stringify(product));
-    });*/
+    });
   }
 }
