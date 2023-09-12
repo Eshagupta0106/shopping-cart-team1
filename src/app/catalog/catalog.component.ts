@@ -4,6 +4,7 @@ import { CartService } from '../service/cart.service';
 import { Product } from '../models/product.model';
 import { Filter } from '../models/filter.model';
 import { FilterService } from '../service/filter.service';
+import { ProductService } from '../service/product.service';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -30,11 +31,12 @@ export class CatalogComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private productService : ProductService
   ) {}
 
   ngOnInit(): void {
-    const storedJsonData = localStorage.getItem('json_data');
+   /* const storedJsonData = localStorage.getItem('json_data');
     if (storedJsonData) {
       this.storedDta = JSON.parse(storedJsonData);
       this.storedDta.sort(
@@ -42,7 +44,11 @@ export class CatalogComponent implements OnInit {
       );
       this.products = this.storedDta;
       this.filteredProducts = this.storedDta;
-    }
+    }*/
+    this.productService.getProducts().subscribe((products) => {
+      this.products = products;
+    });
+
     this.categories = this.getDistinctCategories();
     this.filterService.getAppliedFilters().subscribe((filters) => {
       if (filters) {
@@ -181,7 +187,9 @@ export class CatalogComponent implements OnInit {
   applyFilter(filters: Filter) {
     this.filterService.isFilterApplied.next(false);
     this.filterParams = filters;
-    this.filteredProducts = this.products.filter((product) => {
+    this.productService.getFilteredProducts(filters).subscribe((data) => {
+      this.filteredProducts = data;});
+          /*this.filteredProducts = this.products.filter((product) => {
       let categoryMatches = true;
       let priceMatches = true;
       let availabilityMatches = true;
@@ -209,7 +217,7 @@ export class CatalogComponent implements OnInit {
       return (
         categoryMatches && priceMatches && availabilityMatches && ratingMatches
       );
-    });
+    });*/
   }
 
   handleFilterChange(filters: Filter) {
