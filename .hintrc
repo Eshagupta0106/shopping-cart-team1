@@ -9,16 +9,16 @@
         "image-alt": "off"
       }
     ],
-    "axe/forms": [
-      "default",
-      {
-        "label": "off"
-      }
-    ],
     "axe/aria": [
       "default",
       {
         "aria-allowed-attr": "off"
+      }
+    ],
+    "axe/forms": [
+      "default",
+      {
+        "label": "off"
       }
     ]
   }
