@@ -1,6 +1,7 @@
 package com.shoppingcartteam1.serverside;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 @Document(collection = "users")
 public class User {
@@ -9,6 +10,8 @@ public class User {
     @Id
     private String email;
     private String password;
+    @DBRef
+    private Cart cart;
 
     public String getFirstName() {
         return firstName;
@@ -40,5 +43,12 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

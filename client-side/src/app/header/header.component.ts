@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { Product } from '../models/product.model';
 import { RegisterService } from '../service/register.service';
 import { FilterService } from '../service/filter.service';
+import { CookieService } from 'ngx-cookie-service'; 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -26,7 +28,8 @@ export class HeaderComponent {
     private route: Router,
     private cartService: CartService,
     private registerService: RegisterService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private cookieService: CookieService
   ) {
     this.cartSubscription = this.cartService.cartValue.subscribe((value) => {
       this.cartValue = value;
@@ -126,7 +129,9 @@ export class HeaderComponent {
   signOut(): void {
     this.hideNotification = true;
     this.showProfile = !this.showProfile;
-    this.registerService.clearCurrentUser();
+    // this.registerService.clearCurrentUser();
+    this.cookieService.delete('currentUser');
+    console.log(this.cookieService.get('currentUser'))
     setTimeout(() => {
       this.hideNotification = false;
       this.route.navigate(['/signIn']);

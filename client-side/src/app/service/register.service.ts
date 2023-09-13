@@ -7,10 +7,6 @@ export class RegisterService {
     return JSON.parse(localStorage.getItem(email) as string);
   }
 
-  setUserDetail(email: string, detail: object) {
-    localStorage.setItem(email, JSON.stringify(detail));
-  }
-
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('currentUser') as string);
   }

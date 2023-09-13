@@ -19,6 +19,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -43,9 +44,9 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule,
-  ],
-  providers: [ProductService],
+    RouterModule
+    ],
+  providers: [ProductService,CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
