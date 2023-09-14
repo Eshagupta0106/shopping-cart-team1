@@ -1,6 +1,4 @@
 package com.shoppingcartteam1.serverside;
-
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-
-import com.shoppingcartteam1.serverside.ProductRepository;
 
 @Controller
 public class RouteController {
