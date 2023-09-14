@@ -4,6 +4,7 @@ import { CartService } from '../service/cart.service';
 import { Product } from '../models/product.model';
 import { Filter } from '../models/filter.model';
 import { FilterService } from '../service/filter.service';
+import { ProductService } from '../service/product.service';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -30,28 +31,37 @@ export class CatalogComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
-    private filterService: FilterService
-  ) {}
+    private filterService: FilterService,
+    private productService: ProductService
+  ) { }
 
   ngOnInit(): void {
-    const storedJsonData = localStorage.getItem('json_data');
-    if (storedJsonData) {
-      this.storedDta = JSON.parse(storedJsonData);
-      this.storedDta.sort(
-        (a: { price: number }, b: { price: number }) => a.price - b.price
-      );
-      this.products = this.storedDta;
-      this.filteredProducts = this.storedDta;
-    }
-    this.categories = this.getDistinctCategories();
-    this.filterService.getAppliedFilters().subscribe((filters) => {
-      if (filters) {
-        this.filterParams = filters;
-        this.applyFilter(this.filterParams);
-      } else {
-        this.resetFilters();
+    this.productService.getProducts().subscribe((products) => {
+      this.products = products;
+      this.filteredProducts = products;
+      this.categories = this.getDistinctCategories();
+    });
+
+
+    //  this.categories = this.getDistinctCategories();
+    console.log(this.categories);
+   /* this.route.queryParams.subscribe((queryParams) => {
+      const filterR = queryParams;
+      console.log(filterR);
+      if (filterR) {
+        console.log("I am using product service in catalog");
+        this.applyFilter(filterR['filter']);
+        // this.productService.filterProducts(this.filterR.filters);
       }
     });
+    /*this.filterService.getAppliedFilters().subscribe((filters) => {
+        if (filters) {
+          this.filterParams = filters;
+          this.applyFilter(this.filterParams);
+        } else {
+          this.resetFilters();
+        }
+      });*/
     this.route.queryParams.subscribe((params) => {
       const sourcePage = params['source'];
       const category = params['category'];
@@ -175,40 +185,15 @@ export class CatalogComponent implements OnInit {
   }
 
   getDistinctCategories(): string[] {
-    return [...new Set(this.storedDta.map((product) => product.category))];
+    return [...new Set(this.products.map((product) => product.category))];
   }
 
   applyFilter(filters: Filter) {
     this.filterService.isFilterApplied.next(false);
     this.filterParams = filters;
-    this.filteredProducts = this.products.filter((product) => {
-      let categoryMatches = true;
-      let priceMatches = true;
-      let availabilityMatches = true;
-      let ratingMatches = true;
-      if (Object.values(filters.category).some((val) => val === true)) {
-        categoryMatches = Object.keys(filters.category).some((category) => {
-          return filters.category[category] && product.category === category;
-        });
-      }
-
-      if (filters.minPrice !== null && filters.maxPrice !== null) {
-        priceMatches =
-          product.price >= filters.minPrice &&
-          product.price <= filters.maxPrice;
-      }
-
-      if (filters.availability == 'All') {
-        availabilityMatches = true;
-      } else {
-        availabilityMatches = product.availability === filters.availability;
-      }
-      if (filters.minRating) {
-        ratingMatches = product.rating >= filters.minRating;
-      }
-      return (
-        categoryMatches && priceMatches && availabilityMatches && ratingMatches
-      );
+    console.log(this.filterParams);
+    this.productService.filterProducts(filters).subscribe((data) => {
+      this.filteredProducts = data;
     });
   }
 
@@ -225,6 +210,7 @@ export class CatalogComponent implements OnInit {
     this.filterParams.minRating = 0;
     this.filteredProducts = this.products;
     this.applyFilter(this.filterParams);
+
   }
 
   goToHome() {
@@ -232,11 +218,12 @@ export class CatalogComponent implements OnInit {
   }
 
   navigateToProduct(product: Product) {
+    const filterQueryParams = JSON.stringify(this.filterParams);
+    console.log(this.filterParams);
     const queryParams = {
-      id: product.id,
-      filters: JSON.stringify(this.filterParams),
+      filterQueryParams
     };
-    this.router.navigate(['/product', product.id], { queryParams });
+    this.router.navigate(['/products', product.id], { queryParams });
   }
 
   addToCart(product: Product) {
