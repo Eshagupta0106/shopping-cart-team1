@@ -1,7 +1,6 @@
 package com.shoppingcartteam1.serverside;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 @Document(collection = "products")
 public class Product {
 	@Id
@@ -10,8 +9,8 @@ public class Product {
 	private String category;
 	private int price;
 	private String availability;
-	private int rating;
-	private String[] images;
+	private double rating;
+	private String[] image;
 	private String description;
 	
 	public int getId() {
@@ -44,17 +43,17 @@ public class Product {
 	public void setAvailability(String availability) {
 		this.availability = availability;
 	}
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
-	public String[] getImages() {
-		return images;
+	public String[] getImage() {
+		return image;
 	}
-	public void setImages(String[] images) {
-		this.images = images;
+	public void setImage(String[] image) {
+		this.image = image;
 	}
 	public String getDescription() {
 		return description;

@@ -37,19 +37,25 @@ export class ProductComponent implements OnInit {
     });
     this.route.queryParams.subscribe((queryParams) => {
       this.filterR = queryParams;
-      if (this.filterR.filters) {
-        this.filterService.setAppliedFilters(JSON.parse(this.filterR.filters));
-      }
-    });
+      console.log(this.filterR)
+      if (this.filterR) {
+        console.log("I am using product service");
+       
+    }});
   }
 
   navigateCategory() {
     this.filterService.filters.next(this.filterR);
+    console.log("navigate category");
+    this.route.queryParams.subscribe((queryParams) => {
+     const filterQueryParams = queryParams;
+      console.log(filterQueryParams);
     this.router.navigate(['/catalog'], {
       queryParams: {
-        filters: JSON.stringify(this.filterR.filters),
-      },
+       filterQueryParams
+      }
     });
+  });
   }
 
   generateStars(rating: number): string {
