@@ -3,7 +3,6 @@ package com.shoppingcartteam1.serverside.mongodbcollection;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
-
 @Component
 @Document(collection = "products")
 public class Product {
@@ -13,7 +12,7 @@ public class Product {
 	private String category;
 	private int price;
 	private String availability;
-	private int rating;
+	private double rating;
 	private String[] image;
 	private String description;
 
@@ -56,21 +55,18 @@ public class Product {
 	public void setAvailability(String availability) {
 		this.availability = availability;
 	}
-
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
-
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
-
 	public String[] getImage() {
 		return image;
 	}
+	public void setImage(String[] image) {
+		this.image = image;
 
-	public void setImage(String[] images) {
-		this.image = images;
 	}
 
 	public String getDescription() {
