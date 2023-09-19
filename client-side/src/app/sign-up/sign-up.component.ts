@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { RegisterService } from '../service/register.service';
 import { HttpService } from '../service/http.service';
-import { User } from '../models/user.model';
-import { CookieService } from 'ngx-cookie-service';
-
+import { CookieInteractionService } from '../service/cookieinteraction.service';
+import { LocalstorageService } from '../service/localstorage.service';
+import { CartService } from '../service/cart.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -33,9 +32,10 @@ export class SignUpComponent {
 
   constructor(
     private route: Router,
-    private registerService: RegisterService,
     private httpService: HttpService,
-    private cookieService: CookieService
+    private cartService: CartService,
+    private cookieInteractionService: CookieInteractionService,
+    private localStorageService: LocalstorageService
   ) { }
   showAlert: boolean = true;
   showSignIn: boolean = false;
@@ -44,46 +44,38 @@ export class SignUpComponent {
 
   ngOnInit(): void { }
 
-  signIn() {
+  async signIn() {
     this.showAlert = true;
     this.email = this.profileForm.get('email')?.value ?? '';
     this.password = this.profileForm.get('password')?.value ?? '';
-    let userDetail = null;
-    this.httpService.getUser(this.email).subscribe(
-      (response) => {
-        userDetail = response;
-        if (userDetail) {
-          if ((userDetail as User).password === this.password) {
-            this.hideNotification = true;
-            this.notifyValue = ' You have been successfully logged in';
-            this.cookieService.set('currentUser', JSON.stringify(userDetail));
-            // const userString = this.cookieService.get('currentUser');
-            // if (userString) {
-            //   const user = JSON.parse(userString);
-            //   console.log(user)
-            // } else {
-            //   console.log("Not logged in");
-            // }
-            setTimeout(() => {
-              this.route.navigate(['/home']);
-            }, 1000);
-          } else {
-            this.showAlert = false;
-            this.alertMessage = 'Password is wrong!';
-          }
-        } else {
-          this.showAlert = false;
-          this.alertMessage = 'Not a Registered Member!';
-        }
-      },
-      (error) => {
-        console.log("Couldn't get user|", error);
+    const user = {
+      'email': this.email,
+      'password': this.password
+    };
+
+    try {
+      const response = await this.httpService.postData('/auth/logIn', user).toPromise();
+      const userDetail = response;
+      if (userDetail != "Credentials Invalid !!") {
+        this.hideNotification = true;
+        this.notifyValue = ' You have been successfully logged in';
+        this.cookieInteractionService.setCookieItem('currentUser', JSON.stringify(JSON.parse(userDetail).jwttoken));
+        await this.cartService.getCartItems();
+        this.localStorageService.setLocalStorageItem('cart', JSON.stringify(this.cartService.cart));
+        setTimeout(() => {
+          this.route.navigate(['/home']);
+        }, 1000);
+      } else {
+        this.showAlert = false;
+        this.alertMessage = 'Invalid credentials..!';
       }
-    )
+    } catch (error) {
+      console.log(error);
+    }
+
     this.onSubmit();
   }
-
-  signUp() {
+  async signUp() {
     this.showAlert = true;
     this.email = this.profileForm.get('email')?.value ?? '';
     const userInfo = {
@@ -92,45 +84,30 @@ export class SignUpComponent {
       firstName: this.profileForm.get('firstName')?.value as string,
       lastName: this.profileForm.get('lastName')?.value as string,
     };
-    let user = null;
-    this.httpService.getUser(this.email).subscribe(
-      (response) => {
-        user = response;
-        if (this.email.trim().length == 0 || userInfo.password.trim().length == 0) {
-          this.alertMessage = 'Fields are not filled';
-          this.showAlert = false;
-        } else if (user) {
-          this.alertMessage = 'User already have an account';
-          this.showAlert = false;
-        } else {
-          this.httpService.postData('/createUser', userInfo).subscribe(
-            (response) => {
-              if (!response || !response.startsWith('Created user successfully')) {
-                console.log("Failed to create user");
-              }
-              else {
-                this.cookieService.set('currentUser', JSON.stringify(userInfo));
-              }
-            },
-            (error) => {
-              if (error.status === 500) {
-                console.log("Server error: Failed to create user");
-              } else {
-                console.log("Couldn't create user|", error.message);
-              }
-            }
-          );
-          this.hideNotification = true;
-          this.notifyValue = 'Welcome to our website ' + userInfo.firstName;
-          setTimeout(() => {
-            this.route.navigate(['/home']);
-          }, 1000);
-        }
-      },
-      (error) => {
-        console.log("Couldn't get user|", error);
+
+    try {
+      const user = await this.httpService.getUser(this.email).toPromise();
+      if (this.email.trim().length == 0 || userInfo.password.trim().length == 0) {
+        this.alertMessage = 'Fields are not filled';
+        this.showAlert = false;
+      } else if (user) {
+        this.alertMessage = 'User already has an account';
+        this.showAlert = false;
+      } else {
+        const response = await this.httpService.postData('/auth/signUp', userInfo).toPromise();
+        this.cookieInteractionService.setCookieItem('currentUser', JSON.stringify(JSON.parse(response).jwttoken));
+        await this.cartService.getCartItems();
+        this.localStorageService.setLocalStorageItem('cart', JSON.stringify(this.cartService.cart));
+        this.hideNotification = true;
+        this.notifyValue = 'Welcome to our website ' + userInfo.firstName;
+        setTimeout(() => {
+          this.route.navigate(['/home']);
+        }, 1000);
       }
-    )
+    } catch (error) {
+      console.log("Error:", error);
+    }
+
     this.onSubmit();
   }
 

@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartService } from '../service/cart.service';
-import { Subscription } from 'rxjs';
 import { Product } from '../models/product.model';
-import { RegisterService } from '../service/register.service';
 import { FilterService } from '../service/filter.service';
-import { CookieService } from 'ngx-cookie-service'; 
-
+import { CookieInteractionService } from '../service/cookieinteraction.service';
+import { LocalstorageService } from '../service/localstorage.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -17,8 +14,6 @@ export class HeaderComponent {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   searchText: string = '';
-  private cartSubscription: Subscription;
-  cartValue: number = 0;
   showProfile: boolean = true;
   isMenu: boolean = true;
   hideNotification: boolean = false;
@@ -26,14 +21,11 @@ export class HeaderComponent {
 
   constructor(
     private route: Router,
-    private cartService: CartService,
-    private registerService: RegisterService,
     private filterService: FilterService,
-    private cookieService: CookieService
+    private cookieInteractionService: CookieInteractionService,
+    private localStorageService: LocalstorageService
   ) {
-    this.cartSubscription = this.cartService.cartValue.subscribe((value) => {
-      this.cartValue = value;
-    });
+
   }
 
   ngOnInit() {
@@ -48,23 +40,15 @@ export class HeaderComponent {
     }
   }
 
-  ngOnDestroy() {
-    this.cartSubscription.unsubscribe();
-  }
 
   showProfileDropDown() {
     this.showProfile = !this.showProfile;
   }
 
   navigateCart() {
-    const userString = this.registerService.getCurrentUser();
-    if (userString) {
-      const email = userString.email;
-      if (email.trim().length != 0) {
-        this.route.navigate(['/cart']);
-      } else {
-        this.route.navigate(['/signIn']);
-      }
+    const user = JSON.parse(this.cookieInteractionService.getCookieItem('currentUser') as string);
+    if (user) {
+      this.route.navigate(['/cart']);
     } else {
       this.route.navigate(['/signIn']);
     }
@@ -118,20 +102,13 @@ export class HeaderComponent {
     this.isMenu = !this.isMenu;
   }
 
-  getUserName(): string | null {
-    const currentUser = this.registerService.getCurrentUser();
-    if (currentUser) {
-      return currentUser.firstName;
-    }
-    return null;
-  }
-
   signOut(): void {
     this.hideNotification = true;
     this.showProfile = !this.showProfile;
-    // this.registerService.clearCurrentUser();
-    this.cookieService.delete('currentUser');
-    console.log(this.cookieService.get('currentUser'))
+    this.cookieInteractionService.removeCookieItem('currentUser');
+    if (this.localStorageService.getLocalStorageItem('cart')) {
+      this.localStorageService.removeLocalStorageItem('cart');
+    }
     setTimeout(() => {
       this.hideNotification = false;
       this.route.navigate(['/signIn']);

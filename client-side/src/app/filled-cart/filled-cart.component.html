@@ -1,87 +1,46 @@
-<div
-  class="w-full h-full bg-black top-0 overflow-y-auto overflow-x-hidden fixed sticky-0"
-  id="chec-div"
-  *ngIf="cart.length != 0"
->
+<div class="w-full h-full bg-black top-0 overflow-y-auto overflow-x-hidden fixed sticky-0" id="chec-div"
+  *ngIf="cart.length != 0">
   <div
     class="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700"
-    id="checkout"
-  >
+    id="checkout">
     <div class="flex items-end lg:flex-row flex-col justify-end" id="cart">
       <div
         class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white overflow-y-auto overflow-x-hidden lg:h-screen h-auto"
-        id="scroll"
-      >
-        <div
-          class="flex items-center text-gray-500 hover:text-gray-600 cursor-pointer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon icon-tabler icon-tabler-chevron-left"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
+        id="scroll">
+        <div class="flex items-center text-gray-500 hover:text-gray-600 cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="16"
+            height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <polyline points="15 6 9 12 15 18" />
           </svg>
           <p (click)="goBack()" class="text-sm pl-2 leading-none">Back</p>
         </div>
-        <p
-          class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3"
-        >
+        <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 pt-3">
           Bag
         </p>
-        <div
-          class="md:flex items-strech py-8 md:py-10 lg:py-8 border-t border-gray-50"
-          *ngFor="let item of cart"
-        >
+        <div class="md:flex items-strech py-8 md:py-10 lg:py-8 border-t border-gray-50" *ngFor="let item of cart">
           <div class="md:w-4/12 2xl:w-1/4 w-full">
-            <img
-              [src]="item.product.image[0]"
-              alt="{{ item.product.name }}"
-              class="h-full w-full object-cover object-center"
-              id="productImage"
-            />
+            <img [src]="item.product.image[0]" alt="{{ item.product.name }}"
+              class="h-full w-full object-cover object-center" id="productImage" />
           </div>
           <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
-            <p
-              class="leading-3 text-gray-800 md:pt-0 pt-4 font-extrabold text-sm"
-            >
+            <p class="leading-3 text-gray-800 md:pt-0 pt-4 font-extrabold text-sm">
               {{ item.product.name }}
             </p>
             <div class="flex items-center justify-between w-full pt-1">
-              <button
-                (click)="changeQuantity(item, 'decrease')"
-                class="rounded-lg text-gray-700 hover:text-black"
-              >
+              <button (click)="changeQuantity(item, 'decrease')" class="rounded-lg text-gray-700 hover:text-black">
                 <span class="sr-only">Decrease quantity</span>
                 <span class="text-xl font-semibold text-gray-700">-</span>
               </button>
-
-              <input
-                class="text-center border-none w-10"
-                type="text"
-                placeholder="Quantity"
-                value="{{ item.quantity }}"
-                (change)="calculateTotal()"
-              />
-
-              <button
-                (click)="changeQuantity(item, 'increase')"
-                class="rounded-lg text-gray-700 hover:text-black"
-              >
+              <input class="text-center border-none w-10" type="text" placeholder="Quantity" value="{{ item.quantity }}"
+                (change)="calculateTotal()" />
+              <button (click)="changeQuantity(item, 'increase')" class="rounded-lg text-gray-700 hover:text-black">
                 <span class="sr-only">Increase quantity</span>
                 <span class="text-xl font-semibold text-gray-700">+</span>
               </button>
               <!-- </div> -->
             </div>
-
             <p class="text-xs leading-3 text-gray-600 pt-2"></p>
             <p class="text-xs leading-3 text-gray-600 py-4 font-bold">
               Price: Rs.{{ item.product.price }}
@@ -91,10 +50,7 @@
             </p>
             <div class="flex items-center justify-between pt-5">
               <div class="flex itemms-center">
-                <p
-                  (click)="removeItem(item)"
-                  class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer"
-                >
+                <p (click)="removeItem(item)" class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">
                   Remove
                 </p>
               </div>
@@ -107,8 +63,7 @@
       </div>
       <div class="lg:w-96 md:w-8/12 w-full bg-gray-100 h-full">
         <div
-          class="flex flex-col lg:h-screen h-auto lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 justify-between overflow-y-auto"
-        >
+          class="flex flex-col lg:h-screen h-auto lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 justify-between overflow-y-auto">
           <div>
             <p class="lg:text-4xl text-3xl font-black leading-9 text-gray-800">
               Summary
@@ -131,25 +86,17 @@
           <div>
             <div class="flex items-center pb-6 justify-between lg:pt-5 pt-20">
               <p class="text-2xl leading-normal text-gray-800">Total</p>
-              <p
-                class="text-2xl font-bold leading-normal text-right text-gray-800"
-              >
+              <p class="text-2xl font-bold leading-normal text-right text-gray-800">
                 {{ calculateTotal() + 30 + 20 }}
               </p>
             </div>
-            <button
-              [routerLink]="['/home']"
-              type="button"
-              class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-            >
+            <button [routerLink]="['/home']" type="button"
+              class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">
               Continue Shopping
               <span aria-hidden="true"> &rarr;</span>
             </button>
-            <button
-              [routerLink]="['/checkout']"
-              type="button"
-              class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-            >
+            <button [routerLink]="['/checkout']" type="button"
+              class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">
               Checkout
             </button>
           </div>
@@ -163,7 +110,7 @@
     }
 
     #scroll::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #F1F1F1;
     }
 
     #scroll::-webkit-scrollbar-thumb {
@@ -171,23 +118,13 @@
     }
   </style>
 </div>
-
-<div
-  [ngClass]="{ hidden: !showNotification }"
-  class="fixed flex items-center w-full max-w-xs p-4 space space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800"
->
+<div [ngClass]="{ hidden: !showNotification }"
+  class="fixed flex items-center w-full max-w-xs p-4 space space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800">
   <div
-    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200"
-  >
-    <svg
-      class="w-5 h-5"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-    >
+    class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
       <path
-        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"
-      />
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
     </svg>
     <span class="sr-only">Error icon</span>
   </div>

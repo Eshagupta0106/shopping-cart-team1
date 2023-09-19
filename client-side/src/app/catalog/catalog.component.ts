@@ -226,11 +226,10 @@ export class CatalogComponent implements OnInit {
     this.router.navigate(['/products', product.id], { queryParams });
   }
 
-  addToCart(product: Product) {
-    if (product.availability === 'In Stock') {
+  async addToCart(item: Product) {
+    if (item.availability === 'In Stock') {
       this.notifyValue = 'Item added to Cart';
-      this.cartService.addToCart(product, this.quantity);
-      this.cartService.increaseCartValue(this.quantity);
+      await this.cartService.addToCart(item, this.quantity);
     } else {
       this.notifyValue = 'Item not in Stock';
     }

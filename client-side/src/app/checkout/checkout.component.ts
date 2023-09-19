@@ -10,9 +10,9 @@ import { RegisterService } from '../service/register.service';
   styleUrls: ['./checkout.component.css'],
 })
 export class CheckoutComponent {
-  email: string = '';
-  lastName: string = '';
-  firstName: string = '';
+  // email: string = '';
+  // lastName: string = '';
+  // firstName: string = '';
   cart: CartItem[] = [];
   grand_total: number = 0;
   hideNotification: boolean = false;
@@ -21,18 +21,18 @@ export class CheckoutComponent {
     private cartService: CartService,
     private route: Router,
     private registerService: RegisterService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.cartService.loadCart();
     this.cart = this.cartService.cart;
     this.calculateTotal();
-    const currentUser = this.registerService.getCurrentUser();
-    if (currentUser) {
-      this.email = currentUser.email;
-      this.firstName = currentUser.firstName;
-      this.lastName = currentUser.lastName;
-    }
+    // const currentUser = this.registerService.getCurrentUser();
+    // if (currentUser) {
+    //   this.email = currentUser.email;
+    //   this.firstName = currentUser.firstName;
+    //   this.lastName = currentUser.lastName;
+    // }
     if (this.cart.length == 0) {
       this.route.navigate(['/home']);
     }
@@ -55,7 +55,7 @@ export class CheckoutComponent {
   }
 
   onSubmit() {
-    this.cartService.clearCart();
+    // this.cartService.clearCart();
     setTimeout(() => {
       this.route.navigate(['/thankYou']);
     }, 600);
