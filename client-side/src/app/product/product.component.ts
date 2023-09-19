@@ -26,7 +26,7 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private registerService: RegisterService,
     private filterService: FilterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -71,12 +71,11 @@ export class ProductComponent implements OnInit {
     this.quantity += 1;
   }
 
-  addToCart() {
+  async addToCart() {
     this.hideNotification = true;
     this.hideNotificationAfterDelay(1500);
     if (this.product && this.quantity) {
-      this.cartService.addToCart(this.product, this.quantity);
-      this.cartService.increaseCartValue(this.quantity);
+      await this.cartService.addToCart(this.product, this.quantity);
     }
   }
 
@@ -86,21 +85,10 @@ export class ProductComponent implements OnInit {
     }, delay);
   }
 
-  buyNow() {
+  async buyNow() {
     const userString = this.registerService.getCurrentUser();
     if (userString) {
-      const email = userString.email;
-      if (email.trim().length != 0 && this.product && this.quantity) {
-        if (this.product && this.quantity) {
-          this.isItemCart = this.cartService.itemInCart(this.product);
-          this.isItemCart
-            ? this.cartService.increaseCartValue(0)
-            : this.cartService.increaseCartValue(this.quantity);
-          this.cartService.buyNow(this.product, this.quantity);
-        }
-      } else {
-        this.router.navigate(['/signIn']);
-      }
+      await this.cartService.buyNow(this.product, this.quantity);
     } else {
       this.router.navigate(['/signIn']);
     }

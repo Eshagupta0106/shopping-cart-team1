@@ -1,87 +1,125 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from '../models/cartItem.model';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieInteractionService } from './cookieinteraction.service';
+import { map } from 'rxjs';
+import { Product } from '../models/product.model';
+import { LocalstorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   cart: CartItem[] = [];
-  public cartValue = new BehaviorSubject<number>(this.getCartValue());
 
-  constructor(private route: Router) {
+  constructor(private route: Router, private http: HttpClient, private cookieInteractionService: CookieInteractionService, private localStorageService: LocalstorageService) {
+  }
+  ngOnInit() {
     this.loadCart();
   }
-
-  getCartValue(): number {
-    return JSON.parse(localStorage.getItem('cartValue') as string) || 0;
-  }
-
-  increaseCartValue(amount: number): void {
-    const cartNumber = this.getCartValue() + amount;
-    localStorage.setItem('cartValue', JSON.stringify(cartNumber));
-    this.cartValue.next(cartNumber);
-  }
-
-  decreaseCartValue(amount: number): void {
-    const newValue = Math.max(0, this.getCartValue() - amount);
-    localStorage.setItem('cartValue', JSON.stringify(newValue));
-    this.cartValue.next(newValue);
-  }
-
-  addToCart(product: any, quantity: number): void {
-    const existingCartItem = this.cart.find(
-      (item) => item.product.id === product.id
-    );
-    if (existingCartItem) {
-      existingCartItem.quantity += quantity;
-    } else {
-      this.cart.push({ product, quantity });
+  async addToCart(item: Product, quantity: number): Promise<void> {
+    const cartItems = this.localStorageService.getLocalStorageItem('cart');
+    if (cartItems) {
+      const cart = JSON.parse(cartItems as string);
+      const ind = cart.findIndex((cartItem: CartItem) => cartItem.product.id == item.id);
+      if (ind !== -1) {
+        cart[ind].quantity += quantity;
+      } else {
+        const cartItem = {
+          product: item,
+          quantity: quantity
+        };
+        cart.push(cartItem);
+      }
+      this.localStorageService.setLocalStorageItem('cart', JSON.stringify(cart));
     }
-    const newCartValue = this.calculateCartValue();
-    this.updateCartValue(newCartValue);
-    this.updateCartInLocalStorage();
+    await this.addToMongodbCart(item, quantity);
   }
 
-  buyNow(product: any, quantity: number) {
+  async buyNow(product: any, quantity: number) {
     if (!this.itemInCart(product)) {
       this.cart.push({ product, quantity });
-      this.updateCartInLocalStorage();
+      this.localStorageService.setLocalStorageItem('cart', JSON.stringify(this.cart));
+      await this.addToMongodbCart(product, quantity);
     }
     this.route.navigate(['/cart']);
+  }
+
+  async addToMongodbCart(item: Product, quantity: number) {
+    const currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${currentUserToken}`
+    });
+    const data = {
+      "productId": item.id,
+      "quantity": quantity
+    }
+
+    try {
+      const response = await this.http
+        .post("http://localhost:8093/cart/addCartProduct", JSON.stringify(data), { headers: headers, responseType: 'text' })
+        .toPromise();
+      console.log(response);
+    } catch (error) {
+      console.log("Failed post req|", error);
+    }
   }
 
   itemInCart(product: any): boolean {
     return this.cart.some((item) => item.product.id === product.id);
   }
 
-  getCartItems(): CartItem[] {
+  async getCartItems(): Promise<CartItem[]> {
+    const currentUserToken = this.cookieInteractionService.getCookieItem("currentUser");
+    if (currentUserToken) {
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${currentUserToken}`
+      });
+
+      try {
+        const response = await this.http
+          .get("http://localhost:8093/cart/getCart", { headers: headers })
+          .toPromise();
+
+        this.cart = response as CartItem[];
+      } catch (error) {
+        console.log(error);
+        this.cart = [];
+      }
+    } else {
+      this.cart = [];
+    }
+
     return this.cart;
   }
 
   loadCart(): void {
-    const storedCart = JSON.parse(localStorage.getItem('cartItem') as string);
-    if (storedCart) {
-      this.cart = storedCart;
-    }
+    this.cart = JSON.parse(this.localStorageService.getLocalStorageItem('cart') as string);
   }
 
-  clearCart(): void {
-    localStorage.removeItem('cartItem');
-    this.cart = [];
-    localStorage.removeItem('cartValue');
-    this.cartValue.next(0);
-  }
+  // clearCart(): void {
+  //   localStorage.removeItem('cartItem');
+  //   this.cart = [];
+  //   localStorage.removeItem('cartValue');
+  // this.cartValue.next(0);
+  // }
 
-  removeItem(item: CartItem): void {
-    const index = this.cart.findIndex(
-      (cartItem) => cartItem.product.id === item.product.id
-    );
-    if (index !== -1) {
-      const removedItem = this.cart.splice(index, 1)[0];
-      this.decreaseCartValue(removedItem.quantity);
-      this.updateCartInLocalStorage();
+  async removeItem(id: number): Promise<void> {
+    const currentUserToken = this.cookieInteractionService.getCookieItem("currentUser");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${currentUserToken}`
+    });
+    const params = {
+      "productId": id
+    };
+
+    try {
+      await this.http
+        .delete("http://localhost:8093/cart/deleteCartProduct", { headers: headers, params: params })
+        .toPromise();
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -93,37 +131,22 @@ export class CartService {
     return total;
   }
 
-  changeQuantity(item: CartItem, action: string) {
-    const index = this.cart.findIndex(
-      (cartItem) => cartItem.product.id === item.product.id
-    );
-    if (index !== -1) {
-      if (action === 'increase') {
-        this.cart[index].quantity++;
-        this.increaseCartValue(1);
-      } else if (action === 'decrease') {
-        if (this.cart[index].quantity > 1) {
-          this.cart[index].quantity--;
-          this.decreaseCartValue(1);
-        }
-      }
-      this.updateCartInLocalStorage();
+  async changeQuantity(id: number, action: string): Promise<void> {
+    const currentUserToken = this.cookieInteractionService.getCookieItem("currentUser");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${currentUserToken}`
+    });
+    const params = {
+      productId: id,
+      action: action
+    };
+
+    try {
+      await this.http
+        .put("http://localhost:8093/cart/editCartProductQuantity", null, { params: params, headers: headers })
+        .toPromise();
+    } catch (error) {
+      console.log(error);
     }
-  }
-
-  updateCartValue(newValue: number): void {
-    this.cartValue.next(newValue);
-  }
-
-  private calculateCartValue(): number {
-    let totalValue = 0;
-    for (const item of this.cart) {
-      totalValue += item.product.price * item.quantity;
-    }
-    return totalValue;
-  }
-
-  private updateCartInLocalStorage(): void {
-    localStorage.setItem('cartItem', JSON.stringify(this.cart));
   }
 }

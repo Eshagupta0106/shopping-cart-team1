@@ -1,7 +1,10 @@
-package com.shoppingcartteam1.serverside;
+package com.shoppingcartteam1.serverside.mongodbcollection;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
+@Component
 @Document(collection = "products")
 public class Product {
 	@Id
@@ -11,54 +14,69 @@ public class Product {
 	private int price;
 	private String availability;
 	private int rating;
-	private String[] images;
+	private String[] image;
 	private String description;
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getCategory() {
 		return category;
 	}
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
 	public int getPrice() {
 		return price;
 	}
+
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
 	public String getAvailability() {
 		return availability;
 	}
+
 	public void setAvailability(String availability) {
 		this.availability = availability;
 	}
+
 	public int getRating() {
 		return rating;
 	}
+
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	public String[] getImages() {
-		return images;
+
+	public String[] getImage() {
+		return image;
 	}
-	public void setImages(String[] images) {
-		this.images = images;
+
+	public void setImage(String[] images) {
+		this.image = images;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
