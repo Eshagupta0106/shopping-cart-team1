@@ -7,12 +7,14 @@ import com.shoppingcartteam1.serverside.mongodbrepository.CartRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.ProductRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.UserRepository;
 import com.shoppingcartteam1.serverside.service.ProductService;
+import com.shoppingcartteam1.serverside.service.ProductService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +45,7 @@ public class RouteController {
         this.mongoTemplate = mongoTemplate;
 		this.productService = productService;
     }
+
 	@GetMapping(value = { "/", "/{path:[^\\.]*}" })
 	public String redirectToAngularRoute() {
 		return "index";
