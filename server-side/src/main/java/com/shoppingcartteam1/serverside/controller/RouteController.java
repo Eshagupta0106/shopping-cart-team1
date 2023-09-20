@@ -66,7 +66,6 @@ public class RouteController {
 	public ResponseEntity<List<Product>> searchProducts(@RequestParam("query") String query) {
 
 		List<Product> products = productService.searchProducts(query);
-
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 
@@ -99,9 +98,7 @@ public class RouteController {
 
 		if ("{}".equals(categoryParam) && "All".equals(availability) && minPrice == 0 && maxPrice == 5000
 				&& minRating == 0) {
-			System.out.println("Default filters working");
 			List<Product> filterProducts = mongoTemplate.findAll(Product.class);
-			System.out.println(filterProducts);
 			return ResponseEntity.ok(filterProducts);
 		}
 
@@ -117,11 +114,6 @@ public class RouteController {
 
 		List<Product> filterProducts = mongoTemplate.find(query, Product.class);
 
-		System.out.println(query);
-
-		for (Product product : filterProducts) {
-			System.out.println(product);
-		}
 		return ResponseEntity.ok(filterProducts);
 
 	}

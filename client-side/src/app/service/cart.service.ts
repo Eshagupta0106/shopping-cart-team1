@@ -47,7 +47,8 @@ export class CartService {
   }
 
   async addToMongodbCart(item: Product, quantity: number) {
-    const currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${currentUserToken}`
     });
@@ -71,7 +72,8 @@ export class CartService {
   }
 
   async getCartItems(): Promise<CartItem[]> {
-    const currentUserToken = this.cookieInteractionService.getCookieItem("currentUser");
+    let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
     if (currentUserToken) {
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${currentUserToken}`
@@ -106,7 +108,8 @@ export class CartService {
   // }
 
   async removeItem(id: number): Promise<void> {
-    const currentUserToken = this.cookieInteractionService.getCookieItem("currentUser");
+    let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${currentUserToken}`
     });
@@ -132,7 +135,8 @@ export class CartService {
   }
 
   async changeQuantity(id: number, action: string): Promise<void> {
-    const currentUserToken = this.cookieInteractionService.getCookieItem("currentUser");
+    let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${currentUserToken}`
     });

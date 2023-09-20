@@ -64,7 +64,7 @@ public class CartController {
 	private String getEmail(String authHeader) {
 		String[] headerParts = authHeader.split(" ");
 		String jwtToken = headerParts[1];
-		return getEmailFromToken(jwtToken.substring(1, jwtToken.length() - 1));
+		return getEmailFromToken(jwtToken);
 	}
 
 	@GetMapping("/getCart")
