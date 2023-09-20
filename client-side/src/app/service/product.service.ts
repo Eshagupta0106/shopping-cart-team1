@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { CartItem } from '../models/cartItem.model';
 import { Router } from '@angular/router';
@@ -14,10 +14,8 @@ export class ProductService {
   private apiUrl = 'http://localhost:8093';
   constructor(private http: HttpClient, private route: Router) { }
   private cart: CartItem[] = [];
+  private searchedProducts: Product[] = [];
 
-  loadProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}`);
-  }
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products/all`);
@@ -33,11 +31,9 @@ export class ProductService {
       const selectedCategories = Object.keys(filters.category).filter(
         (key) => filters.category[key]
       );
-      console.log(selectedCategories);
       if (selectedCategories.length > 0) {
         categoryParam = selectedCategories.join(',');
       }
-      console.log(categoryParam);
     }
     const params = new HttpParams()
       .set('category', categoryParam)
@@ -49,7 +45,19 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/products`, { params });
   }
 
+  searchProducts(searchText: string): Observable<HttpResponse<Product[]>> {
+    return this.http.get<Product[]>(`${this.apiUrl}/search`, {
+      params: new HttpParams().set('query', searchText),
+      observe: 'response',
+    });
+  }
 
+  getSearchedProducts(): Product[] {
+    return this.searchedProducts;
+  }
+  setSearchProducts(searchProducts: Product[]) {
+    this.searchedProducts = searchProducts;
+  }
 }
 
 

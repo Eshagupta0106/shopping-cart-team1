@@ -57,13 +57,6 @@ export class SignUpComponent {
             this.hideNotification = true;
             this.notifyValue = ' You have been successfully logged in';
             this.cookieService.set('currentUser', JSON.stringify(userDetail));
-            // const userString = this.cookieService.get('currentUser');
-            // if (userString) {
-            //   const user = JSON.parse(userString);
-            //   console.log(user)
-            // } else {
-            //   console.log("Not logged in");
-            // }
             setTimeout(() => {
               this.route.navigate(['/home']);
             }, 1000);
@@ -77,7 +70,6 @@ export class SignUpComponent {
         }
       },
       (error) => {
-        console.log("Couldn't get user|", error);
       }
     )
     this.onSubmit();
