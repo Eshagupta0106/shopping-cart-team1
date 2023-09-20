@@ -1,4 +1,4 @@
-package com.shoppingcartteam1.serverside;
+package com.shoppingcartteam1.serverside.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.stereotype.Service;
+
+import com.shoppingcartteam1.serverside.mongodbcollection.Product;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,12 +28,6 @@ public class ProductService {
 
     public List<Product> searchProducts(String searchText) {
 
-        /*
-         * if (searchText.endsWith("s")) {
-         * // Remove the "s" to get the singular form
-         * searchText = searchText.substring(0, searchText.length() - 1);
-         * }
-         */
         Pattern categoryPattern = Pattern.compile("\\b" + searchText + "\\w*\\b", Pattern.CASE_INSENSITIVE);
 
         Criteria categoryCriteria = Criteria.where("category").regex(categoryPattern);

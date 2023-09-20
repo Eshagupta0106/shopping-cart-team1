@@ -7,6 +7,7 @@ import com.shoppingcartteam1.serverside.mongodbrepository.CartProductRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.CartRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.ProductRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.UserRepository;
+import com.shoppingcartteam1.serverside.service.ProductService;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,12 +37,13 @@ public class RouteController {
 	@Autowired
 	CartProductRepository cartProductRepository;
     private final MongoTemplate mongoTemplate;
-
+    private final ProductService productService;
     @Autowired
-    public RouteController(MongoTemplate mongoTemplate) {
+    public RouteController(MongoTemplate mongoTemplate,ProductService productService) {
         this.mongoTemplate = mongoTemplate;
-
+        this.productService = productService;
     }
+
 	@GetMapping(value = { "/", "/{path:[^\\.]*}" })
 	public String redirectToAngularRoute() {
 		return "index";
@@ -55,7 +58,12 @@ public class RouteController {
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
-
+    @ResponseBody
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam("query") String query) {
+        List<Product> products = productService.searchProducts(query);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
     @ResponseBody
     @GetMapping("/products/{id}")
     public Product getProductbyId(@PathVariable int id) {
@@ -83,16 +91,6 @@ public class RouteController {
         Query query = new Query()
                 .addCriteria(availabilityCriteria)
                 .addCriteria(Criteria.where("price").gte(minPrice).lte(maxPrice));
-        /*
-         * if (categories.length == 0 && "All".equals(availability) && minPrice == 0 &&
-         * maxPrice == 5000
-         * && minRating == 0) {
-         * System.out.println("Default filters working");
-         * List<Product> filterProducts = mongoTemplate.findAll(Product.class);
-         * System.out.println(filterProducts);
-         * return ResponseEntity.ok(filterProducts);
-         * }
-         */
 
         if (categories.length > 0) {
 
