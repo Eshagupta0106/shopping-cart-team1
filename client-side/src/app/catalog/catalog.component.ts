@@ -19,57 +19,78 @@ export class CatalogComponent implements OnInit {
   hideNotification: boolean = false;
   filterParams: Filter = {
     category: {},
-    availability: '',
+    availability: 'All',
     minPrice: 0,
-    maxPrice: 0,
+    maxPrice: 5000,
     minRating: 0,
   };
   notifyValue: string = '';
   isSideBar: boolean = false;
+  // isFilterApplied: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
     private filterService: FilterService,
-    private productService: ProductService
+    private productService: ProductService,
   ) { }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((products) => {
-      this.products = products;
-      this.filteredProducts = products;
-      this.categories = this.getDistinctCategories();
-    });
-
-
-    //  this.categories = this.getDistinctCategories();
-    console.log(this.categories);
-   /* this.route.queryParams.subscribe((queryParams) => {
-      const filterR = queryParams;
-      console.log(filterR);
-      if (filterR) {
-        console.log("I am using product service in catalog");
-        this.applyFilter(filterR['filter']);
-        // this.productService.filterProducts(this.filterR.filters);
+    this.route.queryParams.subscribe((queryParams) => {
+      const filtertest = queryParams;
+      if (filtertest) {
+        const paramValue = JSON.parse(queryParams['filterQueryParams']);
+        this.handleFilterChange(paramValue);
       }
     });
-    /*this.filterService.getAppliedFilters().subscribe((filters) => {
-        if (filters) {
-          this.filterParams = filters;
-          this.applyFilter(this.filterParams);
-        } else {
-          this.resetFilters();
-        }
-      });*/
+    this.productService.getProducts().subscribe((product) => {
+      this.products = product;
+      this.categories = this.getDistinctCategories();
+    });
+    const filter = this.filterService.getAppliedFilters();
+    if (!filter) {
+      this.loadProducts();
+    }
     this.route.queryParams.subscribe((params) => {
       const sourcePage = params['source'];
       const category = params['category'];
-      if (sourcePage == 'search') {
-        if (category) {
-          this.searchPageFilter(category);
+
+      if (sourcePage === 'search') {
+        this.filteredProducts = this.productService.getSearchedProducts();
+        if (this.filteredProducts.length > 0) {
+          const categories = [...new Set(this.filteredProducts.map(product => product.category))];
+          interface Category {
+            [key: string]: boolean;
+          }
+          const categoryObject: Category = {};
+          categories.forEach(category => {
+            categoryObject[category] = true;
+          });
+          this.filterService.clearAppliedFilters();
+          const filters = {
+            category: categoryObject,
+            availability: 'All',
+            minPrice: 0,
+            maxPrice: 5000,
+            minRating: 0,
+          };
+          this.filterService.setAppliedFilters(filters);
+          this.applyFilter(filters);
+        } else {
+          this.filteredProducts = [];
+          const filters = {
+            category: {},
+            availability: 'All',
+            minPrice: 0,
+            maxPrice: 0,
+            minRating: 0,
+          }
+          this.filterService.setAppliedFilters(filters);
+          this.applyFilter(filters);
         }
-      } else if (sourcePage === 'home') {
+      }
+      else if (sourcePage === 'home') {
         if (category) {
           this.pageFilter(category);
         }
@@ -78,39 +99,12 @@ export class CatalogComponent implements OnInit {
       }
     });
   }
-
-  searchPageFilter(category: string) {
-    this.filterService.clearAppliedFilters();
-    if (
-      category === 'Pen' ||
-      category === 'Pencil' ||
-      category === 'Highlighter' ||
-      category === 'Eraser' ||
-      category === 'Notebooks' ||
-      category === 'Planners' ||
-      category === 'Sticky Notes' ||
-      category === 'Bookmark'
-    ) {
-      const storedJsonData = localStorage.getItem('json_data');
-      if (storedJsonData) {
-        this.storedDta = JSON.parse(storedJsonData);
-      }
-      this.filteredProducts = this.storedDta.filter(
-        (product) => product.category === category
-      );
-      const filters = {
-        category: {
-          [category]: true,
-        },
-        availability: 'All',
-        minPrice: 0,
-        maxPrice: 5000,
-        minRating: 0,
-      };
-      this.filterService.setAppliedFilters(filters);
-    } else {
-      this.filteredProducts = [];
-    }
+  loadProducts() {
+    this.productService.getProducts().subscribe((product) => {
+      this.products = product;
+      this.filteredProducts = this.products;
+      this.categories = this.getDistinctCategories();
+    });
   }
 
   openSideBar() {
@@ -141,6 +135,7 @@ export class CatalogComponent implements OnInit {
         minRating: 0,
       };
       this.filterService.setAppliedFilters(filters);
+      this.applyFilter(filters);
     } else if (category === 'Bookmark' || category === 'Eraser') {
       this.filteredProducts = this.products.filter(
         (product) => product.category === category
@@ -155,6 +150,7 @@ export class CatalogComponent implements OnInit {
         minRating: 0,
       };
       this.filterService.setAppliedFilters(filters);
+      this.applyFilter(filters);
     } else if (
       category === 'Book' ||
       category === 'Notebooks' ||
@@ -179,6 +175,7 @@ export class CatalogComponent implements OnInit {
         minRating: 0,
       };
       this.filterService.setAppliedFilters(filters);
+      this.applyFilter(filters);
     } else if (category.length != 0) {
       this.filteredProducts = [];
     }
@@ -189,12 +186,13 @@ export class CatalogComponent implements OnInit {
   }
 
   applyFilter(filters: Filter) {
-    this.filterService.isFilterApplied.next(false);
+    this.filterService.isFilterApplied.next(true);
     this.filterParams = filters;
-    console.log(this.filterParams);
+    const filterQueryParams = JSON.stringify(filters);
     this.productService.filterProducts(filters).subscribe((data) => {
       this.filteredProducts = data;
     });
+    this.router.navigate(['/catalog'], { queryParams: { filterQueryParams } });
   }
 
   handleFilterChange(filters: Filter) {
@@ -202,7 +200,7 @@ export class CatalogComponent implements OnInit {
   }
 
   resetFilters() {
-    this.filterService.isFilterApplied.next(true);
+    this.filterService.isFilterApplied.next(false);
     this.filterParams.category = {};
     this.filterParams.availability = 'All';
     this.filterParams.minPrice = 0;
@@ -219,11 +217,10 @@ export class CatalogComponent implements OnInit {
 
   navigateToProduct(product: Product) {
     const filterQueryParams = JSON.stringify(this.filterParams);
-    console.log(this.filterParams);
     const queryParams = {
       filterQueryParams
     };
-    this.router.navigate(['/products', product.id], { queryParams });
+    this.router.navigate(['/product', product.id], { queryParams });
   }
 
   async addToCart(item: Product) {

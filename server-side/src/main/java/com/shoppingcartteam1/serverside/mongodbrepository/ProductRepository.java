@@ -7,7 +7,4 @@ import com.shoppingcartteam1.serverside.mongodbcollection.Product;
 
 public interface ProductRepository extends MongoRepository<Product, Integer> {
 
-   /* @Query(value = "{'category':{$exists : true}}")
-    String[] distinctCategories()*/;
-    
 }

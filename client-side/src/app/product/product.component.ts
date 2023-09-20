@@ -37,26 +37,17 @@ export class ProductComponent implements OnInit {
     });
     this.route.queryParams.subscribe((queryParams) => {
       this.filterR = queryParams;
-      console.log(this.filterR)
-      if (this.filterR) {
-        console.log("I am using product service");
-       
-    }});
+    });
   }
 
   navigateCategory() {
     this.filterService.filters.next(this.filterR);
-    console.log("navigate category");
     this.route.queryParams.subscribe((queryParams) => {
-     const filterQueryParams = queryParams;
-      console.log(filterQueryParams);
-    this.router.navigate(['/catalog'], {
-      queryParams: {
-       filterQueryParams
-      }
+      this.router.navigate(['/catalog'], { queryParams }
+      );
     });
-  });
   }
+
 
   generateStars(rating: number): string {
     const fullStars = Math.floor(rating);

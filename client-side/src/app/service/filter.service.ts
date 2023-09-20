@@ -30,7 +30,7 @@ export class FilterService {
 
   }
 
- setAppliedFilters(filters: Filter) {
+  setAppliedFilters(filters: Filter) {
     localStorage.setItem(this.appliedFiltersKey, JSON.stringify(filters));
     this.appliedFiltersSubject.next(filters);
   }

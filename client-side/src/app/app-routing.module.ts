@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'catalog', component: CatalogComponent },
-  { path: 'products/:id', component: ProductComponent },
+  { path: 'product/:id', component: ProductComponent },
   { path: 'emptyCart', component: EmptyCartComponent },
   { path: 'cart', component: FilledCartComponent },
   { path: 'signIn', component: SignUpComponent },
@@ -27,4 +27,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
