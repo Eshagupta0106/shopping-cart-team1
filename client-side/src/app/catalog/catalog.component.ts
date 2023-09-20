@@ -39,7 +39,7 @@ export class CatalogComponent implements OnInit {
     this.route.queryParams.subscribe((queryParams) => {
       const filtertest = queryParams;
       if (filtertest) {
-        const paramValue = JSON.parse(queryParams['filterQueryParams']);
+        const paramValue = JSON.parse(queryParams['filterQueryParams'] as string);
         this.handleFilterChange(paramValue);
       }
     });
