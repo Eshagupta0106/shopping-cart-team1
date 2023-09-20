@@ -1,15 +1,14 @@
 package com.shoppingcartteam1.serverside.controller;
 
 import org.springframework.web.bind.annotation.RestController;
-
 import com.shoppingcartteam1.serverside.mongodbcollection.Product;
 import com.shoppingcartteam1.serverside.mongodbrepository.CartProductRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.CartRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.ProductRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.UserRepository;
+import com.shoppingcartteam1.serverside.service.ProductService;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/")
@@ -34,12 +34,14 @@ public class RouteController {
 	private ProductRepository productRepository;
 	@Autowired
 	CartProductRepository cartProductRepository;
+	
     private final MongoTemplate mongoTemplate;
+	private final ProductService productService;
 
     @Autowired
-    public RouteController(MongoTemplate mongoTemplate) {
+    public RouteController(MongoTemplate mongoTemplate,ProductService productService) {
         this.mongoTemplate = mongoTemplate;
-
+		this.productService = productService;
     }
 	@GetMapping(value = { "/", "/{path:[^\\.]*}" })
 	public String redirectToAngularRoute() {
@@ -55,58 +57,69 @@ public class RouteController {
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
+	
+	@ResponseBody
+	@GetMapping("/search")
+	public ResponseEntity<List<Product>> searchProducts(@RequestParam("query") String query) {
 
-    @ResponseBody
-    @GetMapping("/products/{id}")
-    public Product getProductbyId(@PathVariable int id) {
-        return productRepository.findById(id).orElse(null);
-    }
+		List<Product> products = productService.searchProducts(query);
 
-    @ResponseBody
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> filterProducts(
-            @RequestParam(value = "category", defaultValue = "{}", required = false) String categoryParam,
-            @RequestParam(value = "availability", defaultValue = "All") String availability,
-            @RequestParam(value = "minPrice", defaultValue = "0") Integer minPrice,
-            @RequestParam(value = "maxPrice", defaultValue = "5000") Integer maxPrice,
-            @RequestParam(value = "minRating", required = false) Double minRating) {
+		return new ResponseEntity<>(products, HttpStatus.OK);
+	}
 
-        String[] categories = categoryParam.split(",");
+	@ResponseBody
+	@GetMapping("/products/{id}")
+	public Product getProductbyId(@PathVariable int id) {
+		return productRepository.findById(id).orElse(null);
+	}
 
-        Criteria availabilityCriteria;
-        if ("All".equals(availability)) {
-            availabilityCriteria = Criteria.where("availability").in("In Stock", "Out of Stock");
-        } else {
-            availabilityCriteria = Criteria.where("availability").is(availability);
-        }
+	@ResponseBody
+	@GetMapping("/products")
+	public ResponseEntity<List<Product>> filterProducts(
+			@RequestParam(value = "category", defaultValue = "{}", required = false) String categoryParam,
+			@RequestParam(value = "availability", defaultValue = "All") String availability,
+			@RequestParam(value = "minPrice", defaultValue = "0") Integer minPrice,
+			@RequestParam(value = "maxPrice", defaultValue = "5000") Integer maxPrice,
+			@RequestParam(value = "minRating", defaultValue = "0", required = false) Double minRating) {
 
-        Query query = new Query()
-                .addCriteria(availabilityCriteria)
-                .addCriteria(Criteria.where("price").gte(minPrice).lte(maxPrice));
-        /*
-         * if (categories.length == 0 && "All".equals(availability) && minPrice == 0 &&
-         * maxPrice == 5000
-         * && minRating == 0) {
-         * System.out.println("Default filters working");
-         * List<Product> filterProducts = mongoTemplate.findAll(Product.class);
-         * System.out.println(filterProducts);
-         * return ResponseEntity.ok(filterProducts);
-         * }
-         */
+		String[] categories = categoryParam.split(",");
 
-        if (categories.length > 0) {
+		Criteria availabilityCriteria;
+		if ("All".equals(availability)) {
+			availabilityCriteria = Criteria.where("availability").in("In Stock", "Out of Stock");
+		} else {
+			availabilityCriteria = Criteria.where("availability").is(availability);
+		}
 
-            Criteria categoryCriteria = Criteria.where("category").in((Object[]) categories);
-            query.addCriteria(categoryCriteria);
-        }
+		Query query = new Query().addCriteria(availabilityCriteria)
+				.addCriteria(Criteria.where("price").gte(minPrice).lte(maxPrice));
 
-        if (minRating != null) {
-            query.addCriteria(Criteria.where("rating").gte(minRating));
-        }
+		if ("{}".equals(categoryParam) && "All".equals(availability) && minPrice == 0 && maxPrice == 5000
+				&& minRating == 0) {
+			System.out.println("Default filters working");
+			List<Product> filterProducts = mongoTemplate.findAll(Product.class);
+			System.out.println(filterProducts);
+			return ResponseEntity.ok(filterProducts);
+		}
 
-        List<Product> filterProducts = mongoTemplate.find(query, Product.class);
+		if (categories.length > 0) {
 
-        return ResponseEntity.ok(filterProducts);
+			Criteria categoryCriteria = Criteria.where("category").in((Object[]) categories);
+			query.addCriteria(categoryCriteria);
+		}
 
-    }
+		if (minRating != null) {
+			query.addCriteria(Criteria.where("rating").gte(minRating));
+		}
+
+		List<Product> filterProducts = mongoTemplate.find(query, Product.class);
+
+		System.out.println(query);
+
+		for (Product product : filterProducts) {
+			System.out.println(product);
+		}
+		return ResponseEntity.ok(filterProducts);
+
+	}
 }

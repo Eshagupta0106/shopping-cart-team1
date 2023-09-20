@@ -26,7 +26,6 @@ export class CatalogComponent implements OnInit {
   };
   notifyValue: string = '';
   isSideBar: boolean = false;
-  // isFilterApplied: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
