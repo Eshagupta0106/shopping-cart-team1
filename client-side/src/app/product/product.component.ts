@@ -5,7 +5,7 @@ import { CartService } from '../service/cart.service';
 import { RegisterService } from '../service/register.service';
 import { Product } from '../models/product.model';
 import { FilterService } from '../service/filter.service';
-
+import { CookieInteractionService } from '../service/cookieinteraction.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -25,7 +25,8 @@ export class ProductComponent implements OnInit {
     private router: Router,
     private cartService: CartService,
     private registerService: RegisterService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private cookieInteractionService : CookieInteractionService
   ) { }
 
   ngOnInit(): void {
@@ -71,8 +72,13 @@ export class ProductComponent implements OnInit {
   async addToCart() {
     this.hideNotification = true;
     this.hideNotificationAfterDelay(1500);
-    if (this.product && this.quantity) {
-      await this.cartService.addToCart(this.product, this.quantity);
+    if(this.cookieInteractionService.getCookieItem('currentUser')){
+      if (this.product && this.quantity) {
+        await this.cartService.addToCart(this.product, this.quantity);
+      }
+    }
+    else{
+      this.router.navigate(['/signIn']);
     }
   }
 
