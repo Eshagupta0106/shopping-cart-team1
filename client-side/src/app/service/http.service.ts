@@ -7,7 +7,8 @@ import { User } from '../models/user.model';
 })
 export class HttpService {
   constructor(private http: HttpClient) { }
-  mainUrl = 'http://localhost:8093';
+  // mainUrl = 'http://localhost:8093';
+  mainUrl = 'http://localhost:8095';
   postData(url: string, data: object): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
