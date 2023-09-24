@@ -1,8 +1,7 @@
 package com.shoppingcartteam1.serversidemysql.table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,19 +10,24 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "image")
-public class ProductImage {
+@Table(name = "cartItem")
+public class CartItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private int id;
 
-	private String imageUrl;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_id")
-	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
+
+	@Column(name = "quantity", nullable = false)
+	private int quantity;
+
+	@ManyToOne
+	@JoinColumn(name = "cart_id", nullable = false)
+	private Cart cart_id;
 
 	public int getId() {
 		return id;
@@ -31,14 +35,6 @@ public class ProductImage {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 
 	public Product getProduct() {
@@ -49,14 +45,20 @@ public class ProductImage {
 		this.product = product;
 	}
 
-	public ProductImage() {
-		super();
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public ProductImage(String imageUrl, Product product) {
-		super();
-		this.imageUrl = imageUrl;
-		this.product = product;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public Cart getCart_id() {
+		return cart_id;
+	}
+
+	public void setCart_id(Cart cart_id) {
+		this.cart_id = cart_id;
 	}
 
 }
