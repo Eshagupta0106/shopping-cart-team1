@@ -29,17 +29,25 @@ public class SecurityConfig {
 	private PasswordEncoder passwordEncoder;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable()).cors(cors -> cors.disable())
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/home/**").permitAll()
-						.requestMatchers("auth/login").permitAll().requestMatchers("auth/create-user").permitAll()
-						.requestMatchers("hotel").permitAll().anyRequest().permitAll())
-				.exceptionHandling(ex -> ex.authenticationEntryPoint(point))
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
-		return http.build();
-	}
+	  public SecurityFilterChain securityFilterChain(HttpSecurity http)
+	    throws Exception {
+	    http
+	      .csrf(csrf -> csrf.disable())
+	      .cors(cors -> cors.disable())
+	      .authorizeHttpRequests(auth ->
+	        auth
+//	          .requestMatchers("/cart")
+//	          .authenticated()
+	          .requestMatchers("/**")
+	          .permitAll()
+	      )
+	      .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+	      .sessionManagement(session ->
+	        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	      );
+	    http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+	    return http.build();
+	  }
 
 	@Bean
 	public DaoAuthenticationProvider doDaoAuthenticationProvider() {
