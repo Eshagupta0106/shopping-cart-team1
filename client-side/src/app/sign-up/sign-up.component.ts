@@ -5,6 +5,7 @@ import { HttpService } from '../service/http.service';
 import { CookieInteractionService } from '../service/cookieinteraction.service';
 import { LocalstorageService } from '../service/localstorage.service';
 import { CartService } from '../service/cart.service';
+import { FilterService } from '../service/filter.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -35,7 +36,8 @@ export class SignUpComponent {
     private httpService: HttpService,
     private cartService: CartService,
     private cookieInteractionService: CookieInteractionService,
-    private localStorageService: LocalstorageService
+    private localStorageService: LocalstorageService,
+    private filterService: FilterService
   ) { }
   showAlert: boolean = true;
   showSignIn: boolean = false;
@@ -63,7 +65,9 @@ export class SignUpComponent {
         await this.cartService.getCartItems();
         this.localStorageService.setLocalStorageItem('cart', JSON.stringify(this.cartService.cart));
         setTimeout(() => {
-          this.route.navigate(['/home']);
+          const filters = this.filterService.getStoredFilters();
+          const filterQueryParams = JSON.stringify(filters);
+          this.route.navigate(['/catalog'], { queryParams: { filterQueryParams } });
         }, 1000);
       } else {
         this.showAlert = false;
@@ -101,7 +105,9 @@ export class SignUpComponent {
         this.hideNotification = true;
         this.notifyValue = 'Welcome to our website ' + userInfo.firstName;
         setTimeout(() => {
-          this.route.navigate(['/home']);
+          const filters = this.filterService.getStoredFilters();
+          const filterQueryParams = JSON.stringify(filters);
+          this.route.navigate(['/catalog'], { queryParams: { filterQueryParams } });
         }, 1000);
       }
     } catch (error) {

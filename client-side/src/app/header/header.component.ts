@@ -87,6 +87,7 @@ export class HeaderComponent {
     if (this.localStorageService.getLocalStorageItem('cart')) {
       this.localStorageService.removeLocalStorageItem('cart');
     }
+   this.filterService.resetAppliedFilters();
     setTimeout(() => {
       this.hideNotification = false;
       this.route.navigate(['/signIn']);

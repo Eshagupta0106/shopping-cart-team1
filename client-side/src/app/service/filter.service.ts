@@ -12,6 +12,7 @@ export class FilterService {
   public appliedFiltersSubject = new BehaviorSubject<Filter | null>(
     this.getStoredFilters() || null
   );
+  filterParams: any;
 
   public getStoredFilters(): Filter | null {
     const storedFilters = localStorage.getItem(this.appliedFiltersKey);
@@ -39,5 +40,14 @@ export class FilterService {
     localStorage.removeItem(this.appliedFiltersKey);
     this.appliedFiltersSubject.next(null);
   }
-
+  resetAppliedFilters(){
+    const filters = {
+      category: {},
+      availability: 'All',
+      minPrice: 0,
+      maxPrice: 5000,
+      minRating: 0,
+    };
+    this.setAppliedFilters(filters);
+  }
 }

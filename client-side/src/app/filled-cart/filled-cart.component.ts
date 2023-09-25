@@ -62,10 +62,10 @@ export class FilledCartComponent implements OnInit {
     const cartItemIndex = this.cart.findIndex((cartItem: CartItem) => cartItem.product.id == item.product.id);
     if (cartItemIndex !== -1) {
       if (action == 'increase') {
-        this.cart[cartItemIndex].quantity += 1;
+        this.cart[cartItemIndex].quantity += 1; 
       }
       else {
-        this.cart[cartItemIndex].quantity -= 1;
+        this.cart[cartItemIndex].quantity -= 1;  
       }
       this.localStorageService.setLocalStorageItem('cart', JSON.stringify(this.cart));
     }
