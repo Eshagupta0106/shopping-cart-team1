@@ -71,9 +71,7 @@ then you should be able to see products in catalog page of our website.
 
 Server for Client-side: `ng serve --host 0.0.0.0 --port 5000`
 
-Server for Server-side with mongodb: 'http://localhost:8093'
-
-Server for Server-side with mysql: 'http://localhost:8095'
+Server for Server-side: 'http://localhost:8093'
 
 ## Usage
 
