@@ -21,7 +21,8 @@
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 mb-4">
         <div *ngFor="let product of filteredProducts" class="p-4">
           <a (click)="navigateToProduct(product)" class="block hover:opacity-75 transition">
-            <img [src]="product.image[0]" alt="{{ product.name }}"
+            <!-- <img [src]="product.image[0]" alt="{{ product.name }}" -->
+            <img [src]="product.image[0].imageUrl" alt="{{ product.name }}"
               class="w-full h-72 rounded-lg shadow-md hover:scale-150 transition duration-500 cursor-pointer object-cover" />
           </a>
           <p class="mt-2 text-center text-white text-lg">{{ product.name }}</p>
