@@ -28,10 +28,6 @@ export class FilledCartComponent implements OnInit {
     this.location.back();
   }
 
-  removeAllItems(): void {
-    // this.cartService.clearCart();
-  }
-
   async removeItem(item: CartItem) {
     this.showNotification = true;
     const cartItemIndex = this.cart.findIndex((cartItem: CartItem) => cartItem.product.id == item.product.id);

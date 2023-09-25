@@ -55,7 +55,7 @@ export class CheckoutComponent {
   }
 
   onSubmit() {
-    // this.cartService.clearCart();
+    this.cartService.clearCart();
     setTimeout(() => {
       this.route.navigate(['/thankYou']);
     }, 600);
