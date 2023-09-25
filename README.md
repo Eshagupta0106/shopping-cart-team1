@@ -15,39 +15,64 @@ If you encounter any errors regarding installations of below modules, follow:
  `npm install -g @angular/cli`, `npm install flowbite`, `npm install @fortawesome/fontawesome-free`
 
 ### To run application and store data in mongodb
-You will have to uncomment some lines of code in client-side->src->app
+
+* You will have to uncomment some lines of code in client-side->src->app
 1. catalog -> catalog.component.html
-   
 Lines
 -> uncomment 24, 25
 -> comment 26, 27
-3. filled-cart -> filled-cart.component.html
+2. filled-cart -> filled-cart.component.html
 Lines
 -> uncomment 24, 25
 -> comment 26, 27
-4. product -> product.component.html
+3. product -> product.component.html
 Lines
 -> uncomment 11, 12
 -> comment 13, 14
-5. service -> product.service.ts
-Lines 
--> uncomment 14
--> comment 15
-6. service -> http.service.ts
-Lines
--> uncomment 10
--> comment 11
-7. service -> cart.service.ts
-Lines
--> uncomment 62, 85, 126, 155
--> comment 63, 86, 127, 156
 
 * Open server-side -> src/main/java -> com.shoppingcartteam1.serverside -> ServerSideApplication.java 
 * Right click -> Run As -> Java Application
 
+### To run application and store data in mysql
+
+* You will have to uncomment some lines of code in client-side->src->app
+1. catalog -> catalog.component.html
+Lines
+-> uncomment 26, 27
+-> comment 24, 25
+2. filled-cart -> filled-cart.component.html
+Lines
+-> uncomment 26, 27
+-> comment 24, 25
+3. product -> product.component.html
+Lines
+-> uncomment 13, 14
+-> comment 11, 12
+
+* Open Mysql command line client
+* `create schema shopping_cart_team_1_db'
+* In serverside-mysql -> src/main/resources -> application.properties
+* Replace below lines with your mysql username and password
+  
+`spring.datasource.username= <your-mysql-username>`
+
+`spring.datasource.password= <your-mysql-password>`
+
+* Now, open serverside-mysql -> src/main.java -> com.shoppingcartteam1.serversidemysql -> ServersideMysqlApplication.java
+* Right click in the file -> Run As -> Java Application
+* All the required tables will be created in database
+https://drive.google.com/drive/folders/1AIFbucwOCFa6_o9jtDblW_FUH-ujm7Sz?usp=sharing
+Open the link above, 
+copy contents of product.sql and insert the records to product table
+then copy contents of image.sql and insert records to image table
+then you should be able to see products in catalog page of our website. 
+
 ## Development server
+
 Server for Client-side: `ng serve --host 0.0.0.0 --port 5000`
+
 Server for Server-side with mongodb: 'http://localhost:8093'
+
 Server for Server-side with mysql: 'http://localhost:8095'
 
 ## Usage
