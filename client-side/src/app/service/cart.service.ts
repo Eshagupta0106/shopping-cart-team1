@@ -3,7 +3,6 @@ import { CartItem } from '../models/cartItem.model';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieInteractionService } from './cookieinteraction.service';
-import { map } from 'rxjs';
 import { Product } from '../models/product.model';
 import { LocalstorageService } from './localstorage.service';
 
@@ -38,6 +37,7 @@ export class CartService {
   }
 
   async buyNow(product: any, quantity: number) {
+    this.loadCart();
     if (!this.itemInCart(product)) {
       this.cart.push({ product, quantity });
       this.localStorageService.setLocalStorageItem('cart', JSON.stringify(this.cart));
@@ -102,12 +102,14 @@ export class CartService {
     this.cart = JSON.parse(this.localStorageService.getLocalStorageItem('cart') as string);
   }
 
-  // clearCart(): void {
-  //   localStorage.removeItem('cartItem');
-  //   this.cart = [];
-  //   localStorage.removeItem('cartValue');
-  // this.cartValue.next(0);
-  // }
+  async clearCart(): Promise<void> {
+    const cart = JSON.parse(this.localStorageService.getLocalStorageItem('cart') as string);
+    this.localStorageService.setLocalStorageItem('cart',JSON.stringify([]));
+    this.cart = [];
+    for (const cartItem of cart) {
+      await this.removeItem(cartItem.product.id);
+    }
+  }
 
   async removeItem(id: number): Promise<void> {
     let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
