@@ -17,26 +17,27 @@ If you encounter any errors regarding installations of below modules, follow:
 ### To run application and store data in mongodb
 You will have to uncomment some lines of code in client-side->src->app
 1. catalog -> catalog.component.html
+   
 Lines
 -> uncomment 24, 25
 -> comment 26, 27
-2. filled-cart -> filled-cart.component.html
+3. filled-cart -> filled-cart.component.html
 Lines
 -> uncomment 24, 25
 -> comment 26, 27
-3. product -> product.component.html
+4. product -> product.component.html
 Lines
 -> uncomment 11, 12
 -> comment 13, 14
-4. service -> product.service.ts
+5. service -> product.service.ts
 Lines 
 -> uncomment 14
 -> comment 15
-5. service -> http.service.ts
+6. service -> http.service.ts
 Lines
 -> uncomment 10
 -> comment 11
-6. service -> cart.service.ts
+7. service -> cart.service.ts
 Lines
 -> uncomment 62, 85, 126, 155
 -> comment 63, 86, 127, 156
