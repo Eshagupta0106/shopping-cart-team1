@@ -60,7 +60,6 @@ export class CartService {
     try {
       const response = await this.http
         .post("http://localhost:8093/cart/addCartProduct", JSON.stringify(data), { headers: headers, responseType: 'text' })
-        // .post("http://localhost:8095/cart/addCartProduct", JSON.stringify(data), { headers: headers, responseType: 'text' })
         .toPromise();
       console.log(response);
     } catch (error) {
@@ -83,7 +82,6 @@ export class CartService {
       try {
         const response = await this.http
           .get("http://localhost:8093/cart/getCart", { headers: headers })
-          // .get("http://localhost:8095/cart/getCart", { headers: headers })
           .toPromise();
 
         this.cart = response as CartItem[];
@@ -124,7 +122,6 @@ export class CartService {
     try {
       await this.http
         .delete("http://localhost:8093/cart/deleteCartProduct", { headers: headers, params: params })
-        // .delete("http://localhost:8095/cart/deleteCartProduct", { headers: headers, params: params })
         .toPromise();
     } catch (error) {
       console.log(error);
@@ -153,7 +150,6 @@ export class CartService {
     try {
       await this.http
         .put("http://localhost:8093/cart/editCartProductQuantity", null, { params: params, headers: headers })
-        // .put("http://localhost:8095/cart/editCartProductQuantity", null, { params: params, headers: headers })
         .toPromise();
     } catch (error) {
       console.log(error);
