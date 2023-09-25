@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Filter } from '../models/filter.model';
 import { Router } from '@angular/router';
+import { FilterService } from '../service/filter.service';
 @Component({
   selector: 'app-empty-cart',
   templateUrl: './empty-cart.component.html',
@@ -16,6 +17,7 @@ export class EmptyCartComponent {
   }; 
   constructor(
     private route: Router,
+    private filterService : FilterService
   ) { }
   navigateToCatalog(){
     this.filterParams.category = {};
@@ -24,6 +26,7 @@ export class EmptyCartComponent {
     this.filterParams.maxPrice = 5000;
     this.filterParams.minRating = 0;
     const filterQueryParams = JSON.stringify(this.filterParams);
+    this.filterService.resetAppliedFilters();
     this.route.navigate(['/catalog'], { queryParams: { filterQueryParams } });
   }
 }
