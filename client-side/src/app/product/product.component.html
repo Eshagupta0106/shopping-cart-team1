@@ -8,7 +8,8 @@
       <div class="w-full md:w-1/2 md:relative md:p-4">
         <div class="flex flex-wrap">
           <div *ngFor="let image of product.image" class="w-full md:w-1/2 p-2">
-            <img [src]="image" alt="{{ product.name }}"
+            <!--<img [src]="image" alt="{{ product.name }}"  -->
+            <img [src]="image.imageUrl" alt="{{ product.name }}"
               class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition duration-500 cursor-pointer object-cover" />
           </div>
         </div>
@@ -46,6 +47,7 @@
                 <span class="text-xl font-semibold text-gray-700">+</span>
               </button>
             </div>
+
             <div class="mt-6">
               <button (click)="addToCart()"
                 class="addtocart w-full bg-black text-white rounded-lg py-2 px-4 text-lg md:text-xl mb-2 font-semibold"
@@ -57,7 +59,7 @@
                 *ngIf="product.availability === 'In Stock'">
                 Buy Now
               </button>
-              <p *ngIf="product.availability === 'Out of Stock'" class="text-red-500 text-bold font-extrabold mt-4">
+              <p *ngIf="product.availability === 'Out Of Stock'" class="text-red-500 text-bold font-extrabold mt-4">
                 This product is out of stock and cannot be purchased.
               </p>
             </div>

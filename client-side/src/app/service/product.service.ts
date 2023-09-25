@@ -11,7 +11,7 @@ import { Filter } from '../models/filter.model';
 })
 export class ProductService {
 
-  // private apiUrl = 'http://localhost:8093';
+  //private apiUrl = 'http://localhost:8093';
   private apiUrl = 'http://localhost:8095';
   constructor(private http: HttpClient, private route: Router) { }
   private cart: CartItem[] = [];
