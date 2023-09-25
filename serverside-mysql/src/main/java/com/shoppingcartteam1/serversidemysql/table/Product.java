@@ -3,6 +3,7 @@ package com.shoppingcartteam1.serversidemysql.table;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,10 +27,8 @@ public class Product {
 	private String description;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ProductImage> image;
+    private List<ProductImage> image;
 
-	public Product() {
-	}
 
 	public int getId() {
 		return id;
@@ -108,5 +107,10 @@ public class Product {
 		this.description = description;
 		this.image = image;
 	}
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
+	
 }
