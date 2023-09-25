@@ -16,9 +16,13 @@ export class HttpService {
     return this.http
       .post(this.mainUrl + url, data, { headers: headers, responseType: 'text' });
   }
-  getUser(email: string): Observable<any> {
+  getUser(email: string): Observable<string> {
     let params = new HttpParams();
     params = params.set('email', email);
-    return this.http.get<User>(this.mainUrl + '/auth/getUser', { params });
+    return this.http.get(this.mainUrl + '/auth/getUser', {
+      params: params,
+      responseType: 'text'
+    });
   }
+  
 }

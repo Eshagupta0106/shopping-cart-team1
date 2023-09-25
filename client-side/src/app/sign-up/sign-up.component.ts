@@ -86,11 +86,11 @@ export class SignUpComponent {
     };
 
     try {
-      const user = await this.httpService.getUser(this.email).toPromise();
+      const userPresent = await this.httpService.getUser(this.email).toPromise();
       if (this.email.trim().length == 0 || userInfo.password.trim().length == 0) {
         this.alertMessage = 'Fields are not filled';
         this.showAlert = false;
-      } else if (user) {
+      } else if (userPresent == 'Found') {
         this.alertMessage = 'User already has an account';
         this.showAlert = false;
       } else {
