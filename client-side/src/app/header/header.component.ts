@@ -48,11 +48,11 @@ export class HeaderComponent {
   }
 
   navigateCart() {
-    const user = JSON.parse(this.cookieInteractionService.getCookieItem('currentUser') as string);
+    const user = this.cookieInteractionService.getCookieItem('currentUser');
     if (user) {
       this.route.navigate(['/cart']);
     } else {
-      this.route.navigate(['/signIn']);
+      this.route.navigate(['/emptyCart']);
     }
   }
 

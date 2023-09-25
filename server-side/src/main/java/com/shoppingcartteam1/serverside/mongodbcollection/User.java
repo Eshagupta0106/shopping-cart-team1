@@ -2,6 +2,7 @@ package com.shoppingcartteam1.serverside.mongodbcollection;
 
 import java.util.Collection;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
@@ -12,14 +13,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Component
 @Document(collection = "users")
 public class User implements UserDetails {
+	@Id
+	private ObjectId id;
 	private String firstName;
 	private String lastName;
-	@Id
 	private String email;
 	private String password;
 	@DBRef
 	private Cart cart;
+	
 
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -95,4 +105,5 @@ public class User implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
 }

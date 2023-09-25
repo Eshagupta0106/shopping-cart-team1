@@ -1,14 +1,11 @@
 package com.shoppingcartteam1.serverside.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
 import com.shoppingcartteam1.serverside.mongodbcollection.Product;
 import com.shoppingcartteam1.serverside.mongodbrepository.CartProductRepository;
-import com.shoppingcartteam1.serverside.mongodbrepository.CartRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.ProductRepository;
-import com.shoppingcartteam1.serverside.mongodbrepository.UserRepository;
 import com.shoppingcartteam1.serverside.service.ProductService;
-import com.shoppingcartteam1.serverside.service.ProductService;
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -22,16 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/")
 @CrossOrigin(origins = "*")
 public class RouteController {
-	@Autowired
-	private CartRepository cartRepository;
-	@Autowired
-	private UserRepository userRepository;
 	@Autowired
 	private ProductRepository productRepository;
 	@Autowired

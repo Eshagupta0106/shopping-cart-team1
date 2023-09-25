@@ -11,3 +11,7 @@ button {
 button:hover {
     font-weight: bolder;
 }
+.display{
+    display : none;
+    cursor: auto;
+}
