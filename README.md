@@ -30,8 +30,9 @@ Lines
 -> uncomment 11, 12
 -> comment 13, 14
 
-* Open server-side -> src/main/java -> com.shoppingcartteam1.serverside -> ServerSideApplication.java 
-* Right click -> Run As -> Java Application
+Open other terminal and make sure you are in root directory `shopping-cart-team1`
+Give command `./run.bat`
+Then choose 1
 
 ### To run application and store data in mysql
 
@@ -58,8 +59,10 @@ Lines
 
 `spring.datasource.password= <your-mysql-password>`
 
-* Now, open serverside-mysql -> src/main.java -> com.shoppingcartteam1.serversidemysql -> ServersideMysqlApplication.java
-* Right click in the file -> Run As -> Java Application
+If mongodb is already running terminate it, Open other terminal and make sure you are in root directory `shopping-cart-team1`
+Give command `./run.bat`
+Then choose 2
+
 * All the required tables will be created in database
 https://drive.google.com/drive/folders/1AIFbucwOCFa6_o9jtDblW_FUH-ujm7Sz?usp=sharing
 Open the link above, 
