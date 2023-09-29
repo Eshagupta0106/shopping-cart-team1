@@ -8,6 +8,10 @@ import { FilledCartComponent } from './filled-cart/filled-cart.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminUpdateProductComponent } from './admin-update-product/admin-update-product.component';
+import { AdminGuard } from './AdminGuard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,7 +22,10 @@ const routes: Routes = [
   { path: 'cart', component: FilledCartComponent },
   { path: 'signIn', component: SignUpComponent },
   { path: 'thankYou', component: ThankyouComponent },
-  { path: 'checkout', component: CheckoutComponent }
+  { path: 'checkout', component: CheckoutComponent },
+  {path:'adminaddproduct', component:AdminPageComponent,canActivate: [AdminGuard]},
+  {path:'admindashboard', component:AdminDashboardComponent,canActivate: [AdminGuard]},
+  {path: 'adminupdate/:id', component: AdminUpdateProductComponent,canActivate: [AdminGuard]}
 ];
 
 @NgModule({

@@ -1,0 +1,157 @@
+<link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+<link rel="stylesheet"
+    href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+
+
+<section class=" py-1 bg-blueGray-50">
+    <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+        <div *ngIf="product"
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <div class="rounded-t bg-white mb-0 px-6 py-6">
+                    <div class="text-center flex justify-between">
+                        <h6 class="text-blueGray-700 text-xl font-bold">
+                            Update Product
+                        </h6>
+                        <button type="submit"
+                            class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow-lg hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 w-32">
+                            Update
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+
+                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                        Product Information
+                    </h6>
+                    <div class="flex flex-wrap">
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label for="name" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                    Product Name
+                                </label>
+                                <input type="text" id="name" formControlName="name" [(ngModel)]="product.name"
+                                    name="name"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    required>
+                            </div>
+                            <div *ngIf="productForm.get('name')!.invalid && productForm.get('name')!.touched">
+                                <p class="error-text">Product Name is required.</p>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="category">
+                                    Category
+                                </label>
+                                <input type="text" formControlName="category" [(ngModel)]="product.category"
+                                    id="category" name="category" required
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                            </div>
+                            <div *ngIf="productForm.get('category')!.invalid && productForm.get('category')!.touched">
+                                <p class="error-text">Category is required.</p>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="price">
+                                    Price
+                                </label>
+                                <input type="number" id="price" formControlName="price" [(ngModel)]="product.price"
+                                    name="price"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    required>
+                            </div>
+                            <div *ngIf="productForm.get('price')!.invalid && productForm.get('price')!.touched">
+                                <p class="error-text">price is required.</p>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="availability">
+                                    Availability
+                                </label>
+                                <div class="flex">
+                                    <label class="block text-blueGray-600 text-sm font-bold mb-2 ml-2">
+                                        <input type="radio" formControlName="availability" [(ngModel)]="product.availability" name="availability" value="In Stock" required>
+                                        In Stock
+                                    </label>
+                                    <label class="block text-blueGray-600 text-sm font-bold mb-2 ml-2">
+                                        <input type="radio" formControlName="availability" [(ngModel)]="product.availability" name="availability" value="Out of Stock" required>
+                                        Out of Stock
+                                    </label>
+                                </div>
+                            </div>
+                            <div
+                                *ngIf="productForm.get('availability')!.invalid && productForm.get('availability')!.touched">
+                                <p class="error-text">Availability is required.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                        Product Description
+                    </h6>
+                    <div class="flex flex-wrap">
+                        <div class="w-full lg:w-12/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    for="description">
+                                </label>
+                                <textarea id="description" formControlName="description"
+                                    [(ngModel)]="product.description" name="description"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    required></textarea>
+                            </div>
+                            <div
+                                *ngIf="productForm.get('description')!.invalid && productForm.get('description')!.touched">
+                                <p class="error-text">Description is required.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                        Product Images
+                    </h6>
+                    <div class="flex ">
+                        <div class="w-full lg:w-12/12 px-4">
+
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="image">
+                            </label>
+                            <input type="file" id="image" formArrayName="image"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                name="image" (change)="onFileChange($event)" multiple>
+
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div *ngIf="(selectedImageUrls.length === 0 && !clearButtonClicked) || (clearButtonClicked)"
+                            class="error-text">
+                            Please select at least one image.
+                        </div>
+                        <h6 class="text-blueGray-400 text-sm mb-2 font-bold uppercase">Selected Images</h6>
+                        <button type="button" (click)="clearSelectedImages()"
+                            class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow-lg hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-100 w-25">
+                            Clear
+                        </button>
+                        <div class="flex flex-wrap">
+                            <div class="w-1/4 p-2" *ngFor="let imageUrl of selectedImageUrls">
+                                <img [src]="imageUrl" alt="Selected Image" class="max-w-full">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br>
+
+    </div>
+
+</section>

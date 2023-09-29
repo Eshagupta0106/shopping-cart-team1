@@ -30,7 +30,7 @@ export class FilledCartComponent implements OnInit {
 
   async removeItem(item: CartItem) {
     this.showNotification = true;
-    const cartItemIndex = this.cart.findIndex((cartItem: CartItem) => cartItem.product.id == item.product.id);
+    const cartItemIndex = this.cart.findIndex((cartItem: CartItem) => cartItem.product.id === item.product.id);
     if (cartItemIndex !== -1) {
       this.cart.splice(cartItemIndex, 1);
       this.localStorageService.setLocalStorageItem('cart', JSON.stringify(this.cart));
@@ -59,7 +59,7 @@ export class FilledCartComponent implements OnInit {
   }
 
   async changeQuantity(item: CartItem, action: string) {
-    const cartItemIndex = this.cart.findIndex((cartItem: CartItem) => cartItem.product.id == item.product.id);
+    const cartItemIndex = this.cart.findIndex((cartItem: CartItem) => cartItem.product.id === item.product.id);
     if (cartItemIndex !== -1) {
       if (action == 'increase') {
         this.cart[cartItemIndex].quantity += 1; 

@@ -20,6 +20,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminUpdateProductComponent } from './admin-update-product/admin-update-product.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { CookieService } from 'ngx-cookie-service';
     SignUpComponent,
     CheckoutComponent,
     ThankyouComponent,
+    AdminPageComponent,
+    AdminDashboardComponent,
+    AdminUpdateProductComponent,
   ],
   imports: [
     BrowserModule,

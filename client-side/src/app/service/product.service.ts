@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { CartItem } from '../models/cartItem.model';
 import { Router } from '@angular/router';
 import { Product } from '../models/product.model';
 import { Filter } from '../models/filter.model';
+import { CookieInteractionService } from './cookieinteraction.service';
+import { LocalstorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,7 @@ import { Filter } from '../models/filter.model';
 export class ProductService {
 
   private apiUrl = 'http://localhost:8093';
-  constructor(private http: HttpClient, private route: Router) { }
+  constructor(private http: HttpClient, private route: Router, private cookieInteractionService: CookieInteractionService, private localStorageService: LocalstorageService) { }
   private cart: CartItem[] = [];
   private searchedProducts: Product[] = [];
 
@@ -21,7 +23,7 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/products/all`);
   }
 
-  getProductById(id: number): Observable<any> {
+  getProductById(id: string): Observable<any> {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
   }
 
@@ -57,6 +59,22 @@ export class ProductService {
   }
   setSearchProducts(searchProducts: Product[]) {
     this.searchedProducts = searchProducts;
+  }
+
+  addProduct(product: any) {
+    let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
+    const headers = new HttpHeaders();
+    return this.http.post(`http://localhost:8093/admin/add`, product,{headers:headers});
+  }
+
+  deleteProduct(id: any): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8093/admin/delete/${id}`);
+  }
+
+  updateProduct(product:any,id:any):Observable<any>{
+    console.log(product)
+    return this.http.post<void>(`http://localhost:8093/admin/update-product/${id}`,product);
   }
 }
 

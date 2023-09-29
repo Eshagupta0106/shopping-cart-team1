@@ -17,11 +17,13 @@ export class CartService {
   ngOnInit() {
     this.loadCart();
   }
-  async addToCart(item: Product, quantity: number): Promise<void> {
+  async addToCart(item: any, quantity: number): Promise<void> {
     const cartItems = this.localStorageService.getLocalStorageItem('cart');
     if (cartItems) {
+      console.log(cartItems)
       const cart = JSON.parse(cartItems as string);
-      const ind = cart.findIndex((cartItem: CartItem) => cartItem.product.id == item.id);
+      console.log(cart)
+      const ind = cart.findIndex((cartItem: CartItem) => cartItem.product.id === item.id);
       if (ind !== -1) {
         cart[ind].quantity += quantity;
       } else {
@@ -36,7 +38,7 @@ export class CartService {
     await this.addToMongodbCart(item, quantity);
   }
 
-  async buyNow(product: any, quantity: number) {
+  async buyNow(product: Product, quantity: number) {
     this.loadCart();
     if (!this.itemInCart(product)) {
       this.cart.push({ product, quantity });
@@ -61,7 +63,7 @@ export class CartService {
       const response = await this.http
         .post("http://localhost:8093/cart/addCartProduct", JSON.stringify(data), { headers: headers, responseType: 'text' })
         .toPromise();
-      console.log(response);
+  
     } catch (error) {
       console.log("Failed post req|", error);
     }
@@ -109,7 +111,7 @@ export class CartService {
     }
   }
 
-  async removeItem(id: number): Promise<void> {
+  async removeItem(id: string): Promise<void> {
     let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
     currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
     const headers = new HttpHeaders({
@@ -136,7 +138,7 @@ export class CartService {
     return total;
   }
 
-  async changeQuantity(id: number, action: string): Promise<void> {
+  async changeQuantity(id: string, action: string): Promise<void> {
     let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
     currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
     const headers = new HttpHeaders({

@@ -105,11 +105,11 @@ public class CartController {
 			User user = userRepository.findUserCart((String) currentUser);
 			Cart cart = user.getCart();
 			List<CartProduct> cartProducts = cart.getProducts();
-			Product product = productRepository.findById((Integer) productId).orElse(null);
+			Product product = productRepository.findById((String) productId).orElse(null);
 			int flag = 0;
 			if (cartProducts != null && cartProducts.size() > 0) {
 				for (CartProduct cartProduct : cartProducts) {
-					if (cartProduct != null && cartProduct.getProduct().getId() == (Integer) productId) {
+					if (cartProduct != null && cartProduct.getProduct().getId() == (String) productId) {
 						cartProduct.setQuantity(cartProduct.getQuantity() + (Integer) quantity);
 						cartProductRepository.save(cartProduct);
 						flag = 1;
@@ -136,7 +136,7 @@ public class CartController {
 
 	@DeleteMapping("/deleteCartProduct")
 	public void deleteCartProduct(@RequestHeader("Authorization") String authorizationHeader,
-			@RequestParam("productId") int productId) {
+			@RequestParam("productId") String productId) {
 		String currentUser = getEmail(authorizationHeader);
 		User user = userRepository.findUserCart(currentUser);
 		if (user != null) {
@@ -161,7 +161,7 @@ public class CartController {
 
 	@PutMapping("/editCartProductQuantity")
 	public void editCartProductQuantity(@RequestHeader("Authorization") String authorizationHeader,
-			@RequestParam("productId") int productId, @RequestParam("action") String action) {
+			@RequestParam("productId") String productId, @RequestParam("action") String action) {
 		String currentUser = getEmail(authorizationHeader);
 		User user = userRepository.findUserCart(currentUser);
 		if (user != null) {

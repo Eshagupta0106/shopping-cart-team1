@@ -1,0 +1,69 @@
+<div class="mx-20 my-10">
+
+    <br>
+    <a routerLink="/adminaddproduct" class="inline-flex overflow-hidden text-white bg-gray-900 rounded group">
+        <span class="px-3.5 py-2 text-white bg-purple-500 group-hover:bg-purple-600 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+        </span>
+        <span class="pl-4 pr-5 py-2.5">Add Product</span>
+    </a>
+
+    <br>
+    <br>
+    <div class="mb-4">
+        <label for="availabilityFilter" class="block text-gray-700 text-sm font-bold mb-2">
+          Filter by Availability:
+        </label>
+        <select
+          id="availabilityFilter"
+          class="border rounded px-2 py-1"
+          [(ngModel)]="selectedAvailability"
+          (change)="filterProducts()"
+        >
+          <option value="">All</option>
+          <option value="In Stock">In Stock</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
+    </div>
+    
+    <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-4 py-3 sm:px-6">Product name</th>
+                    <th scope="col" class="px-4 py-3 sm:px-6">Category</th>
+                    <th scope="col" class="px-4 py-3 sm:px-6">Availability</th>
+                    <th scope="col" class="px-4 py-3 sm:px-6">Price</th>
+                    <th scope="col" class="px-4 py-3 sm:px-6 mx-5">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of Products" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-4 py-3 sm:px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ product.name }}
+                    </th>
+                    <td class="px-4 py-3 sm:px-6">
+                        {{ product.category }}
+                    </td>
+                    <td class="px-4 py-3 sm:px-6">
+                        {{ product.availability }}
+                    </td>
+                    <td class="px-4 py-3 sm:px-6">Rs. {{ product.price }}</td>
+                    <td class="px-4 py-3 sm:px-6">
+                        <a [routerLink]="'/adminupdate/' + product.id"  class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-3 sm:mr-5">
+                            Edit
+                        </a>
+                        <a (click)="deleteProduct(product)"
+                            class="font-medium text-red-600 dark:text-blue-500 hover:underline ml-3 sm:ml-5">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

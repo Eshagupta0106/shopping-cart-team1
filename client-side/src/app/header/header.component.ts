@@ -5,6 +5,7 @@ import { FilterService } from '../service/filter.service';
 import { CookieInteractionService } from '../service/cookieinteraction.service';
 import { LocalstorageService } from '../service/localstorage.service';
 import { ProductService } from '../service/product.service';
+import { RegisterService } from '../service/register.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -19,13 +20,15 @@ export class HeaderComponent {
   isMenu: boolean = true;
   hideNotification: boolean = false;
   category: string = '';
+ isUserAdmin:Boolean = false;
 
   constructor(
     private route: Router,
     private filterService: FilterService,
     private cookieInteractionService: CookieInteractionService,
     private localStorageService: LocalstorageService,
-    private productService: ProductService
+    private productService: ProductService,
+    private registerService:RegisterService
   ) {
 
   }
@@ -40,6 +43,7 @@ export class HeaderComponent {
       this.products = this.storedDta;
       this.filteredProducts = this.storedDta;
     }
+    this.isUserAdmin = this.registerService.isAdmin();
   }
 
 
@@ -97,4 +101,6 @@ export class HeaderComponent {
   showMenu() {
     this.isMenu = !this.isMenu;
   }
+
+
 }
