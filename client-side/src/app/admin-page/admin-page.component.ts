@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../service/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-page',
@@ -24,7 +25,7 @@ export class AdminPageComponent implements OnInit {
   
   selectedImageUrls: string[] = [];
 
-  constructor(private formBuilder: FormBuilder, private productService:ProductService) { }
+  constructor(private formBuilder: FormBuilder, private productService:ProductService, private router: Router) { }
 
   ngOnInit() {
     this.productForm = this.formBuilder.group({
@@ -62,10 +63,11 @@ export class AdminPageComponent implements OnInit {
     
       this.productService.addProduct(formData).subscribe(
         (response) => {
-          console.log('Product added:', response);
           this.productForm.reset();
           this.selectedImages = [];
           this.selectedImageUrls = [];
+          this.router.navigate(["/admindashboard"])
+
         },
         (error) => {
           console.error('Error adding product:', error);

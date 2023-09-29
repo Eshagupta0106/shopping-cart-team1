@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../service/product.service';
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
 import { Product } from '../models/product.model';
 
 @Component({
@@ -16,8 +14,6 @@ export class AdminDashboardComponent {
 
   constructor(
     private productService: ProductService,
-    private cookieService: CookieService,
-    private router: Router
   ) { }
   ngOnInit() {
 
@@ -31,22 +27,22 @@ export class AdminDashboardComponent {
   }
 
   deleteProduct(productToDelete: Product) {
-    this.productService.deleteProduct(productToDelete.id).subscribe();
-    const index = this.Products.findIndex(
-      (hotel: { hotelId: any }) => hotel.hotelId === productToDelete.id
-    );
-    if (index !== -1) {
-      this.Products.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(this.Products));
-      this.Products = JSON.parse(localStorage.getItem('cart') as string);
-    }
+    this.productService.deleteProduct(productToDelete.id).subscribe(() => {
+      const index = this.Products.findIndex(
+        (product: { id: any }) => product.id === productToDelete.id
+      );
+      if (index !== -1) {
+        this.Products.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(this.Products));
+      }
+      this.filterProducts();
+    });
   }
 
  
 
   filterProducts() {
     if (this.selectedAvailability === '') {
-      // If no availability filter is selected, show all products
       this.productService.getProducts().subscribe((response: any) => {
         this.Products = response;
         this.Products.sort((a: { price: number }, b: { price: number }) => {
@@ -54,7 +50,6 @@ export class AdminDashboardComponent {
         });
       });
     } else {
-      // If an availability filter is selected, filter products based on availability
       this.productService.getProducts().subscribe((response: any) => {
         this.Products = response.filter((product: Product) =>
           product.availability === this.selectedAvailability

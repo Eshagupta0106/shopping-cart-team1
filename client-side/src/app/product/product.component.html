@@ -8,10 +8,10 @@
       <div class="w-full md:w-1/2 md:relative md:p-4">
         <div class="flex flex-wrap">
           <div *ngFor="let image of product.image" class="w-full md:w-1/2 p-2">
-            <img [src]="image" alt="{{ product.name }}" 
-            class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition duration-500 cursor-pointer object-cover" />
-            <!-- <img [src]="image.imageUrl" alt="{{ product.name }}"
-              class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition duration-500 cursor-pointer object-cover" /> -->
+            <!-- <img [src]="image" alt="{{ product.name }}" 
+            class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition duration-500 cursor-pointer object-cover" /> -->
+            <img [src]="image.imageUrl" alt="{{ product.name }}"
+              class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition duration-500 cursor-pointer object-cover" />
           </div>
         </div>
       </div>

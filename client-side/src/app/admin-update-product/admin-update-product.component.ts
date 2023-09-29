@@ -85,10 +85,10 @@ export class AdminUpdateProductComponent implements OnInit {
 
       this.productService.updateProduct(formData, productData.id).subscribe(
         (response) => {
-          console.log('Product added:', response);
           this.productForm.reset();
           this.selectedImages = [];
           this.selectedImageUrls = [];
+          this.router.navigate(["/admindashboard"])
         },
         (error) => {
           console.error('Error adding product:', error);
