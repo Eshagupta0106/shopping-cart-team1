@@ -34,7 +34,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/home/**").permitAll()
 				          .requestMatchers("admin/update-product/").hasRole("ADMIN")
 						  .requestMatchers("admin/delete/").hasRole("ADMIN")
-						  .requestMatchers("admin/").hasRole("ADMIN")
+						  .requestMatchers("admin/add").hasRole("ADMIN")
 						.requestMatchers("hotel").permitAll().anyRequest().permitAll())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(point))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
