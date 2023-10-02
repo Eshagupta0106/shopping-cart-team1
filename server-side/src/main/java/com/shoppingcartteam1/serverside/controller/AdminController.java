@@ -81,10 +81,10 @@ public class AdminController {
 	}
 
 	@PostMapping("admin/update-product/{id}")
-	public ResponseEntity<?> updateProduct(@RequestParam("image") MultipartFile[] images,
+	public ResponseEntity<?> updateProduct(@RequestParam(value = "image", required = false) MultipartFile[] images,
 			@RequestParam("name") String name, @RequestParam("category") String category,
 			@RequestParam("price") int price, @RequestParam("availability") String availability,
-			@RequestParam("rating") double rating, @RequestParam("description") String description,@PathVariable("id") String id, @RequestHeader("Authorization") String authorizationHeader) throws IOException {
+			@RequestParam("rating") double rating, @RequestParam("description") String description,@PathVariable("id") String id) throws IOException {
 		System.out.println(name);
 		System.out.println(id);
 	    Optional<Product> existingProduct = productRepository.findById(id);
@@ -92,20 +92,25 @@ public class AdminController {
 	    if (existingProduct.isPresent()) {
 	        Product productToUpdate = existingProduct.get();
 	      
-	    	List<String> imageList = new ArrayList<>();
-			for (MultipartFile image : images) {
-				if (!image.isEmpty()) {
-					String data = cloudinaryImageService.upload(image);
-					imageList.add(data);
-				}
-			}
+
 			productToUpdate.setName(name);
 			productToUpdate.setCategory(category);
 			productToUpdate.setPrice(price);
 			productToUpdate.setAvailability(availability);
 			productToUpdate.setRating(rating);
-			productToUpdate.setImage(imageList.toArray(new String[0]));
 			productToUpdate.setDescription(description);
+			
+			if (images != null && images.length > 0) {
+				List<String> imageList = new ArrayList<>();
+	            for (MultipartFile image : images) {
+	                if (!image.isEmpty()) {
+	                    String imageUrl = cloudinaryImageService.upload(image);
+	                    imageList.add(imageUrl);
+	                }
+	            }
+	           productToUpdate.setImage(imageList.toArray(new String[0]));
+	        }
+
 	        productRepository.save(productToUpdate);
 
 	        return new ResponseEntity<>(productToUpdate, HttpStatus.OK);
@@ -113,6 +118,7 @@ public class AdminController {
 	        return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
 	    }
 	}
+	
 	
 	@DeleteMapping("admin/delete/{id}")
 	public void deleteHotel(@PathVariable String id, @RequestHeader("Authorization") String authorizationHeader) {
