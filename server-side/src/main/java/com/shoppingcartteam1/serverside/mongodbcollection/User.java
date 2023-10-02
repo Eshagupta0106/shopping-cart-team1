@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
+
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +20,9 @@ public class User implements UserDetails {
 	private String lastName;
 	private String email;
 	private String password;
+	private String role;
 	@DBRef
 	private Cart cart;
-	
 
 	public ObjectId getId() {
 		return id;
@@ -30,6 +31,7 @@ public class User implements UserDetails {
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -62,6 +64,14 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public Cart getCart() {
 		return cart;
 	}
@@ -72,7 +82,6 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

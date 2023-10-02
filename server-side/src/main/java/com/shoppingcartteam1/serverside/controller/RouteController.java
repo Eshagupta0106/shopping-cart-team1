@@ -64,68 +64,6 @@ public class RouteController {
 	public List<Product> getProducts() {
 		return productRepository.findAll();
 	}
-
-	@PostMapping(value = "/admin/add")
-	public ResponseEntity<?> addProduct(@RequestParam("image") MultipartFile[] images,
-			@RequestParam("name") String name, @RequestParam("category") String category,
-			@RequestParam("price") int price, @RequestParam("availability") String availability,
-			@RequestParam("rating") double rating, @RequestParam("description") String description) throws IOException {
-
-		List<String> imageList = new ArrayList<>();
-		for (MultipartFile image : images) {
-			if (!image.isEmpty()) {
-				String data = cloudinaryImageService.upload(image);
-				imageList.add(data);
-			}
-		}
-
-		Product product = new Product();
-		product.setName(name);
-		product.setCategory(category);
-		product.setPrice(price);
-		product.setAvailability(availability);
-		product.setRating(rating);
-		product.setImage(imageList.toArray(new String[0]));
-		product.setDescription(description);
-		productRepository.save(product);
-
-		return new ResponseEntity<>(product, HttpStatus.OK);
-
-	}
-
-	@PostMapping("admin/update-product/{id}")
-	public ResponseEntity<?> updateProduct(@RequestParam("image") MultipartFile[] images,
-			@RequestParam("name") String name, @RequestParam("category") String category,
-			@RequestParam("price") int price, @RequestParam("availability") String availability,
-			@RequestParam("rating") double rating, @RequestParam("description") String description,@PathVariable("id") String id) throws IOException {
-		System.out.println(name);
-		System.out.println(id);
-	    Optional<Product> existingProduct = productRepository.findById(id);
-
-	    if (existingProduct.isPresent()) {
-	        Product productToUpdate = existingProduct.get();
-	      
-	    	List<String> imageList = new ArrayList<>();
-			for (MultipartFile image : images) {
-				if (!image.isEmpty()) {
-					String data = cloudinaryImageService.upload(image);
-					imageList.add(data);
-				}
-			}
-			productToUpdate.setName(name);
-			productToUpdate.setCategory(category);
-			productToUpdate.setPrice(price);
-			productToUpdate.setAvailability(availability);
-			productToUpdate.setRating(rating);
-			productToUpdate.setImage(imageList.toArray(new String[0]));
-			productToUpdate.setDescription(description);
-	        productRepository.save(productToUpdate);
-
-	        return new ResponseEntity<>(productToUpdate, HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
-	    }
-	}
 	
 	@ResponseBody
 	@GetMapping("/search")
@@ -181,14 +119,6 @@ public class RouteController {
 
 		return ResponseEntity.ok(filterProducts);
 
-	}
-	
-	@DeleteMapping("admin/delete/{id}")
-	public void deleteHotel(@PathVariable String id) {
-		System.out.println(id);
-		Optional<Product> product = productService.findById(id);
-		Product products = product.get();
-		productRepository.deleteById(products.getId());
 	}
 	
 	

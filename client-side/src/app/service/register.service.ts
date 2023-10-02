@@ -17,7 +17,15 @@ export class RegisterService {
     }
   }
 
-  isAdmin(): Boolean {
-    return true;
+  isAdmin(): any {
+    let role=localStorage.getItem("role")||'';
+    if (role.includes("ADMIN")) {
+      return true;
+    }
+    return false;
+  }
+
+  setRole(role:string) {
+    localStorage.setItem("role",role);
   }
 }
