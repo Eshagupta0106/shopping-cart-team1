@@ -2,6 +2,7 @@ package com.shoppingcartteam1.serverside.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,14 @@ import com.shoppingcartteam1.serverside.mongodbcollection.User;
 import com.shoppingcartteam1.serverside.mongodbrepository.CartRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.UserRepository;
 import com.shoppingcartteam1.serverside.security.JwtHelperCls;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.Collection;
+
+
+
 
 @RestController
 @RequestMapping("/auth")
@@ -59,6 +68,15 @@ public class AuthController {
 		JwtResponse response = new JwtResponse();
 		response.setJwttoken(token);
 		response.setEmail(userDetails.getUsername());
+		// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		// if (authentication != null) {
+		//     Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		//     for (GrantedAuthority authority : authorities) {
+		//         System.out.println("User has role: " + authority.getAuthority());
+		//         if (authority.getAuthority().equals("ROLE_ADMIN")) {
+		//             System.out.println("This is role admin");		        }
+		//     }
+		// }
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -71,11 +89,25 @@ public class AuthController {
 		cart = cartRepository.save(cart);
 		user.setCart(cart);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		
+		if (user.getRole() == null || user.getRole().isEmpty() || user.getRole().equals(null)) {
+	        user.setRole("USER");
+	    }
+		List<User> users=userRepository.findAll();
+		if (users.size()==0) {
+			user.setRole("ADMIN");
+		}
+		
+		    
+		String role = user.getRole();
 		user = userRepository.save(user);
 		String jwtToken = helper.generateToken(user.getEmail());
 		JwtResponse response = new JwtResponse();
+		
+		UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+		
 		response.setJwttoken(jwtToken);
-		response.setEmail(user.getUsername());
+		response.setEmail(user.getEmail());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

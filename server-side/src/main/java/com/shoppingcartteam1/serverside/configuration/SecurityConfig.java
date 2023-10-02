@@ -32,7 +32,9 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable()).cors(cors -> cors.disable())
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/home/**").permitAll()
-						.requestMatchers("auth/login").permitAll().requestMatchers("auth/create-user").permitAll()
+						  .requestMatchers("admin/add").hasRole("ADMIN")
+						  .requestMatchers("admin/update-product/").hasRole("ADMIN")
+						  .requestMatchers("admin/delete/").hasRole("ADMIN")
 						.requestMatchers("hotel").permitAll().anyRequest().permitAll())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(point))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

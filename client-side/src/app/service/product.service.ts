@@ -64,17 +64,31 @@ export class ProductService {
   addProduct(product: any) {
     let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
     currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
-    const headers = new HttpHeaders();
-    return this.http.post(`http://localhost:8093/admin/add`, product,{headers:headers});
+    console.log(currentUserToken)
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${currentUserToken}`
+    });
+    return this.http.post(`http://localhost:8093/admin/add`, product,{ headers: headers, responseType: 'text' });
   }
 
   deleteProduct(id: any): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8093/admin/delete/${id}`);
+    let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
+    console.log(currentUserToken)
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${currentUserToken}`
+    });
+    return this.http.delete<void>(`http://localhost:8093/admin/delete/${id}`,{ headers: headers });
   }
 
   updateProduct(product:any,id:any):Observable<any>{
-    console.log(product)
-    return this.http.post<void>(`http://localhost:8093/admin/update-product/${id}`,product);
+    let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
+    currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
+    console.log(currentUserToken)
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${currentUserToken}`
+    });
+    return this.http.post<void>(`http://localhost:8093/admin/update-product/${id}`,product,{ headers: headers });
   }
 }
 
