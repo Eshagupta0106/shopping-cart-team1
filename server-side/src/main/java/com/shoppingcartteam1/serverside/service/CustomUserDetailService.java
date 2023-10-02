@@ -37,15 +37,12 @@ public class CustomUserDetailService implements UserDetailsService {
 				adminUsers.add(u.getEmail());
 			}
 		}
-		System.out.println(adminUsers);
 		if (adminUsers.contains(username)) {
 			authority = new SimpleGrantedAuthority("ROLE_ADMIN");
 		}
 		else {
 			authority = new SimpleGrantedAuthority("ROLE_USER");
 		}
-
-		System.out.println(Collections.singleton(authority));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
