@@ -30,6 +30,12 @@ import com.shoppingcartteam1.serversidemysql.table.User;
 import com.shoppingcartteam1.serversidemysql.repository.CartRepository;
 import com.shoppingcartteam1.serversidemysql.repository.UserRepository;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.Collection;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
@@ -57,14 +63,29 @@ public class AuthController {
 		this.doAuthenticate(request.getEmail(), request.getPassword());
 		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 		String token = this.helper.generateToken(userDetails.getUsername());
+		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
 		JwtResponse response = new JwtResponse();
 		response.setJwttoken(token);
 		response.setEmail(userDetails.getUsername());
+		SimpleGrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+		if (authorities.contains(adminAuthority)) {
+			response.setRole("ADMIN");
+			}
+		else {
+			response.setRole("USER");
+		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/signUp")
 	public ResponseEntity<JwtResponse> createUser(@RequestBody User user) {
+		if (user.getRole() == null || user.getRole().isEmpty() || user.getRole().equals(null)) {
+	        user.setRole("USER");
+	    }
+		List<User> users=userRepository.findAll();
+		if (users.size()==0) {
+			user.setRole("ADMIN");
+		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 		Cart cart = new Cart();
@@ -74,8 +95,10 @@ public class AuthController {
 		cartRepository.save(cart);
 		String jwtToken = helper.generateToken(user.getEmail());
 		JwtResponse response = new JwtResponse();
+		UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
 		response.setJwttoken(jwtToken);
 		response.setEmail(user.getUsername());
+		response.setRole(user.getRole());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

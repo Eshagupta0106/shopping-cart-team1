@@ -35,6 +35,9 @@ public class User implements UserDetails {
 	@Column(name = "password", nullable = false)
 	private String password;
 
+	@Column(name = "role", nullable = false)
+	private String role;
+
 	@OneToOne(mappedBy = "user")
 	@JsonIgnore
 	private Cart cart;
@@ -80,6 +83,14 @@ public class User implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public Cart getCart() {

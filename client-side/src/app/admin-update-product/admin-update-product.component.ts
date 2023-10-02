@@ -44,7 +44,7 @@ export class AdminUpdateProductComponent implements OnInit {
           this.product = data;
           this.selectedImages = [];
           this.selectedImageUrls = data.image;
-          // this.selectedImageUrls = data.image.map((imageObj: any) => imageObj.imageUrl);
+           this.selectedImageUrls = data.image.map((imageObj: any) => imageObj.imageUrl);
         },
         (error) => {
           console.error(error);
