@@ -64,7 +64,6 @@ export class ProductService {
   addProduct(product: any) {
     let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
     currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
-    console.log(currentUserToken)
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${currentUserToken}`
     });
@@ -74,7 +73,6 @@ export class ProductService {
   deleteProduct(id: any): Observable<void> {
     let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
     currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
-    console.log(currentUserToken)
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${currentUserToken}`
     });
@@ -84,7 +82,6 @@ export class ProductService {
   updateProduct(product:any,id:any):Observable<any>{
     let currentUserToken = this.cookieInteractionService.getCookieItem('currentUser');
     currentUserToken = currentUserToken?.substring(1, currentUserToken.length - 1) as string;
-    console.log(currentUserToken)
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${currentUserToken}`
     });

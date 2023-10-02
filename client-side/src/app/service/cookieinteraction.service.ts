@@ -15,6 +15,6 @@ export class CookieInteractionService {
         this.cookieService.set(key, value);
     }
     removeCookieItem(key: string): void {
-        this.cookieService.delete(key);
+        this.cookieService.deleteAll();
     }
 }

@@ -43,7 +43,12 @@ export class HeaderComponent {
       this.products = this.storedDta;
       this.filteredProducts = this.storedDta;
     }
-    this.isUserAdmin = this.registerService.isAdmin();
+    if(this.registerService.isAdmin()) {
+      this.isUserAdmin=true;
+    }
+    else {
+      this.isUserAdmin=false;
+    }
   }
 
 
@@ -88,6 +93,7 @@ export class HeaderComponent {
     this.hideNotification = true;
     this.showProfile = !this.showProfile;
     this.cookieInteractionService.removeCookieItem('currentUser');
+    this.registerService.setRole("");
     if (this.localStorageService.getLocalStorageItem('cart')) {
       this.localStorageService.removeLocalStorageItem('cart');
     }

@@ -6,6 +6,7 @@ import { CookieInteractionService } from '../service/cookieinteraction.service';
 import { LocalstorageService } from '../service/localstorage.service';
 import { CartService } from '../service/cart.service';
 import { FilterService } from '../service/filter.service';
+import { RegisterService } from '../service/register.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -37,7 +38,8 @@ export class SignUpComponent {
     private cartService: CartService,
     private cookieInteractionService: CookieInteractionService,
     private localStorageService: LocalstorageService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private registerService: RegisterService
   ) { }
   showAlert: boolean = true;
   showSignIn: boolean = false;
@@ -60,6 +62,7 @@ export class SignUpComponent {
       const userDetail = response;
       if (userDetail != "Credentials Invalid !!") {
         this.hideNotification = true;
+        this.registerService.setRole(JSON.stringify(JSON.parse(userDetail).role));
         this.notifyValue = ' You have been successfully logged in';
         this.cookieInteractionService.setCookieItem('currentUser', JSON.stringify(JSON.parse(userDetail).jwttoken));
         await this.cartService.getCartItems();

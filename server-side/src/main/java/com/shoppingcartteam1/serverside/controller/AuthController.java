@@ -33,9 +33,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Collection;
-
-
-
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @RestController
 @RequestMapping("/auth")
@@ -65,18 +63,17 @@ public class AuthController {
 		this.doAuthenticate(request.getEmail(), request.getPassword());
 		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 		String token = this.helper.generateToken(userDetails.getUsername());
+		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
 		JwtResponse response = new JwtResponse();
 		response.setJwttoken(token);
 		response.setEmail(userDetails.getUsername());
-		// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// if (authentication != null) {
-		//     Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		//     for (GrantedAuthority authority : authorities) {
-		//         System.out.println("User has role: " + authority.getAuthority());
-		//         if (authority.getAuthority().equals("ROLE_ADMIN")) {
-		//             System.out.println("This is role admin");		        }
-		//     }
-		// }
+		 SimpleGrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+		if (authorities.contains(adminAuthority)) {
+			response.setRole("ADMIN");
+			}
+		else {
+			response.setRole("USER");
+		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -108,6 +105,7 @@ public class AuthController {
 		
 		response.setJwttoken(jwtToken);
 		response.setEmail(user.getEmail());
+		response.setRole(user.getRole());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

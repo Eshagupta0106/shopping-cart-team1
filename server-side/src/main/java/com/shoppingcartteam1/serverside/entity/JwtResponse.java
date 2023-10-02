@@ -3,6 +3,7 @@ package com.shoppingcartteam1.serverside.entity;
 public class JwtResponse {
 	private String jwttoken;
 	private String email;
+	private String role;
 
 	public JwtResponse() {
 		super();
@@ -27,5 +28,13 @@ public class JwtResponse {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }
