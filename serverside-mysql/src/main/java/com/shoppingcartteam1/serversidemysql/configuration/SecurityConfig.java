@@ -38,9 +38,9 @@ public class SecurityConfig {
 	        auth
 //	          .requestMatchers("/cart")
 //	          .authenticated()
-            //   .requestMatchers("/admin/update-product/").hasRole("ADMIN")
-			//   .requestMatchers("/admin/delete/").hasRole("ADMIN")
-			//   .requestMatchers("/admin/add").hasRole("ADMIN")
+               .requestMatchers("/admin/update-product/").hasRole("ADMIN")
+			   .requestMatchers("/admin/delete/").hasRole("ADMIN")
+			   .requestMatchers("/admin/add").hasRole("ADMIN")
 	          .requestMatchers("/**")
 	          .permitAll()
 	      )
