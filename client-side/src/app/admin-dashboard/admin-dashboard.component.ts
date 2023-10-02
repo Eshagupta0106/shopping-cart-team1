@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Product } from '../models/product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,6 +15,7 @@ export class AdminDashboardComponent {
 
   constructor(
     private productService: ProductService,
+    private router:Router
   ) { }
   ngOnInit() {
 
@@ -27,17 +29,24 @@ export class AdminDashboardComponent {
   }
 
   deleteProduct(productToDelete: Product) {
-    this.productService.deleteProduct(productToDelete.id).subscribe(() => {
-      const index = this.Products.findIndex(
-        (product: { id: any }) => product.id === productToDelete.id
-      );
-      if (index !== -1) {
-        this.Products.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(this.Products));
+    this.productService.deleteProduct(productToDelete.id).subscribe(
+      () => {
+        const index = this.Products.findIndex(
+          (product: { id: any }) => product.id === productToDelete.id
+        );
+        if (index !== -1) {
+          this.Products.splice(index, 1);
+        }
+        this.filterProducts();
+        this.router.navigate(['/admindashboard']);
+      },
+      (error) => {
+
+        console.error('Error deleting product:', error);
       }
-      this.filterProducts();
-    });
+    );
   }
+  
 
  
 

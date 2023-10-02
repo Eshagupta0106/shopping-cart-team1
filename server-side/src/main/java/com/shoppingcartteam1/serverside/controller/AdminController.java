@@ -122,7 +122,6 @@ public class AdminController {
 	
 	@DeleteMapping("admin/delete/{id}")
 	public void deleteHotel(@PathVariable String id, @RequestHeader("Authorization") String authorizationHeader) {
-		System.out.println(id);
 		Optional<Product> product = productService.findById(id);
 		Product products = product.get();
 		productRepository.deleteById(products.getId());

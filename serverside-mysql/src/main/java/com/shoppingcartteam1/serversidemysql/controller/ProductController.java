@@ -173,15 +173,11 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/admin/delete/{id}")
-	public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+	public void deleteProduct(@PathVariable int id) {
 	    Optional<Product> productOptional = productRepository.findById(id);
-
 	    if (productOptional.isPresent()) {
 	        Product product = productOptional.get();
-	        productRepository.delete(product);
-	        return ResponseEntity.ok("Product deleted successfully.");
-	    } else {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
-	    }
+	        productRepository.deleteById(product.getId());
+	    } 
 	}
 }
