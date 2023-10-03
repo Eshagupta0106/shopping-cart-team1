@@ -40,7 +40,7 @@ public class SecurityConfig {
 //	          .authenticated()
                .requestMatchers("/admin/update-product/").hasRole("ADMIN")
 			   .requestMatchers("/admin/delete/").hasRole("ADMIN")
-			   .requestMatchers("/admin/add").hasRole("ADMIN")
+			   .requestMatchers("/admin/").hasRole("ADMIN")
 	          .requestMatchers("/**")
 	          .permitAll()
 	      )

@@ -38,9 +38,6 @@ public class ProductController {
 	private final ProductRepository productRepository;
 	
 	@Autowired
-	CloudinaryImageService cloudinaryImageService;
-	
-	@Autowired
 	ProductImageRepository productImageRepository;
 
 	@Autowired
@@ -93,91 +90,5 @@ public class ProductController {
 			return ResponseEntity.ok(filterProducts);
 		}
 
-	}
-
-	@PostMapping("/admin/add")
-	public ResponseEntity<?> addProduct(@RequestParam("image") MultipartFile[] images,
-			@RequestParam("name") String name, @RequestParam("category") String category,
-			@RequestParam("price") int price, @RequestParam("availability") String availability,
-			@RequestParam("rating") double rating, @RequestParam("description") String description) throws IOException {
-
-		Product product = new Product();
-		product.setName(name);
-		product.setCategory(category);
-		product.setPrice(price);
-		product.setAvailability(availability);
-		product.setRating(rating);
-		product.setDescription(description);
-
-		
-		  List<ProductImage> productImages = new ArrayList<>();
-		    for (MultipartFile image : images) {
-		        if (!image.isEmpty()) {
-		            String imageUrl = cloudinaryImageService.upload(image);
-		            ProductImage productImage = new ProductImage(imageUrl, product);
-		            productImages.add(productImage);
-		        }
-		    }
-		    product.setImage(productImages);
-		    Product savedProduct = productRepository.save(product);
-
-
-		return new ResponseEntity<>(savedProduct,HttpStatus.OK );
-	}
-
-	
-	@PostMapping("/admin/update-product/{id}")
-	@Transactional
-	public ResponseEntity<?> updateProduct(
-	    @PathVariable int id,
-	    @RequestParam(value = "image", required = false) MultipartFile[] images,
-	    @RequestParam("name") String name,
-	    @RequestParam("category") String category,
-	    @RequestParam("price") int price,
-	    @RequestParam("availability") String availability,
-	    @RequestParam("rating") double rating,
-	    @RequestParam("description") String description) throws IOException {
-
-		  Optional<Product> existingProductOptional = productRepository.findById(id);
-
-		    if (existingProductOptional.isPresent()) {
-		        Product existingProduct = existingProductOptional.get();
-
-		        existingProduct.setName(name);
-		        existingProduct.setCategory(category);
-		        existingProduct.setPrice(price);
-		        existingProduct.setAvailability(availability);
-		        existingProduct.setRating(rating);
-		        existingProduct.setDescription(description);
-
-		        if (images != null && images.length > 0) {
-		            productImageRepository.deleteByProduct(existingProduct);
-
-		            List<ProductImage> productImages = new ArrayList<>();
-		            for (MultipartFile image : images) {
-		                if (!image.isEmpty()) {
-		                    String imageUrl = cloudinaryImageService.upload(image);
-		                    ProductImage productImage = new ProductImage(imageUrl, existingProduct);
-		                    productImages.add(productImage);
-		                }
-		            }
-		            existingProduct.setImage(productImages);
-		        }
-
-		        Product updatedProduct = productRepository.save(existingProduct);
-
-		        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
-	    }
-	}
-	
-	@DeleteMapping("/admin/delete/{id}")
-	public void deleteProduct(@PathVariable int id) {
-	    Optional<Product> productOptional = productRepository.findById(id);
-	    if (productOptional.isPresent()) {
-	        Product product = productOptional.get();
-	        productRepository.deleteById(product.getId());
-	    } 
 	}
 }
