@@ -1,18 +1,16 @@
 package com.shoppingcartteam1.serverside.controller;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingcartteam1.serverside.mongodbcollection.Product;
+import com.shoppingcartteam1.serverside.mongodbcollection.UserRole;
 import com.shoppingcartteam1.serverside.mongodbrepository.CartProductRepository;
 import com.shoppingcartteam1.serverside.mongodbrepository.ProductRepository;
 import com.shoppingcartteam1.serverside.service.CloudinaryImageService;
 import com.shoppingcartteam1.serverside.service.ProductService;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -20,11 +18,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,7 +64,7 @@ public class RouteController {
 	public List<Product> getProducts() {
 		return productRepository.findAll();
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/search")
 	public ResponseEntity<List<Product>> searchProducts(@RequestParam("query") String query) {
@@ -120,6 +120,25 @@ public class RouteController {
 		return ResponseEntity.ok(filterProducts);
 
 	}
-	
-	
+
+	@GetMapping("/current-user")
+	public ResponseEntity<?> getCurrentUserRole() {
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		    if (authentication == null || !authentication.isAuthenticated()) {
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated");
+		    }
+
+		    if (authentication.getPrincipal() instanceof UserDetails) {
+		        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		        String username = userDetails.getUsername();
+		        System.out.println(username);
+		        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+		        String userRole = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("ROLE_USER");
+		        System.out.println(userRole);
+		        return ResponseEntity.ok(new UserRole(userRole));
+		    } else {
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Principal is not UserDetails");
+		    }
+	}
+
 }

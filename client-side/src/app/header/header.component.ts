@@ -30,7 +30,7 @@ export class HeaderComponent {
     private productService: ProductService,
     private registerService:RegisterService
   ) {
-
+ 
   }
 
   ngOnInit() {
@@ -43,12 +43,11 @@ export class HeaderComponent {
       this.products = this.storedDta;
       this.filteredProducts = this.storedDta;
     }
-    if(this.registerService.isAdmin()) {
-      this.isUserAdmin=true;
-    }
-    else {
-      this.isUserAdmin=false;
-    }
+    
+    this.registerService.getUserRole().subscribe((role) => {
+      this.isUserAdmin = role === "ROLE_ADMIN";
+    });
+  
   }
 
 
