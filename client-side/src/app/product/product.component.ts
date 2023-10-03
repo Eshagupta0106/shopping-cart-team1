@@ -18,6 +18,7 @@ export class ProductComponent implements OnInit {
   isItemCart: boolean = false;
   hideNotification: boolean = false;
   filterR: any = {};
+  userRole:string ="";
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class ProductComponent implements OnInit {
     this.route.queryParams.subscribe((queryParams) => {
       this.filterR = queryParams;
     });
+   
   }
 
   navigateCategory() {

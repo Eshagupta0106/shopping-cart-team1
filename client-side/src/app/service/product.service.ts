@@ -87,6 +87,8 @@ export class ProductService {
     });
     return this.http.post<void>(`http://localhost:8093/admin/update-product/${id}`,product,{ headers: headers });
   }
+
+
 }
 
 

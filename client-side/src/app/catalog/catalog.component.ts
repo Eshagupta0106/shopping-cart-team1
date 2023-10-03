@@ -5,6 +5,7 @@ import { Product } from '../models/product.model';
 import { Filter } from '../models/filter.model';
 import { FilterService } from '../service/filter.service';
 import { ProductService } from '../service/product.service';
+import { RegisterService } from '../service/register.service';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
@@ -33,13 +34,14 @@ export class CatalogComponent implements OnInit {
     private router: Router,
     private filterService: FilterService,
     private productService: ProductService,
+    private registerService: RegisterService
   ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
       const filtertest = queryParams;
       if (filtertest) {
-        if(queryParams['filterQueryParams']){
+        if (queryParams['filterQueryParams']) {
           const paramValue = JSON.parse(queryParams['filterQueryParams'] as string);
           this.handleFilterChange(paramValue);
         }
@@ -99,6 +101,8 @@ export class CatalogComponent implements OnInit {
         this.resetFilters();
       }
     });
+    
+    this.registerService.getCurrentUser();
   }
   loadProducts() {
     this.productService.getProducts().subscribe((product) => {
