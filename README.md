@@ -29,6 +29,9 @@ Lines
 Lines
 -> uncomment 11, 12
 -> comment 13, 14
+4. admin-update-product -> admin-update-product-component.ts
+Lines
+-> comment 46
 
 Open other terminal and make sure you are in root directory `shopping-cart-team1`
 Give command `./run.bat`
@@ -87,6 +90,9 @@ Server for Server-side: 'http://localhost:8093'
 * Can also click the "Cart" icon next to a product image in the catalog page to add it to your cart.
 * Navigate to the cart page to view and manage your items.
 * Remove items from the cart or update quantities as needed.
+* Login to Admin account
+* Add product and view the new product in admin dashboard.
+* Edit or Remove the new product from dashboard.
 
 ## Features
 
@@ -103,6 +109,8 @@ Server for Server-side: 'http://localhost:8093'
 * Generates invoice of all the products bought.
 * After placing order, the cart will be cleared.
 * Responsive design for mobile and desktop.
+* Role based access control for admin and user.
+* Admin has access to add product, update product and delete product
 
 ## FAQ
 
