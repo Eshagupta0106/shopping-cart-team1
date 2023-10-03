@@ -62,7 +62,7 @@ export class SignUpComponent {
       const userDetail = response;
       if (userDetail != "Credentials Invalid !!") {
         this.hideNotification = true;
-        this.registerService.setRole(JSON.stringify(JSON.parse(userDetail).role));
+        // this.registerService.setRole(JSON.stringify(JSON.parse(userDetail).role));
         this.notifyValue = ' You have been successfully logged in';
         this.cookieInteractionService.setCookieItem('currentUser', JSON.stringify(JSON.parse(userDetail).jwttoken));
         await this.cartService.getCartItems();
