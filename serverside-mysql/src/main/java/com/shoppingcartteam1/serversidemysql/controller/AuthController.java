@@ -98,7 +98,14 @@ public class AuthController {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
 		response.setJwttoken(jwtToken);
 		response.setEmail(user.getUsername());
-		response.setRole(user.getRole());
+		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+		SimpleGrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+		if (authorities.contains(adminAuthority)) {
+			response.setRole("ADMIN");
+			}
+		else {
+			response.setRole("USER");
+		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
